@@ -10,13 +10,10 @@ namespace NCC.DSS.Collections.Tests
     public class APIDefinitionTests
     {
         [TestMethod]
-        [DataRow("http://localhost/")]
-        [DataRow("https://localhost/")]
-        public void API_Definition_RunAsync_Test(string url)
+        public void API_Definition_RunAsync_Test()
         {
             //Assign
-            HttpRequest req = new Mock<HttpRequest>().Object;            
-            //req.RequestUri = new Uri(url);
+            HttpRequest req = new Mock<HttpRequest>().Object;                        
 
             //Act
             var res = ApiDefinition.RunAsync(req, MockingHelper.GetMockLogger(), MockingHelper.GetMockSwaggerGenerator());
