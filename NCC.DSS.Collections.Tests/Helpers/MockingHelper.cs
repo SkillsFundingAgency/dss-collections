@@ -1,37 +1,33 @@
-﻿using DFC.HTTP.Standard;
-using DFC.Swagger.Standard;
+﻿using DFC.Common.Standard.Logging;
+using DFC.JSON.Standard;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NCS.DSS.Collections.ContentExtractors;
-using NCS.DSS.Collections.Validators;
+using NCS.DSS.Collections.DataStore;
+using NCS.DSS.Collections.Models;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
 
 namespace NCC.DSS.Collections.Tests.Helpers
 {
     public static class MockingHelper
-    {
-        public static ICollectionValidator GetMockValidator()
-        {
-            return new Mock<ICollectionValidator>() as ICollectionValidator;
-        }
-
-        public static ICollectionExtractor GetMockExtractor()
-        {
-            return new Mock<ICollectionExtractor>() as ICollectionExtractor;
-        }
-
+    {        
         public static ILogger GetMockLogger()
         {
             return new Mock<ILogger>() as ILogger;
+        }        
+
+        public static ILoggerHelper GetMockLoggerHelper()
+        {
+            return new Mock<ILoggerHelper>() as ILoggerHelper;
         }
 
-        public static ISwaggerDocumentGenerator GetMockSwaggerGenerator()
+        public static ICollectionDataStore GetMockCollectionDataStore()
         {
-            return new Mock<ISwaggerDocumentGenerator>() as ISwaggerDocumentGenerator;
-        }
-
-        public static IHttpRequestHelper GetHttpRequestHelper()
-        {
-            return new Mock<IHttpRequestHelper>() as IHttpRequestHelper;
+            return new Mock<ICollectionDataStore>() as ICollectionDataStore;
         }
     }
 }

@@ -1,7 +1,8 @@
-using DFC.Common.Standard.Logging;
 using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
+using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -9,9 +10,9 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
@@ -27,19 +28,30 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to return all collections for the touchpoint.")]
         public static async Task<IActionResult> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Collections")] HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req,
             ILogger log,
-            [Inject]IGetCollectionsHttpTriggerService service)
+            [Inject]IGetCollectionsHttpTriggerService service,
+            [Inject]IJsonHelper jsonHelper,
+            [Inject]IHttpRequestHelper requestHelper,
+            [Inject]IHttpResponseMessageHelper responseMessageHelper)
         {
-            log.LogInformation("Get Collections C# HTTP trigger function processing a request.");            
+            log.LogInformation("Get Collections C# HTTP trigger function processing a request. TouchpointId " + requestHelper.GetDssTouchpointId(req));            
 
             try
             {
-                return await service.ProcessRequest(req);
+                var results = await service.ProcessRequestAsync();
+
+                if (results.Count == 0)
+                {
+                    return responseMessageHelper.NoContent() as IActionResult;
+                }
+
+                return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "CollectionId", "id")) as IActionResult;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new NoContentResult();
+                log.LogError(ex, "Get Collections C# HTTP trigger function");
+                return responseMessageHelper.UnprocessableEntity() as IActionResult;
             }            
         }
     }

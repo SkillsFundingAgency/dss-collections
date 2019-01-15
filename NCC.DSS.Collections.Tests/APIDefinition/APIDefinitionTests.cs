@@ -1,3 +1,4 @@
+using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -13,10 +14,11 @@ namespace NCC.DSS.Collections.Tests
         public void API_Definition_RunAsync_Test()
         {
             //Assign
-            HttpRequest req = new Mock<HttpRequest>().Object;                        
+            HttpRequest req = new Mock<HttpRequest>().Object;
+            ISwaggerDocumentGenerator swaggerGenerator = new SwaggerDocumentGenerator();
 
             //Act
-            var res = ApiDefinition.RunAsync(req, MockingHelper.GetMockLogger(), MockingHelper.GetMockSwaggerGenerator());
+            var res = ApiDefinition.RunAsync(req, MockingHelper.GetMockLogger(), swaggerGenerator);
 
             //Assert
             Assert.IsNotNull(res);

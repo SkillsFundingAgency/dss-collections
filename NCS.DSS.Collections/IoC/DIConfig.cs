@@ -6,7 +6,7 @@ using DFC.Swagger.Standard;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using NCS.DSS.Collections.ContentExtractors;
+using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.IoC;
@@ -16,7 +16,7 @@ using NCS.DSS.Collections.Validators;
 [assembly: WebJobsStartup(typeof(DIConfig))]
 
 namespace NCS.DSS.Collections.IoC
-{    
+{
     public class DIConfig : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
@@ -25,10 +25,10 @@ namespace NCS.DSS.Collections.IoC
 
             ConfigureServices(builder);
             ConfigureHelpers(builder);
-            ConfigureValidators(builder);
-            ConfigureContentExtractors(builder);
+            ConfigureValidators(builder);            
             ConfigureLogging(builder);
             ConfigureSwaggerGeneration(builder);
+            ConfigureDataStorage(builder);
         }
 
         private void ConfigureServices(IWebJobsBuilder builder)
@@ -40,7 +40,7 @@ namespace NCS.DSS.Collections.IoC
 
         private void ConfigureHelpers(IWebJobsBuilder builder)
         {
-            builder.Services.AddScoped<IHttpRequestHelper, HttpRequestHelper>();
+            builder.Services.AddScoped<IHttpRequestHelper, HttpRequestHelper>();            
             builder.Services.AddScoped<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
             builder.Services.AddScoped<IJsonHelper, JsonHelper>();
         }
@@ -48,12 +48,7 @@ namespace NCS.DSS.Collections.IoC
         private void ConfigureValidators(IWebJobsBuilder builder)
         {            
             builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
-        }
-
-        private void ConfigureContentExtractors(IWebJobsBuilder builder)
-        {
-            builder.Services.AddScoped<ICollectionExtractor, CollectionExtractor>();
-        }
+        }        
 
         private void ConfigureLogging(IWebJobsBuilder builder)
         {
@@ -63,6 +58,11 @@ namespace NCS.DSS.Collections.IoC
         private void ConfigureSwaggerGeneration(IWebJobsBuilder builder)
         {
             builder.Services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
+        }
+
+        private void ConfigureDataStorage(IWebJobsBuilder builder)
+        {
+            builder.Services.AddScoped<ICollectionDataStore, CollectionDataStore>();
         }
     }
 }

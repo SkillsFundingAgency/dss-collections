@@ -1,9 +1,11 @@
-﻿using NCS.DSS.Collections.Scaffold;
+﻿using NCS.DSS.Collections.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {
-    public interface IGetCollectionsHttpTriggerService : ICollectionService
+    public interface IGetCollectionsHttpTriggerService
     {
-
+        Task<List<Collection>> ProcessRequestAsync();
     }
 }

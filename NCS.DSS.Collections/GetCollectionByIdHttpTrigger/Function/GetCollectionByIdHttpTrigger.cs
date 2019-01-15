@@ -1,5 +1,8 @@
 using DFC.Functions.DI.Standard.Attributes;
+using DFC.HTTP.Standard;
+using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -7,9 +10,9 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
@@ -25,20 +28,29 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
         public static async Task<IActionResult> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Collections/{collectionId}")] HttpRequestMessage req, string collectionId,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId,
             ILogger log,
-            [Inject] IGetCollectionByIdHtppTriggerService service)
+            [Inject]IGetCollectionByIdHtppTriggerService service,
+            [Inject]IJsonHelper jsonHelper,
+            [Inject]IHttpResponseMessageHelper responseMessageHelper)
         {            
-            log.LogInformation("Get Collection C# HTTP trigger function processing a request.");            
+            log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);            
 
             try
             {
-                return await service.ProcessRequest(req);
+                var collection = await service.ProcessRequestAsync(collectionId);
+                
+                if (collection == null)
+                {
+                    return responseMessageHelper.NoContent() as IActionResult;
+                }
+
+                return responseMessageHelper.Ok() as IActionResult;
             }
             catch (Exception ex)
             {
                 log.LogError(ex, "Get Collection C# HTTP trigger function");
-                return new BadRequestObjectResult("Please pass a CollectionId on the query string or in the request body");
+                return responseMessageHelper.UnprocessableEntity() as IActionResult;                
             }            
         }
     }

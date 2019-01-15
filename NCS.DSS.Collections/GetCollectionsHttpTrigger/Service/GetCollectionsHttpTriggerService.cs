@@ -1,7 +1,10 @@
-﻿using DFC.Functions.DI.Standard.Attributes;
+﻿using DFC.Common.Standard.Logging;
+using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
+using NCS.DSS.Collections.DataStore;
+using NCS.DSS.Collections.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
@@ -9,13 +12,17 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
     public class GetCollectionsHttpTriggerService : IGetCollectionsHttpTriggerService
     {
         private readonly IHttpRequestHelper _requestHelper;
-        public GetCollectionsHttpTriggerService([Inject]IHttpRequestHelper requestHelper)
+        private readonly ILoggerHelper _loggerHelper;
+        private readonly ICollectionDataStore _dataStore;
+        public GetCollectionsHttpTriggerService([Inject]IHttpRequestHelper requestHelper, [Inject]ILoggerHelper loggerHelper, [Inject]ICollectionDataStore dataStore)
         {
             _requestHelper = requestHelper;
+            _loggerHelper = loggerHelper;
+            _dataStore = dataStore;
         }
-        public async Task<IActionResult> ProcessRequest(HttpRequestMessage req)
-        {
-            return await Task.FromResult(new OkObjectResult("Not Implemented"));
+        public async Task<List<Collection>> ProcessRequestAsync()
+        {                    
+            return await _dataStore.GetCollections();
         }
     }
 }
