@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
@@ -27,7 +28,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to return all collections for the touchpoint.")]
-        public static async Task<IActionResult> RunAsync(
+        public static async Task<HttpResponseMessage> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req,
             ILogger log,
             [Inject]IGetCollectionsHttpTriggerService service,
@@ -43,15 +44,15 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 
                 if (results.Count == 0)
                 {
-                    return responseMessageHelper.NoContent() as IActionResult;
+                    return responseMessageHelper.NoContent();
                 }
 
-                return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "CollectionId", "id")) as IActionResult;
+                return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));
             }
             catch (Exception ex)
             {
                 log.LogError(ex, "Get Collections C# HTTP trigger function");
-                return responseMessageHelper.UnprocessableEntity() as IActionResult;
+                return responseMessageHelper.UnprocessableEntity();
             }            
         }
     }

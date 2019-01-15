@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
@@ -27,7 +28,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
-        public static async Task<IActionResult> RunAsync(
+        public static async Task<HttpResponseMessage> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId,
             ILogger log,
             [Inject]IGetCollectionByIdHtppTriggerService service,
@@ -42,15 +43,15 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
                 
                 if (collection == null)
                 {
-                    return responseMessageHelper.NoContent() as IActionResult;
+                    return responseMessageHelper.NoContent();
                 }
 
-                return responseMessageHelper.Ok() as IActionResult;
+                return responseMessageHelper.Ok(jsonHelper.SerializeObjectAndRenameIdProperty<Collection>(collection, "id", "CollectionId"));
             }
             catch (Exception ex)
             {
                 log.LogError(ex, "Get Collection C# HTTP trigger function");
-                return responseMessageHelper.UnprocessableEntity() as IActionResult;                
+                return responseMessageHelper.UnprocessableEntity();
             }            
         }
     }
