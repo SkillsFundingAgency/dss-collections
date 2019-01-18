@@ -8,7 +8,7 @@ namespace NCS.DSS.Collections.DataStore
 {
     public class CollectionDataStore : ICollectionDataStore
     {
-        public async Task<Collection> GetCollectionById(string collectionId)
+        public async Task<Collection> GetCollectionById(Guid collectionId)
         {
             return new Collection()
             {

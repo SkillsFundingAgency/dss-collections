@@ -6,6 +6,7 @@ using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
+using System;
 using System.Collections.Generic;
 
 namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
@@ -35,7 +36,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
             IGetCollectionsHttpTriggerService service = new GetCollectionsHttpTriggerService(new HttpRequestHelper(), new LoggerHelper(), new CollectionDataStore());
 
             //Act
-            IEnumerable<Collection> result = service.ProcessRequestAsync().Result;
+            IEnumerable<Collection> result = service.ProcessRequestAsync(Guid.NewGuid()).Result;
 
             //Assert
             Assert.IsNotNull(service);

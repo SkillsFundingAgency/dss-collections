@@ -1,3 +1,4 @@
+using DFC.Common.Standard.Logging;
 using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
@@ -34,26 +35,42 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             [Inject]IGetCollectionsHttpTriggerService service,
             [Inject]IJsonHelper jsonHelper,
             [Inject]IHttpRequestHelper requestHelper,
-            [Inject]IHttpResponseMessageHelper responseMessageHelper)
+            [Inject]IHttpResponseMessageHelper responseMessageHelper,
+            [Inject]ILoggerHelper loggerHelper)
         {
-            log.LogInformation("Get Collections C# HTTP trigger function processing a request. TouchpointId " + requestHelper.GetDssTouchpointId(req));            
+            loggerHelper.LogMethodEnter(log);
 
-            try
+            var correlationId = requestHelper.GetDssCorrelationId(req);
+            if (string.IsNullOrEmpty(correlationId))
+                log.LogInformation("Unable to locate 'DssCorrelationId' in request header");
+
+            if (!Guid.TryParse(correlationId, out var correlationGuid))
             {
-                var results = await service.ProcessRequestAsync();
-
-                if (results.Count == 0)
-                {
-                    return responseMessageHelper.NoContent();
-                }
-
-                return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));
+                log.LogInformation("Unable to parse 'DssCorrelationId' to a Guid");
+                correlationGuid = Guid.NewGuid();
             }
-            catch (Exception ex)
+
+            var touchpointId = requestHelper.GetDssTouchpointId(req);
+
+            if (string.IsNullOrEmpty(touchpointId))
             {
-                log.LogError(ex, "Get Collections C# HTTP trigger function");
-                return responseMessageHelper.UnprocessableEntity();
-            }            
+                loggerHelper.LogInformationMessage(log, correlationGuid, "Unable to locate 'TouchpointId' in request header");
+                return responseMessageHelper.BadRequest();
+            }
+
+            if (!Guid.TryParse(touchpointId, out var touchpointGuid))
+                return responseMessageHelper.BadRequest(touchpointGuid);
+
+            var results = await service.ProcessRequestAsync(touchpointGuid);
+
+            if (results.Count == 0)
+            {
+                return responseMessageHelper.NoContent();
+            }
+
+            loggerHelper.LogMethodExit(log);
+
+            return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
         }
     }
 }

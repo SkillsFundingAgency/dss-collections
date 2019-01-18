@@ -1,9 +1,7 @@
 ﻿using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
-using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
@@ -20,10 +18,11 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             //Assign
             IHttpRequestHelper requestHelper = new HttpRequestHelper();
             IHttpResponseMessageHelper responseMessageHelper = new HttpResponseMessageHelper();
-            ILoggerHelper mockLoggerHelper = MockingHelper.GetMockLoggerHelper();
+            ILoggerHelper loggerHelper = new LoggerHelper();
             IJsonHelper jsonHelper = new JsonHelper();
-            ICollectionDataStore mockDataStore = MockingHelper.GetMockCollectionDataStore(); 
-            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(requestHelper, responseMessageHelper, mockLoggerHelper, jsonHelper, mockDataStore);
+            ICollectionDataStore collectionDataStore = new CollectionDataStore();
+
+            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(requestHelper, responseMessageHelper, loggerHelper, jsonHelper, collectionDataStore);            
 
             //Assert
             Assert.IsNotNull(service);
@@ -35,13 +34,14 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             //Assign            
             IHttpRequestHelper requestHelper = new HttpRequestHelper();
             IHttpResponseMessageHelper responseMessageHelper = new HttpResponseMessageHelper();
-            ILoggerHelper mockLoggerHelper = MockingHelper.GetMockLoggerHelper();
+            ILoggerHelper loggerHelper = new LoggerHelper();
             IJsonHelper jsonHelper = new JsonHelper();
-            ICollectionDataStore dataStore = new CollectionDataStore();
-            IGetCollectionByIdHtppTriggerService getCollectionByIdHtppTriggerService = new GetCollectionByIdHtppTriggerService(requestHelper, responseMessageHelper, mockLoggerHelper, jsonHelper, dataStore);
+            ICollectionDataStore collectionDataStore = new CollectionDataStore();
+
+            IGetCollectionByIdHtppTriggerService getCollectionByIdHtppTriggerService = new GetCollectionByIdHtppTriggerService(requestHelper, responseMessageHelper, loggerHelper, jsonHelper, collectionDataStore);
 
             //Act
-            var result = getCollectionByIdHtppTriggerService.ProcessRequestAsync(Guid.NewGuid().ToString()).Result;
+            var result = getCollectionByIdHtppTriggerService.ProcessRequestAsync(Guid.NewGuid(), Guid.NewGuid()).Result;
 
             //Assert
             Assert.IsNotNull(getCollectionByIdHtppTriggerService);

@@ -1,3 +1,4 @@
+using DFC.Common.Standard.Logging;
 using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
     public static class GetCollectionByIdHttpTrigger
-    {        
+    {
         [FunctionName("GetById")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collection Plan found", ShowSchema = true)]
@@ -33,13 +33,42 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             ILogger log,
             [Inject]IGetCollectionByIdHtppTriggerService service,
             [Inject]IJsonHelper jsonHelper,
-            [Inject]IHttpResponseMessageHelper responseMessageHelper)
+            [Inject]IHttpRequestHelper requestHelper,
+            [Inject]IHttpResponseMessageHelper responseMessageHelper,
+            [Inject]ILoggerHelper loggerHelper)
         {            
             log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);            
 
             try
             {
-                var collection = await service.ProcessRequestAsync(collectionId);
+                var correlationId = requestHelper.GetDssCorrelationId(req);
+
+                if (string.IsNullOrEmpty(correlationId))
+                    log.LogInformation("Unable to locate 'DssCorrelationId' in request header");
+
+                if (!Guid.TryParse(correlationId, out var correlationGuid))
+                {
+                    log.LogInformation("Unable to parse 'DssCorrelationId' to a Guid");
+                    correlationGuid = Guid.NewGuid();
+                }
+
+                var touchpointId = requestHelper.GetDssTouchpointId(req);
+
+                if (string.IsNullOrEmpty(touchpointId))
+                {
+                    loggerHelper.LogInformationMessage(log, correlationGuid, "Unable to locate 'TouchpointId' in request header");
+                    return responseMessageHelper.BadRequest();
+                }
+
+                if (!Guid.TryParse(touchpointId, out var touchpointGuid))
+                {
+                    log.LogInformation("Unable to parse 'DssTouchpointId' to a Guid");                    
+                }
+
+                if (!Guid.TryParse(collectionId, out var collectionGuid))
+                    return responseMessageHelper.BadRequest(collectionGuid);
+
+                var collection = await service.ProcessRequestAsync(touchpointGuid, collectionGuid);
                 
                 if (collection == null)
                 {
