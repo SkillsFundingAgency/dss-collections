@@ -125,9 +125,10 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeCreated_WhenRequestIsValid()
         {
             //Assign
-            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);            
+            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);
 
-            _postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>()).Returns(Task.FromResult(true).Result);
+            //_postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>()).Returns(Task.FromResult(true).Result);
+            _postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>()).Returns(Task.FromResult(_collection).Result);
 
             _httpResponseMessageHelper
                 .Created(Arg.Any<string>()).Returns(x => new HttpResponseMessage(HttpStatusCode.Created));

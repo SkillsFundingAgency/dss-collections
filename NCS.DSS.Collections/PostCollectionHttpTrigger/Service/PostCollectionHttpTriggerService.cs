@@ -1,10 +1,7 @@
 ﻿using DFC.Common.Standard.Logging;
 using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Provider;
-using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System;
@@ -18,19 +15,16 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
     {        
         private readonly ICollectionValidator _collectionValidator;        
         private readonly IHttpRequestHelper _requestHelper;
-        private readonly ILoggerHelper _loggerHelper;
-        private readonly ICollectionDataStore _dataStore;
+        private readonly ILoggerHelper _loggerHelper;        
         private readonly IDocumentDBProvider _documentDBProvider;
         public PostCollectionHttpTriggerService([Inject]ICollectionValidator collectionValidator, 
                                                 [Inject]IHttpRequestHelper requestHelper, 
-                                                [Inject]ILoggerHelper loggerHelper,
-                                                [Inject]ICollectionDataStore dataStore,
+                                                [Inject]ILoggerHelper loggerHelper,                                                
                                                 [Inject]IDocumentDBProvider documentDBProvider)
         {                     
             _requestHelper = requestHelper;
             _loggerHelper = loggerHelper;
-            _collectionValidator = collectionValidator;
-            _dataStore = dataStore;
+            _collectionValidator = collectionValidator;            
             _documentDBProvider = documentDBProvider;
         }
         public async Task<Collection> ProcessRequestAsync(Collection collection)
@@ -45,11 +39,16 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
             if (validationErrors.Any())
             {
                 return null;
-            }            
+            }
 
-            var response = await _documentDBProvider.CreateCollectionAsync(collection);
+            //var response = await _documentDBProvider.CreateCollectionAsync(collection);
 
-            return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;
+            //return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;            
+
+            collection.CollectionId = Guid.NewGuid();
+            collection.CollectionReports = new Uri("http://localhost");
+
+            return collection;
         }
     }
 }

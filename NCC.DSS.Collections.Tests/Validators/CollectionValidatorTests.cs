@@ -57,9 +57,9 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = collectionValidator.Validate(collection).Result;
 
             //Assert
-            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(0, result.Count());
             Assert.IsNotNull(collection);
-            Assert.AreEqual(Guid.Empty, collection.CollectionId);
+            Assert.IsNotNull(collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
             Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.UKPRN);

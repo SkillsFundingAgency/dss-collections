@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NCS.DSS.Collections.Cosmos.Provider;
-using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.IoC;
@@ -22,7 +21,7 @@ namespace NCS.DSS.Collections.IoC
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.AddDependencyInjection();
+            builder.AddDependencyInjection();            
 
             ConfigureServices(builder);
             ConfigureHelpers(builder);
@@ -62,8 +61,7 @@ namespace NCS.DSS.Collections.IoC
         }
 
         private void ConfigureDataStorage(IWebJobsBuilder builder)
-        {
-            builder.Services.AddScoped<ICollectionDataStore, CollectionDataStore>();
+        {            
             builder.Services.AddScoped<IDocumentDBProvider, DocumentDBProvider>();
         }        
     }

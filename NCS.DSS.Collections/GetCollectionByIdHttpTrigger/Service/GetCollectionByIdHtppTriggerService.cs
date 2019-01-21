@@ -1,15 +1,7 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.Functions.DI.Standard.Attributes;
-using DFC.HTTP.Standard;
-using DFC.JSON.Standard;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using DFC.Functions.DI.Standard.Attributes;
 using NCS.DSS.Collections.Cosmos.Provider;
-using NCS.DSS.Collections.DataStore;
 using NCS.DSS.Collections.Models;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
@@ -23,7 +15,15 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
         }
         public async Task<Collection> ProcessRequestAsync(Guid touchPointId, Guid collectionId)
         {
-            return await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);
+            //return await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);
+            return new Collection
+            {
+                CollectionId = Guid.NewGuid(),
+                CollectionReports = new Uri("http://localhost"),
+                LastModifiedDate = DateTime.Now,
+                TouchPointId = touchPointId,
+                UKPRN = "12345678"
+            };
         }
     }
 }
