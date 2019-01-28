@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
+using NCS.DSS.Collections.Validators;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -35,34 +36,21 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             [Inject]IHttpRequestHelper httpRequestHelper,
             [Inject]IHttpResponseMessageHelper httpResponseMessageHelper,
             [Inject]IJsonHelper jsonHelper,
-            [Inject]ILoggerHelper loggerHelper)
+            [Inject]ILoggerHelper loggerHelper,
+            [Inject]IDssCorrelationValidator dssCorrelationValidator,
+            [Inject]IDssTouchpointValidator dssTouchpointValidator)
         {
-            loggerHelper.LogMethodEnter(log);            
+            loggerHelper.LogMethodEnter(log);
 
-            var correlationId = httpRequestHelper.GetDssCorrelationId(req);
-            if (string.IsNullOrEmpty(correlationId))
-                log.LogInformation("Unable to locate 'DssCorrelationId' in request header");
+            var correlationId = dssCorrelationValidator.Extract(req, log);
 
-            if (!Guid.TryParse(correlationId, out var correlationGuid))
-            {
-                log.LogInformation("Unable to parse 'DssCorrelationId' to a Guid");
-                correlationGuid = Guid.NewGuid();
-            }
-
-            var touchpointId = httpRequestHelper.GetDssTouchpointId(req);
+            var touchpointId = dssTouchpointValidator.Extract(req, log);
+            
             if (string.IsNullOrEmpty(touchpointId))
             {
-                loggerHelper.LogInformationMessage(log, correlationGuid, "Unable to locate 'TouchpointId' in request header");
                 return httpResponseMessageHelper.BadRequest();
             }
-
-            //var ApimURL = httpRequestHelper.GetDssApimUrl(req);
-            //if (string.IsNullOrEmpty(ApimURL))
-            //{
-            //    loggerHelper.LogInformationMessage(log, correlationGuid, "Unable to locate 'apimurl' in request header");
-            //    return httpResponseMessageHelper.BadRequest();
-            //}
-
+            
             Collection collection;
 
             try

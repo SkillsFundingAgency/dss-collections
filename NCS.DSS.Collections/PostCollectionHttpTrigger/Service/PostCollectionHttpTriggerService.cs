@@ -41,14 +41,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
                 return null;
             }
 
-            //var response = await _documentDBProvider.CreateCollectionAsync(collection);
+            var response = await _documentDBProvider.CreateCollectionAsync(collection);
 
-            //return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;            
-
-            collection.CollectionId = Guid.NewGuid();
-            collection.CollectionReports = new Uri("http://localhost");
-
-            return collection;
+            return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;                                    
         }
     }
 }

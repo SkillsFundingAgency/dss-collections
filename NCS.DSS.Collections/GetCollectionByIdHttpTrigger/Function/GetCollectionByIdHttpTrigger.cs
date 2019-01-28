@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
+using NCS.DSS.Collections.Validators;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -35,28 +36,20 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             [Inject]IJsonHelper jsonHelper,
             [Inject]IHttpRequestHelper requestHelper,
             [Inject]IHttpResponseMessageHelper responseMessageHelper,
-            [Inject]ILoggerHelper loggerHelper)
+            [Inject]ILoggerHelper loggerHelper,
+            [Inject]IDssCorrelationValidator dssCorrelationValidator,
+            [Inject]IDssTouchpointValidator dssTouchpointValidator)
         {            
             log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);            
 
             try
             {
-                var correlationId = requestHelper.GetDssCorrelationId(req);
+                var correlationId = dssCorrelationValidator.Extract(req, log);
 
-                if (string.IsNullOrEmpty(correlationId))
-                    log.LogInformation("Unable to locate 'DssCorrelationId' in request header");
-
-                if (!Guid.TryParse(correlationId, out var correlationGuid))
-                {
-                    log.LogInformation("Unable to parse 'DssCorrelationId' to a Guid");
-                    correlationGuid = Guid.NewGuid();
-                }
-
-                var touchpointId = requestHelper.GetDssTouchpointId(req);
+                var touchpointId = dssTouchpointValidator.Extract(req, log);
 
                 if (string.IsNullOrEmpty(touchpointId))
-                {
-                    loggerHelper.LogInformationMessage(log, correlationGuid, "Unable to locate 'TouchpointId' in request header");
+                {                    
                     return responseMessageHelper.BadRequest();
                 }
 

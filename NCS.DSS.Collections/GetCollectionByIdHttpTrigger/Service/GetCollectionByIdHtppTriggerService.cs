@@ -15,15 +15,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
         }
         public async Task<Collection> ProcessRequestAsync(Guid touchPointId, Guid collectionId)
         {
-            //return await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);
-            return new Collection
-            {
-                CollectionId = Guid.NewGuid(),
-                CollectionReports = new Uri("http://localhost"),
-                LastModifiedDate = DateTime.Now,
-                TouchPointId = touchPointId,
-                UKPRN = "12345678"
-            };
+            return await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);            
         }
     }
 }

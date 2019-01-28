@@ -21,14 +21,16 @@ namespace NCS.DSS.Collections.IoC
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.AddDependencyInjection();            
+            builder.AddDependencyInjection();
 
             ConfigureServices(builder);
             ConfigureHelpers(builder);
-            ConfigureValidators(builder);            
+            ConfigureValidators(builder);
             ConfigureLogging(builder);
             ConfigureSwaggerGeneration(builder);
             ConfigureDataStorage(builder);
+
+            //ConfigureBuilder(builder);
         }
 
         private void ConfigureServices(IWebJobsBuilder builder)
@@ -40,15 +42,17 @@ namespace NCS.DSS.Collections.IoC
 
         private void ConfigureHelpers(IWebJobsBuilder builder)
         {
-            builder.Services.AddScoped<IHttpRequestHelper, HttpRequestHelper>();            
+            builder.Services.AddScoped<IHttpRequestHelper, HttpRequestHelper>();
             builder.Services.AddScoped<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
             builder.Services.AddScoped<IJsonHelper, JsonHelper>();
         }
 
         private void ConfigureValidators(IWebJobsBuilder builder)
-        {            
+        {
             builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
-        }        
+            builder.Services.AddScoped<IDssCorrelationValidator, DssCorrelationValidator>();
+            builder.Services.AddScoped<IDssTouchpointValidator, DssTouchpointValidator>();
+        }
 
         private void ConfigureLogging(IWebJobsBuilder builder)
         {
@@ -61,8 +65,13 @@ namespace NCS.DSS.Collections.IoC
         }
 
         private void ConfigureDataStorage(IWebJobsBuilder builder)
-        {            
+        {
             builder.Services.AddScoped<IDocumentDBProvider, DocumentDBProvider>();
-        }        
+        }
+
+        private void ConfigureBuilder(IWebJobsBuilder builder)
+        {
+            builder.Services.AddSingleton(builder);
+        }
     }
 }

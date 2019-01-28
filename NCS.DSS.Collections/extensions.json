@@ -1,0 +1,5 @@
+{
+  "extensions":[
+    { "name": "DIConfig", "typeName":"NCS.DSS.Collections.IoC.DIConfig, NCS.DSS.Collections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"}
+  ]
+}
