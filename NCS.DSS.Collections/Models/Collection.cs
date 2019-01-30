@@ -30,5 +30,10 @@ namespace NCS.DSS.Collections.Models
         [Display(Description = "Date and time of the last modification to the record.")]
         [Example(Description = "2018-06-20T13:45:00")]
         public DateTime? LastModifiedDate { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Description = "Report file location.")]
+        [Example(Description = "//location/path")]        
+        public string ReportStorageLocation { get; set; }
     }
 }
