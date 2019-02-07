@@ -43,6 +43,7 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
 
 
         [TestMethod]
+        [Ignore]
         public void TimeTest()
         {
             var a = DateTime.Now.Ticks;
@@ -55,6 +56,7 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
         }
 
         [TestMethod]
+        [Ignore]
         public void LoadCustomers()
         {
             

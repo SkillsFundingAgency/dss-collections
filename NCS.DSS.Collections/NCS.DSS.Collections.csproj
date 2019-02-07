@@ -4,6 +4,9 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Properties\launchSettings.json" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="DFC.Common.Standard" Version="0.1.0" />
     <PackageReference Include="DFC.Configuration" Version="0.1.7" />
     <PackageReference Include="DFC.Functions.DI.Standard" Version="0.1.0" />
@@ -20,5 +23,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
