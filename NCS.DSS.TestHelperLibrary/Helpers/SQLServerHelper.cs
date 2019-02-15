@@ -77,11 +77,10 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
                 foreach (var item in dict)
                 {
                     sqlString += (firstOne ? "" : ",") + checkForReplacements(item.Key);
-                    sqlValuesString += (firstOne ? "" : ",") + "'" + item.Value + "'";
+                    sqlValuesString += (firstOne ? "" : ",") + ( string.IsNullOrEmpty(item.Value) ? "NULL" : "'" + item.Value.Replace("'","''") + "'" );
                     firstOne = false;
                 }
                 sqlString += sqlValuesString + ")";
-
                 try
                 {
                     SqlCommand newCommand = new SqlCommand(sqlString, Connection);
