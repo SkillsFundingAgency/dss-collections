@@ -13,5 +13,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
         Task<ResourceResponse<Document>> CreateCollectionAsync(Collection collection);
         Task<List<Collection>> GetCollectionsForTouchpointAsync(Guid touchpointId);
         Task<Collection> GetCollectionForTouchpointAsync(Guid touchPointId, Guid collectionId);
+        Task<Collection> GetCollectionAsync(Guid collectionId);
+        Task<ResourceResponse<Document>> UpdateCollectionAsync(Models.Collection collection);
     }
 }

@@ -38,19 +38,20 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             [Inject]IJsonHelper jsonHelper,
             [Inject]ILoggerHelper loggerHelper,
             [Inject]IDssCorrelationValidator dssCorrelationValidator,
-            [Inject]IDssTouchpointValidator dssTouchpointValidator)
+            [Inject]IDssTouchpointValidator dssTouchpointValidator,
+            [Inject]IApimUrlValidator apimUrlValidator)
         {
             loggerHelper.LogMethodEnter(log);
 
             var correlationId = dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);
-            
-            if (string.IsNullOrEmpty(touchpointId))
-            {
+            var touchpointId = dssTouchpointValidator.Extract(req, log);                                  
+
+            var ApimUrl = apimUrlValidator.Extract(req, log);
+
+            if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(ApimUrl))
                 return httpResponseMessageHelper.BadRequest();
-            }
-            
+
             Collection collection;
 
             try
@@ -62,13 +63,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return httpResponseMessageHelper.UnprocessableEntity(ex);
             }
             
-
-            var result = await service.ProcessRequestAsync(collection);
+            var result = await service.ProcessRequestAsync(collection, ApimUrl);
 
             if (result == null)
             {
                 return httpResponseMessageHelper.BadRequest();
-            }
+            }            
 
             return httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(result, "id", "CollectionId"));            
         }

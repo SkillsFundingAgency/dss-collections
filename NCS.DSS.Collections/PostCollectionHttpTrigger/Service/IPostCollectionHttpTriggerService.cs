@@ -5,6 +5,6 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 {
     public interface IPostCollectionHttpTriggerService
     {
-        Task<Collection> ProcessRequestAsync(Collection collection);
+        Task<Collection> ProcessRequestAsync(Collection collection, string apimUrl);
     }
 }

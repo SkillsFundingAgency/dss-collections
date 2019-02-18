@@ -4,6 +4,7 @@ using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
+using NCS.DSS.Collections.Storage;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -18,6 +19,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     {
         private IHttpRequestHelper _requestHelper;
         private IDocumentDBProvider _documentDBProvider;
+        private IStorage _storage;
         private Collection _collection;
         private List<Collection> _collections;
         private Guid _touchPointId;
@@ -32,12 +34,13 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             _collections = Substitute.For<List<Collection>>();
             _touchPointId = Guid.NewGuid();
             _collectionId = Guid.NewGuid();
+            _storage = Substitute.For<IStorage>();
         }
         [Test]
         public void GetCollectionByIdHtppTriggerService_Create_Test()
         {                        
             //Act
-            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(_documentDBProvider);            
+            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(_documentDBProvider, _storage);            
 
             //Assert
             Assert.IsNotNull(service);
@@ -51,7 +54,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             _documentDBProvider.GetCollectionForTouchpointAsync(_touchPointId, _collectionId).Returns(Task.FromResult(_collection).Result);
 
             //Act
-            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(_documentDBProvider);
+            IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(_documentDBProvider, _storage);
             var result = service.ProcessRequestAsync(_touchPointId, _collectionId);
 
             //Assert

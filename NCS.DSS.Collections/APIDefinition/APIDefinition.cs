@@ -22,11 +22,18 @@ namespace NCS.DSS.Collections.APIDefinition
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req,
             ILogger log,
             [Inject]ISwaggerDocumentGenerator swaggerDocumentGenerator)
-        {            
-            return new HttpResponseMessage(HttpStatusCode.OK)
-            {                
-                Content = new StringContent(swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, Assembly.GetExecutingAssembly()))
-            };
+        {          
+            try
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, Assembly.GetExecutingAssembly()))
+                };
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.NoContent);                
+            }
         }        
     }
 }

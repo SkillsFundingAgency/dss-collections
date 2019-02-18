@@ -47,6 +47,24 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             return false;
         }
 
+        public async Task<Collection> GetCollectionAsync(Guid collectionId)
+        {
+            var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
+
+            var client = DocumentDBClient.CreateDocumentClient();
+
+            var collectionForCollectionIdQuery = client?.CreateDocumentQuery<Collection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
+                                                    .Where(x => x.CollectionId == collectionId)
+                                                    .AsDocumentQuery();
+
+            if (collectionForCollectionIdQuery == null)
+                return null;
+
+            var collection = await collectionForCollectionIdQuery.ExecuteNextAsync<Collection>();
+
+            return collection?.FirstOrDefault();
+        }
+
         public async Task<Collection> GetCollectionForTouchpointAsync(Guid touchPointId, Guid collectionId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
@@ -84,6 +102,20 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             }
 
             return collections.Any() ? collections : null;
+        }
+
+        public async Task<ResourceResponse<Document>> UpdateCollectionAsync(Collection collection)
+        {
+            var documentUri = DocumentDBHelper.CreateCollectionDocumentUri(collection.CollectionId);
+
+            var client = DocumentDBClient.CreateDocumentClient();
+
+            if (client == null)
+                return null;
+
+            var response = await client.ReplaceDocumentAsync(documentUri, collection);
+
+            return response;
         }
     }
 }

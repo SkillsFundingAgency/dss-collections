@@ -33,7 +33,8 @@ namespace NCS.DSS.Collections.Models
 
         [DataType(DataType.Text)]
         [Display(Description = "Report file location.")]
-        [Example(Description = "//location/path")]        
+        [Example(Description = "//location/path")]       
+        [JsonIgnore]
         public string ReportStorageLocation { get; set; }
     }
 }

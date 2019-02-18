@@ -61,14 +61,18 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
                 if (!Guid.TryParse(collectionId, out var collectionGuid))
                     return responseMessageHelper.BadRequest(collectionGuid);
 
-                var collection = await service.ProcessRequestAsync(touchpointGuid, collectionGuid);
+                var result = await service.ProcessRequestAsync(touchpointGuid, collectionGuid);
                 
-                if (collection == null)
+                if (result == null)
                 {
                     return responseMessageHelper.NoContent();
                 }
 
-                return responseMessageHelper.Ok(jsonHelper.SerializeObjectAndRenameIdProperty<Collection>(collection, "id", "CollectionId"));
+                return new HttpResponseMessage()
+                {
+                    Content = new StreamContent(result),
+                    StatusCode = HttpStatusCode.OK                    
+                };
             }
             catch (Exception ex)
             {

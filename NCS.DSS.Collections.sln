@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCS.DSS.Collections", "NCS.DSS.Collections\NCS.DSS.Collections.csproj", "{4FC90B80-795F-42A8-9B57-789BF62BBEC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCC.DSS.Collections.Tests", "NCC.DSS.Collections.Tests\NCC.DSS.Collections.Tests.csproj", "{106B7B6B-A74A-48FF-9FD4-432918997292}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCC.DSS.Collections.Tests", "NCC.DSS.Collections.Tests\NCC.DSS.Collections.Tests.csproj", "{106B7B6B-A74A-48FF-9FD4-432918997292}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

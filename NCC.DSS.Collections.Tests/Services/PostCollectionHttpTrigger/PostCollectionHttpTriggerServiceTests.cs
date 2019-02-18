@@ -38,7 +38,8 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private IJsonHelper _jsonHelper;
         private Collection _collection;
         private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;        
+        private IDssTouchpointValidator _dssTouchpointValidator;
+        private IApimUrlValidator _apimValidator;
 
         [SetUp]
         public void Setup()
@@ -55,6 +56,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             _dssCorrelationValidator = new DssCorrelationValidator(_httpRequestHelper);
             _dssTouchpointValidator = new DssTouchpointValidator(_httpRequestHelper, _loggerHelper, _dssCorrelationValidator);
+            _apimValidator = new ApimUrlValidator(_httpRequestHelper, _loggerHelper, _dssCorrelationValidator);
 
             _httpRequestHelper.GetDssCorrelationId(_request).Returns(ValidDssCorrelationId);
             _httpRequestHelper.GetDssTouchpointId(_request).Returns("0000000001");
@@ -133,7 +135,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             //Assign
             _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);
             
-            _postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>()).Returns(Task.FromResult(_collection).Result);
+            _postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>(), Arg.Any<string>()).Returns(Task.FromResult(_collection).Result);
 
             _httpResponseMessageHelper
                 .Created(Arg.Any<string>()).Returns(x => new HttpResponseMessage(HttpStatusCode.Created));
@@ -157,7 +159,9 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
                 _jsonHelper,
                 _loggerHelper,
                 _dssCorrelationValidator,
-                _dssTouchpointValidator).ConfigureAwait(false);
+                _dssTouchpointValidator,
+                _apimValidator
+                ).ConfigureAwait(false);
         }
     }
 }
