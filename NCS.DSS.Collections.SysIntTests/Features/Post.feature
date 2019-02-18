@@ -44,7 +44,7 @@ Feature: Post
 	| 100TODAY     | 4                      | 07484503700  | 05100924950 | 08483057675       | email5@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
 	| 100YESTERDAY | 4                      | 07484503700  | 05100924950 | 08483057675       | email6@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
 
-#	Given I load test interaction data for this feature
+	Given I load test interaction data for this feature
 #	#Parent for INTERACTION is CUSTOMER
  | LoaderRef                   | TouchpointId | AdviserDetailsId                     | DateandTimeOfInteraction | Channel | InteractionType | LastModifiedDate     | LastModifiedTouchpointId |
  | 18TMRW                      | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 1       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
@@ -65,81 +65,80 @@ Feature: Post
  | MULTIPLE_SESSIONS_HISTORIC  | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
 
 
-#	Given I load test session data for the feature
-#	#Parent for SESSION is INTERACTION
-#	| LoaderRef                  | ParentRef | DateandTimeOfSession | VenuePostCode | SessionAttended | ReasonForNonAttendance | LastModifiedDate     | LastModifiedTouchpointId |
-#	| 18TMRW                     | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18TODAY                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18YESTERDAY                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TMRW                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TODAY                   | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100YESTERDAY               | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| DOB_UNKNOWN                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_B4_CONTRACT_START  | 1         | 2018-09-30T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | Today                | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_NOW                | 1         | Now                  | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_HAS_FUTURE_DATE    | 1         | Today +1D            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -100           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -400           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	Given I load test session data for the feature
+	#Parent for SESSION is INTERACTION
+	| LoaderRef                  | ParentRef | DateandTimeOfSession | VenuePostCode | SessionAttended | ReasonForNonAttendance | LastModifiedDate     | LastModifiedTouchpointId |
+	| 18TMRW                     | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18TODAY                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18YESTERDAY                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TMRW                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TODAY                   | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100YESTERDAY               | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| DOB_UNKNOWN                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_B4_CONTRACT_START  | 1         | 2018-09-30T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_HAS_CURRENT_DATE   | 1         | Today                | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_NOW                | 1         | Now                  | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_HAS_FUTURE_DATE    | 1         | Today +1D            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -100           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -400           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
 
 
 
 
-#	Given I load action plan data for the feature
-#	#Parent for ACTION PLAN is SESSION
-#	| LoaderRef                  | ParentRef | DateActionPlanCreated | CustomerCharterShownToCustomer | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation |
-#	| 18TMRW                     | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 18TODAY                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 18YESTERDAY                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100TMRW                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100TODAY                   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100YESTERDAY               | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| DOB_UNKNOWN                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_B4_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_NOW                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_HAS_FUTURE_DATE    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	Given I load action plan data for the feature
+	#Parent for ACTION PLAN is SESSION
+	| LoaderRef                  | ParentRef | DateActionPlanCreated | CustomerCharterShownToCustomer | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation |
+	| 18TMRW                     | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| 18TODAY                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| 18YESTERDAY                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| 100TMRW                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| 100TODAY                   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| 100YESTERDAY               | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| DOB_UNKNOWN                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| SESSION_B4_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| SESSION_ON_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| SESSION_HAS_CURRENT_DATE   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| SESSION_NOW                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| SESSION_HAS_FUTURE_DATE    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| MULTIPLE_SESSIONS_HISTORIC | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| MULTIPLE_SESSIONS_HISTORIC | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
 	
 
-#	Given I load action data for the feature
+	Given I load action data for the feature
 #	#Parent for ACTION is ACTION PLAN
-#	| LoaderRef | ParentRef | DateActionAgreed     | DateActionAimsToBeCompletedBy | ActionSummary    | SignpostedTo | ActionType | ActionStatus | PersonResponsible | LastModifiedDate     |
-#	| 18TMRW    | 1         | 2018-07-30T09:00:00Z | 2018-08-08T09:00:00Z          | Details of stuff | Someone      | 1          | 1            | 1                 | 2018-07-30T09:00:00Z |
-
-#	Given I load outcome data for the feature
-#	#Parent for OUTCOME is ACTION PLAN
-#	| LoaderRef                  | ParentRef | OutcomeType | OutcomeClaimedDate   | OutcomeEffectiveDate |
-#	| 18TMRW                     | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TMRW                     | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TMRW                     | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18YESTERDAY                | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18YESTERDAY                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100TMRW                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100TODAY                   | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100YESTERDAY               | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| DOB_UNKNOWN                | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_B4_CONTRACT_START  | 1         | 4           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_ON_CONTRACT_START  | 1         | 5           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_NOW                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 1           | 2018-07-20T21:45:00Z | Today -50D           |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2           | 2018-07-20T21:45:00Z | Today -60D           |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 3           | 2018-07-20T21:45:00Z | Today -40D           |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| LoaderRef | ParentRef | DateActionAgreed     | DateActionAimsToBeCompletedBy | ActionSummary    | SignpostedTo | ActionType | ActionStatus | PersonResponsible | LastModifiedDate     |
+	| 18TMRW    | 1         | 2018-07-30T09:00:00Z | 2018-08-08T09:00:00Z          | Details of stuff | Someone      | 1          | 1            | 1                 | 2018-07-30T09:00:00Z |
+	Given I load outcome data for the feature
+	#Parent for OUTCOME is ACTION PLAN
+	| LoaderRef                  | ParentRef | OutcomeType | OutcomeClaimedDate   | OutcomeEffectiveDate |
+	| 18TMRW                     | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18TMRW                     | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18TMRW                     | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18TODAY                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18TODAY                    | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18TODAY                    | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18YESTERDAY                | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 18YESTERDAY                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 100TMRW                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 100TODAY                   | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| 100YESTERDAY               | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| DOB_UNKNOWN                | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| SESSION_B4_CONTRACT_START  | 1         | 4           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| SESSION_ON_CONTRACT_START  | 1         | 5           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| SESSION_HAS_CURRENT_DATE   | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| SESSION_NOW                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 1           | 2018-07-20T21:45:00Z | Today -50D           |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2           | 2018-07-20T21:45:00Z | Today -60D           |
+	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 3           | 2018-07-20T21:45:00Z | Today -40D           |
+	| MULTIPLE_SESSIONS_HISTORIC | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| MULTIPLE_SESSIONS_HISTORIC | 2         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| MULTIPLE_SESSIONS_HISTORIC | 2         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
 
 	Given I have completed loading data and don't want to repeat for each test
 	And I have confirmed all test data is now in the backup data store

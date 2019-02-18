@@ -32,6 +32,7 @@ namespace NCS.DSS.Collections.SysIntTests.Hooks
         [AfterScenario]
         public void AfterScenario()
         {
+            return;
             List<Loader> testData = (List<Loader>)scenarioContext["SearchTestData"];
             SQLServerHelper sqlHelper = new SQLServerHelper();
             CosmosHelper.Initialise(envSettings.CosmosEndPoint, envSettings.CosmosAccountKey);
