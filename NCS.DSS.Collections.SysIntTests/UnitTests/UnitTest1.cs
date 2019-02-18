@@ -83,7 +83,7 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
                         string json = JsonConvert.SerializeObject(customer, Formatting.Indented);//, settings);
 
                         // don't want to send internal reference
-                        json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
+                        //json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
 
                         var response = RestHelper.Post(envSettings.BaseUrl + "/customers/api/customers/", json, envSettings.TouchPointId, envSettings.SubscriptionKey);
 
@@ -129,7 +129,7 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
                             string json = JsonConvert.SerializeObject(address, Formatting.Indented);//, settings);
 
                             // don't want to send internal reference
-                            json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
+                            //json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
 
                             var response = RestHelper.Post(envSettings.BaseUrl + "addresses/api/Customers/" + address.CustomerId + "/addresses/", json, envSettings.TouchPointId, envSettings.SubscriptionKey);
 
@@ -174,7 +174,7 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
                             string json = JsonConvert.SerializeObject(contact, Formatting.Indented);//, settings);
 
                             // don't want to send internal reference
-                            json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
+                            //json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
 
                             var response = RestHelper.Post(envSettings.BaseUrl + "contacts/api/Customers/" + contact.CustomerId + "/contacts/", json, envSettings.TouchPointId, envSettings.SubscriptionKey);
 
