@@ -19,5 +19,9 @@ namespace NCS.DSS.Collections.SysIntTests
         public string CosmosEndPoint => Configuration["CosmosDB:EndPoint"];
         public string CosmosAccountKey => Configuration["CosmosDB:Key"];
         public string SqlConnectionString => Configuration["SQLDataStore:ConnectionString"];
+        public string StorageConnectionString => Configuration["Storage:ConnectionString"];
+        public string StorageContainerName => Configuration["Storage:ContainerName"];
+        public string ServiceBusConnectionString => Configuration["ServiceBus:ConnectionString"];
+        public string ServiceBusQueueName => Configuration["ServiceBus:QueueName"];
     }
 }

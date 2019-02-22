@@ -35,10 +35,17 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         internal static readonly AzureSearchSingleton CustomerDataLoad = AzureSearchSingleton.Instance;
         private List<Models.ReportRow> ReportRows;
         private readonly ScenarioContext scenarioContext;
+        private readonly FeatureContext featureContext;
 
-        public StepDefinitions(ScenarioContext context)
+        private DateTime ReportDate = DateTime.Today;
+
+        private DateTime FeedStartDate = new DateTime(2019, 4, 1);
+        
+
+        public StepDefinitions(ScenarioContext context, FeatureContext fcontext)
         {
             scenarioContext = context;
+            featureContext = fcontext;
         }
 
         public void SubmitTheSearch()
@@ -259,7 +266,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void GivenIRememberTheRecordsReturned()
         {
             var list = SearchResults.Results
-                .Select(i => i.CustomerID);
+                .Select(i => i.CustomerId);
             PreviousResults.AddRange(list);
         }
 
@@ -285,7 +292,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         {
             // check retured results do not include those previously returned
             var resultList = SearchResults.Results
-                            .Select(s => s.CustomerID);
+                            .Select(s => s.CustomerId);
             bool matches = resultList.Any(x => PreviousResults.Any(y => y == x));
             matches.Should().BeFalse("because there shouldn't be any documents returned that were seen on an ealier page");
         }
@@ -426,22 +433,51 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
                 }
             }
             sqlHelper.CloseConnection();
-            scenarioContext["SearchTestData"] = LoaderData;
+            featureContext["TestData"] = LoaderData;
+
         }
+
+        [Given(@"a request has been made for tax year ""(.*)"" and touch point (.*) and the report data is available")]
+        public void GivenARequestHasBeenMadeForTaxYearAndTouchPointAndTheReportDataIsAvailable(int p0, Decimal p1)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
 
         [Given(@"a request has been made and the report data is available")]
         public void GivenARequestHasBeenMadeAndTheReportDataIsAvailable()
         {
             SQLServerHelper sqlInstance = new SQLServerHelper();
             sqlInstance.SetConnection(envSettings.SqlConnectionString);
-            var ds = sqlInstance.ExecuteStoredProcedure("GetReportData");
+
+            int dateOffSet = ( ReportDate - DateTime.Today).Days;
+          sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", dateOffSet.ToString());
+
+
+            //int feedinDate = (ReportDate - DateTime.Today).Days;
+            sqlInstance.UpsertParameterValue("dss-data-collections-params", "FeedStartDate", FeedStartDate.ToShortDateString());
+
+            var ds = sqlInstance.ExecuteTableFunction("dcc-collections", new string[] { "9000000000", "1718" });
+
+            //revert time travel setting
+            sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", "0");
+
+            //var ds = sqlInstance.ExecuteStoredProcedure("GetReportData");
+            ds.Tables[0].Rows.Count.Should().BeGreaterThan(0, "Because we want data to be present in the report");
 
             ReportRows = ds.Tables[0].AsEnumerable().Select(
                             dataRow => new ReportRow
                             {
                                 CustomerId = dataRow.Field<Guid>("CustomerId").ToString(),
                                 DateofBirth = dataRow.Field<DateTime>("DateofBirth").ToString(),
-                                HomePostCode = dataRow.Field<string>("HomePostCode")
+                                HomePostCode = dataRow.Field<string>("HomePostCode"),
+                                ActionPlanID = dataRow.Field <Guid> ("ActionPlanID").ToString(),
+                                SessionDate  = dataRow.Field<DateTime>("SessionDate").ToString(),
+                                SubContractorId = dataRow.Field<string>("SubContractorId").ToString(),
+                                AdviserName = dataRow.Field<string>("AdviserName").ToString(),
+                                OutcomeID = dataRow.Field<Guid>("OutcomeID").ToString(),
+                                OutcomeType = dataRow.Field<int>("OutcomeType").ToString(),
+                               // OutcomePriorityCustomer = dataRow.Field<int>("OutcomePriorityCustomer").ToString()
                             }).ToList();
         }
 
@@ -450,7 +486,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenTestCustomerIsIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)scenarioContext["SearchTestData"];
+            List<Loader> testData = (List<Loader>)scenarioContext["TestData"];
  
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
@@ -465,7 +501,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenTestCustomerIsNotIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)scenarioContext["SearchTestData"];
+            List<Loader> testData = (List<Loader>)scenarioContext["TestData"];
 
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
@@ -475,5 +511,20 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             var checkList = ReportRows.Where(j => j.CustomerId == customerId);
             checkList.Count().Should().Be(0, "Because otherwise the test customer " + p0 + "has been unexpectedly found in the report");
         }
+
+        [Given(@"The current date is ""(.*)""")]
+        public void GivenTheCurrentDateIs(string p0)
+        {
+            ReportDate = DateTime.Parse(p0);
+
+        }
+
+        [Given(@"The service start date is ""(.*)""")]
+        public void GivenTheServiceStartDateIs(string p0)
+        {
+            FeedStartDate = DateTime.Parse(p0);
+        }
+
+
     }
 }

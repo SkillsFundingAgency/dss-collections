@@ -30,8 +30,6 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
             foreach ( var bit in tmp)
             {
                 TimestampString += "ABCDEFGHIJKL".Substring(Convert.ToInt32(bit.ToString()),1); 
-
-
             }
 
         }
@@ -72,7 +70,6 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                     foreach (var refIndex in newLoad.AllParents)
                     {
                         pathToUse = pathToUse.Replace(refIndex.Key, refIndex.Value);
-
                     }
 
                 }
@@ -83,7 +80,6 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 // don't want to send internal reference
                 json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
                 json = JsonHelper.RemovePropertyFromJsonString(json, "ParentRef");
-
 
                 //submit the request
                 var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, envSettings.TouchPointId, envSettings.SubscriptionKey);

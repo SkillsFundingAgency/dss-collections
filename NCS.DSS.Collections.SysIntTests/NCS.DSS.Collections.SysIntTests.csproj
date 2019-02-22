@@ -120,10 +120,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AzureSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\GetReponse.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GetReponse.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Post.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Post.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\SpecFlowFeature1.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecFlowFeature1.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Report_retrieval.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_retrieval.feature</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataLoadHelper.cs" />
     <Compile Include="Helpers\RestHelper.cs" />
@@ -131,6 +146,7 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\ActionPlan.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\FamilyTreeItem.cs" />
@@ -151,6 +167,7 @@
     <Compile Include="Models\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singletons\AzureSearchSingleton.cs" />
+    <Compile Include="Steps\ResponseStepDefs.cs" />
     <Compile Include="Steps\StepDefinitions.cs" />
     <Compile Include="UnitTests\UnitTest1.cs" />
   </ItemGroup>
@@ -162,9 +179,21 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AzureSearch.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\GetReponse.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GetReponse.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Post.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Post.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\SpecFlowFeature1.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpecFlowFeature1.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Report_retrieval.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Report_retrieval.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

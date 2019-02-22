@@ -77,5 +77,21 @@ namespace NCS.DSS.Collections.SysIntTests
             return returnVal.ToLower();
 
         }
-    }
+
+		public static string CollectionNameFromType(string type)
+		{
+			string returnVal;
+			switch (type)
+			{
+				case "Address":
+					returnVal = "addresses";
+					break;
+				default:
+					returnVal = type + "s";
+					break;
+			}
+			return returnVal.ToLower();
+
+		}
+	}
 }

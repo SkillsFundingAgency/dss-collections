@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 
@@ -12,6 +13,10 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
     {
         private SqlConnection Connection;
         private Dictionary<string, string> ReplacementDict = new Dictionary<string, string>();
+        private const string Apos = "'";
+
+        public string parameterTableReferenceFieldName { get; set; } = "ParameterName";
+        public string parameterTableValueFieldName { get; set; } = "ParameterValue";
 
         public void  AddReplacementRule ( string original, string replacement)
         {
@@ -94,6 +99,36 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             return true;
         }
 
+        public DataSet ExecuteTableFunction(string functionName, string[] parameters)
+        {
+            DataSet ds = new DataSet(functionName);
+            string paramsString = "";
+            parameters.Where((data, index) =>
+            {
+                paramsString += (index > 0 ? "," : "(") + Apos + data + Apos + (index == parameters.Length -1 ? ")":"") ;
+                return false;
+            }).Any();
+            
+            string sqlString = "select * from [" + functionName + "] " + paramsString;
+
+            if (Connection.State == System.Data.ConnectionState.Open || OpenConnection())
+            {
+                try
+                {
+                    SqlCommand myCommand = new SqlCommand(sqlString, Connection);
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = myCommand;
+                    da.Fill(ds);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+
+            }
+            return ds;
+        }
+
         public DataSet ExecuteStoredProcedure(string procName)
         {
             DataSet ds = new DataSet(procName);
@@ -166,6 +201,52 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
+                }
+            }
+            return success;
+        }
+
+        public string GetParameterValue( string table, string parameterName)
+        {
+            //todo
+
+            return null;
+        }
+
+        public bool UpsertParameterValue( string table, string parameterName, string ParameterValue)
+        {
+            bool success = true;
+            //   parameterTableReferenceFieldName
+            //   parameterTableValueFieldName
+            string sqlString =
+                "IF EXISTS (SELECT {NAMEFIELD} FROM [dbo].[{TABLE}] WHERE {NAMEFIELD} = '{NAME}')" + System.Environment.NewLine +
+                "BEGIN" + System.Environment.NewLine +
+                "UPDATE[dbo].[{TABLE}] SET {VALUEFIELD} = '{VALUE}' WHERE {NAMEFIELD} = '{NAME}'" + System.Environment.NewLine +
+                "END" + System.Environment.NewLine +
+                "ELSE" + System.Environment.NewLine  +
+                "BEGIN" + System.Environment.NewLine +
+                "INSERT INTO[dbo].[{TABLE}]" + System.Environment.NewLine +
+                "({NAMEFIELD}, {VALUEFIELD}) VALUES('{NAME}', '{VALUE}')" + System.Environment.NewLine +
+                "END";
+
+            sqlString = sqlString.Replace("{TABLE}", table);
+            sqlString = sqlString.Replace("{NAMEFIELD}", parameterTableReferenceFieldName);
+            sqlString = sqlString.Replace("{VALUEFIELD}", parameterTableValueFieldName);
+            sqlString = sqlString.Replace("{NAME}", parameterName);
+            sqlString = sqlString.Replace("{VALUE}", ParameterValue);
+
+            // check if connected
+            if (Connection.State == System.Data.ConnectionState.Open || OpenConnection())
+            {
+                try
+                {
+                    SqlCommand newCommand = new SqlCommand(sqlString, Connection);
+                    newCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    success = false;
                 }
             }
             return success;

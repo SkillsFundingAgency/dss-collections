@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Newtonsoft.Json;
 
 namespace NCS.DSS.TestHelperLibrary.Helpers
 {
@@ -8,8 +9,10 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
     {
         //Reusable instance of DocumentClient which represents the connection to a DocumentDB endpoint
         private static DocumentClient client;
-        public static string BaseUrl { get; set; }
-        public static string AutorizationKey { get; set; }
+       // public static string BaseUrl { get; set; }
+       // public static string AutorizationKey { get; set; }
+
+
 
         public static bool Initialise(string baseUrl, string authKey)
         {
@@ -40,5 +43,13 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             }
             return false;
         }
+
+		public static string InsertDocumentFromJson(string database, string collection, string json)
+		{
+			dynamic doc = JsonConvert.DeserializeObject(json);
+			var returnDoc = client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(database, collection), doc).GetAwaiter().GetResult();
+            var  res = returnDoc.Resource;
+			return res.ToString();
+		}
     }
 }

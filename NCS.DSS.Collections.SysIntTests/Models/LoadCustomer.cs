@@ -10,6 +10,6 @@ namespace NCS.DSS.Collections.SysIntTests.Models
     {
         public string LoaderRef { get; set; }
         public string ParentRef { get; set; }
-        public string CustomerId { get; set; }
+       // public string CustomerId { get; set; }
     }
 }

@@ -16,24 +16,41 @@ namespace NCS.DSS.Collections.SysIntTests.Hooks
     {
         // For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
         private readonly ScenarioContext scenarioContext;
-        private readonly EnvironmentSettings envSettings;
 
-        public DCHooks(ScenarioContext context, EnvironmentSettings settings )
+        public DCHooks(ScenarioContext context)
         {
             scenarioContext = context;
-            envSettings = settings;
-        }
+         }
+
         [BeforeScenario]
         public void BeforeScenario()
         {
             //TODO: implement logic that has to run before executing each scenario
         }
 
-        [AfterScenario]
-        public void AfterScenario()
+        [AfterFeature]
+        public static void AfterFeature()
         {
-            List<Loader> testData = (List<Loader>)scenarioContext["SearchTestData"];
+            List<Loader> testData;
+            try
+            {
+                testData = (List<Loader>)FeatureContext.Current["TestData"];
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Feature Cleanup: No data found to tear down");
+                return;
+            }
+            Console.WriteLine("Feature Cleanup: About to process teardown list");
+
+            TearDownData(testData);
+        }
+
+
+        private static bool TearDownData(List<Loader> testData)
+        {
             SQLServerHelper sqlHelper = new SQLServerHelper();
+            EnvironmentSettings envSettings = new EnvironmentSettings();
             CosmosHelper.Initialise(envSettings.CosmosEndPoint, envSettings.CosmosAccountKey);
             sqlHelper.SetConnection(envSettings.SqlConnectionString);
             // loop through the data load list and check each is now in the SQL server data store
@@ -51,6 +68,25 @@ namespace NCS.DSS.Collections.SysIntTests.Hooks
                 CosmosHelper.DeleteDocument(constants.CollectionNameFromId(item.ParentType), constants.CollectionNameFromId(item.ParentType), item.ParentId);
             }
             sqlHelper.CloseConnection();
+            return true;
+        }
+        [AfterScenario]
+        public void AfterScenario()
+        {
+            List<Loader> testData;
+
+            try
+            {
+                testData = (List<Loader>)scenarioContext["TestData"];
+            }
+            catch ( Exception e)
+            {
+                Console.WriteLine("Scenario Cleanup: No data found to tear down");
+                return;
+            }
+            Console.WriteLine("Scenario Cleanup: About to process teardown list");
+            TearDownData(testData);
+           
         }
     }
 }

@@ -11,5 +11,12 @@ namespace NCS.DSS.Collections.SysIntTests.Models
         public string CustomerId { get; set; }
         public string DateofBirth { get; set; }
         public string HomePostCode { get; set; }
+        public string ActionPlanID { get; set; }
+        public string SessionDate { get; set; }
+        public string SubContractorId { get; set; }
+        public string AdviserName { get; set; }
+        public string OutcomeID { get; set; }
+        public string OutcomeType { get; set; }
+        public string OutcomePriorityCustomer { get; set; }
     }
 }

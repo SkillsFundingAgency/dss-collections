@@ -6,7 +6,7 @@ namespace NCS.DSS.Collections.SysIntTests.Models
 {
     public class Customer
     {
-        public string CustomerID { get; set; }
+        public string CustomerId { get; set; }
         public string DateOfRegistration { get; set; }
         public string Title { get; set; }
         public string GivenName { get; set; }
