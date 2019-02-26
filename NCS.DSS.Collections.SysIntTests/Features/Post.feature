@@ -4,144 +4,141 @@ Feature: Post
 
 
 	Background:
-
 	Given I load test customer data for this feature:
 	#Parent for ADDRESS in CUSTOMER
 	| LoaderRef                   | TouchPoint | Title | GivenName        | FamilyName   | DateofBirth     | DateOfRegistration | UniqueLearnerNumber | OptInUserResearch | OptInMarketResearch | DateOfTermination | ReasonForTermination | IntroducedBy | IntroducedByAdditionalInfo | LastModifiedDate     |
-#	| 18TMRW                      | 9000000001 | 4     | Bob Joel         | Mc' Bride    | Today -18Y -1D  | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| 18TODAY                     | 9000000001 | 4     | Dawn-Lucy        | O'Hent       | Today -18Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| 18YESTERDAY                 | 9000000001 | 4     | Karen -Alice     | Mc 'Dwyre    | Today -18Y +1D  | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| 100TMRW                     | 9000000001 | 4     | Katy - May       | Ja 'Flip     | Today -100Y -1D | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| 100TODAY                    | 9000000001 | 4     | Tony- Spruce     | Mc'Nano-hara | Today -100Y     | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| 100YESTERDAY                | 9000000001 | 4     | May, Dean-Alice  | Mc  'BRIDE   | Today -100Y +1D | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| DOB_UNKNOWN                 | 9000000001 | 4     | Gva.Mint - Spice | Mc - Jones   |                 | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-#	| SESSION_B4_CONTRACT_START   | 9000000001 | 4     | darren           | Di   - Bones | Today -21Y      | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 18TMRW                      | 9000000001 | 4     | Bob Joel         | Mc'Bride    | Today -18Y -1D  | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 18TODAY                     | 9000000001 | 4     | Dawn-Lucy        | O'Hent       | Today -18Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 18YESTERDAY                 | 9000000001 | 4     | Karen -Alice     | Mc'Dwyre    | Today -18Y +1D  | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 100TMRW                     | 9000000001 | 4     | Katy - May       | Ja'Flip     | Today -100Y -1D | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 100TODAY                    | 9000000001 | 4     | Tony- Spruce     | Mc'Nano-hara | Today -100Y     | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| 100YESTERDAY                | 9000000001 | 4     | May, Dean-Alice  | Mc'BRIDE   | Today -100Y +1D | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| DOB_UNKNOWN                 | 9000000001 | 4     | Gva.Mint - Spice | Mc-Jones   |                 | Now -3D            | 9999900003          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| SESSION_B4_CONTRACT_START   | 9000000001 | 4     | darren           | Di-Bones | Today -21Y      | Now -3D            | 9999900001          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
 	| SESSION_ON_CONTRACT_START   | 9000000001 | 4     | Bill             | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
 	| SESSION_HAS_CURRENT_DATE    | 9000000001 | 4     | Doris            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-	| SESSION_NOW                 | 9000000001 | 4     | Dorren           | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-	| SESSION_HAS_FUTURE_DATE     | 9000000001 | 4     | Denis            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+#	| SESSION_NOW                 | 9000000001 | 4     | Dorren           | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+#	| SESSION_HAS_FUTURE_DATE     | 9000000001 | 4     | Denis            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
 	| MULTIPLE_SESSIONS_THIS_YR   | 9000000001 | 4     | Denis            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-	| MULTIPLE_SESSIONS_THIS_YR_2 | 9000000001 | 4     | Denis            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
-	| MULTIPLE_SESSIONS_HISTORIC  | 9000000001 | 4     | Denis            | Smithe       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| MULTIPLE_SESSIONS_THIS_YR_2 | 9000000001 | 4     | Denis            | Smithers       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
+	| MULTIPLE_SESSIONS_HISTORIC  | 9000000001 | 4     | Denbb            | Smit       | Today -21Y      | Now -3D            | 9999900002          | true              | false               |                   |                      | 1            | ZZ_TESTDATA_ANON           | 2019-01-17T00:00:00Z |
 
-#	Given I load test address data for this feature:
+	And I load test address data for this feature:
 #	#Parent for ADDRESS is CUSTOMER# | #                           
-#	| LoaderRef    | Address1      | Address2      | Address3 | Address4 | Address5 | PostCode | AlternativePostCode | Longitude | Latitude | EffectiveFrom | EffectiveTo | LastModifiedDate     | LastModifiedTouchpointId |
-#	| 18TMRW       | 1 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18TODAY      | 2 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18YESTERDAY  | 3 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TMRW      | 4 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TODAY     | 5 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100YESTERDAY | 6 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| LoaderRef    | Address1      | Address2      | Address3 | Address4 | Address5 | PostCode | AlternativePostCode | Longitude | Latitude | EffectiveFrom | EffectiveTo | LastModifiedDate     | LastModifiedTouchpointId |
+	| 18TMRW       | 1 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18TODAY      | 2 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18YESTERDAY  | 3 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TMRW      | 4 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TODAY     | 5 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100YESTERDAY | 6 Lake Street | North Walsham |          |          |          | B44 9UX  | EC2P 2AG            |           |          |               |             | 2019-01-23T00:00:00Z | 90000001                 |
 
-#	 Given I load test contact data for this feature:
+	 And I load test contact data for this feature:
 #	#Parent for CONTACT is CUSTOMER
-#	| LoaderRef    | PreferredContactMethod | MobileNumber | HomeNumber  | AlternativeNumber | EmailAddress        | LastModifiedDate     | LastModifiedTouchpointId |
-#	| 18TMRW       | 4                      | 07484503700  | 05100924950 | 08483057675       | email1@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18TODAY      | 4                      | 07484503700  | 05100924950 | 08483057675       | email2@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18YESTERDAY  | 4                      | 07484503700  | 05100924950 | 08483057675       | email3@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TMRW      | 4                      | 07484503700  | 05100924950 | 08483057675       | email4@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TODAY     | 4                      | 07484503700  | 05100924950 | 08483057675       | email5@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100YESTERDAY | 4                      | 07484503700  | 05100924950 | 08483057675       | email6@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
-#
-##	Given I load test interaction data for this feature
+	| LoaderRef    | PreferredContactMethod | MobileNumber | HomeNumber  | AlternativeNumber | EmailAddress        | LastModifiedDate     | LastModifiedTouchpointId |
+	| 18TMRW       | 4                      | 07484503700  | 05100924950 | 08483057675       | email1@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18TODAY      | 4                      | 07484503700  | 05100924950 | 08483057675       | email2@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18YESTERDAY  | 4                      | 07484503700  | 05100924950 | 08483057675       | email3@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TMRW      | 4                      | 07484503700  | 05100924950 | 08483057675       | email4@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TODAY     | 4                      | 07484503700  | 05100924950 | 08483057675       | email5@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100YESTERDAY | 4                      | 07484503700  | 05100924950 | 08483057675       | email6@domain2.test | 2019-01-23T00:00:00Z | 90000001                 |
+
+ And I load test interaction data for this feature
 #	#Parent for INTERACTION is CUSTOMER
-# | LoaderRef                   | TouchpointId | AdviserDetailsId                     | DateandTimeOfInteraction | Channel | InteractionType | LastModifiedDate     | LastModifiedTouchpointId |
- #| 18TMRW                      | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 1       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | 18TODAY                     | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | 18YESTERDAY                 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | 100TMRW                     | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 1       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | 100TODAY                    | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | 100YESTERDAY                | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | DOB_UNKNOWN                 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | SESSION_B4_CONTRACT_START   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | SESSION_ON_CONTRACT_START   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | LoaderRef                   | TouchpointId | AdviserDetailsId                     | DateandTimeOfInteraction | Channel | InteractionType | LastModifiedDate     | LastModifiedTouchpointId |
+ | 18TMRW                      | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 1       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | 18TODAY                     | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | 18YESTERDAY                 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | 100TMRW                     | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 1       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | 100TODAY                    | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | 100YESTERDAY                | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | DOB_UNKNOWN                 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | SESSION_B4_CONTRACT_START   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | SESSION_ON_CONTRACT_START   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
 # | SESSION_HAS_CURRENT_DATE    | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
 # | SESSION_NOW                 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
 # | SESSION_HAS_FUTURE_DATE     | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | MULTIPLE_SESSIONS_THIS_YR   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | MULTIPLE_SESSIONS_THIS_YR_2 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | MULTIPLE_SESSIONS_THIS_YR_2 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
-# | MULTIPLE_SESSIONS_HISTORIC  | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | MULTIPLE_SESSIONS_THIS_YR   | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | MULTIPLE_SESSIONS_THIS_YR_2 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | MULTIPLE_SESSIONS_THIS_YR_2 | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
+ | MULTIPLE_SESSIONS_HISTORIC  | 4            | bb940afb-1423-4999-a234-5a64a5c00831 | Today -180D              | 2       | 3               | 2019-01-23T00:00:00Z | 90000001                 |
 
-
-#	Given I load test session data for the feature
+	And I load test session data for the feature
 #	#Parent for SESSION is INTERACTION
-#	| LoaderRef                  | ParentRef | DateandTimeOfSession | VenuePostCode | SessionAttended | ReasonForNonAttendance | LastModifiedDate     | LastModifiedTouchpointId |
-#	| 18TMRW                     | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18TODAY                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 18YESTERDAY                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TMRW                    | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100TODAY                   | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| 100YESTERDAY               | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| DOB_UNKNOWN                | 1         | Today -180D          | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_B4_CONTRACT_START  | 1         | 2018-09-30T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-10-01T00:00:00Z | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | Today                | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_NOW                | 1         | Now                  | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| SESSION_HAS_FUTURE_DATE    | 1         | Today +1D            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -100           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -50            | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -400           | NE9 7RG       | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| LoaderRef                  | ParentRef                 | DateandTimeOfSession | VenuePostCode        | SessionAttended | ReasonForNonAttendance | LastModifiedDate     | LastModifiedTouchpointId |
+	| 18TMRW                     | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18TODAY                    | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 18YESTERDAY                | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TMRW                    | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100TODAY                   | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| 100YESTERDAY               | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| DOB_UNKNOWN                | 1                         | Today -180D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_B4_CONTRACT_START  | 1                         | 2018-09-30T00:00:00Z | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| SESSION_ON_CONTRACT_START  | 1                         | 2018-10-01T00:00:00Z | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+# | SESSION_ON_CONTRACT_START | 1                    | 2018-10-01T00:00:00Z | NE9 7RG         | true                   |                      | 2019-01-23T00:00:00Z     | 90000001 |
+#	| SESSION_HAS_CURRENT_DATE   | 1                         | Today                | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+#	| SESSION_NOW                | 1                         | Now                  | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+#	| SESSION_HAS_FUTURE_DATE    | 1                         | Today +1D            | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1                         | Today -100D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1                         | Today -50D           | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_HISTORIC | 1                         | Today -50D           | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
+	| MULTIPLE_SESSIONS_HISTORIC | 1                         | Today -400D          | NE9 7RG              | true            |                        | 2019-01-23T00:00:00Z | 90000001                 |
 
 
 
-
-#	Given I load action plan data for the feature
+	And I load action plan data for the feature
 #	#Parent for ACTION PLAN is SESSION
-#	| LoaderRef                  | ParentRef | DateActionPlanCreated | CustomerCharterShownToCustomer | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation |
-#	| 18TMRW                     | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 18TODAY                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 18YESTERDAY                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100TMRW                    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100TODAY                   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| 100YESTERDAY               | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| DOB_UNKNOWN                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_B4_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_ON_CONTRACT_START  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_NOW                | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| SESSION_HAS_FUTURE_DATE    | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 2018-07-30T09:00:00Z  | true                           | 2018-07-30T09:00:00Z    | 2018-07-30T09:00:00Z         | 1                        | 2018-07-30T09:00:00Z       | 1                | looking for work |
+	| LoaderRef                  | ParentRef | DateActionPlanCreated | CustomerCharterShownToCustomer | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation |
+	| 18TMRW                     | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work1 |
+	| 18TODAY                    | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work2 |
+	| 18YESTERDAY                | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work3 |
+	| 100TMRW                    | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work4 |
+	| 100TODAY                   | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work5 |
+	| 100YESTERDAY               | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work6 |
+	| DOB_UNKNOWN                | 1         | Today -160D           | true                           | Today -160D             | Today -160D                  | 1                        | Today -160D                | 1                | looking for work7 |
+	| SESSION_B4_CONTRACT_START  | 1         | Today -10D            | true                           | Today -10D              | Today -10D                   | 1                        | Today -10D                 | 1                | looking for work8 |
+	| SESSION_ON_CONTRACT_START  | 1         | Today -10D            | true                           | Today -10D              | Today -10D                   | 1                        | Today -10D                 | 1                | looking for work9 |
+#	| SESSION_HAS_CURRENT_DATE   | 1         | Today                 | true                           | Today                   | Today                        | 1                        | Today                      | 1                | looking for work10 |
+#	| SESSION_NOW                | 1         | Now                   | true                           | Now                     | Now                          | 1                        | Now                        | 1                | looking for work11 |
+#	| SESSION_HAS_FUTURE_DATE    | 1         | Today +1D             | true                           | Today +1D               | Today +1D                    | 1                        | Today +1D                  | 1                | looking for work12 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1         | Today -100D           | true                           | Today -100D             | Today -100D                  | 1                        | Today -100D                | 1                | looking for work13 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 2         | Today -50D            | true                           | Today -50D              | Today -50D                   | 1                        | Today -50D                 | 1                | looking for work14 |
+	| MULTIPLE_SESSIONS_HISTORIC | 1         | Today -50D            | true                           | Today -50D              | Today -50D                   | 1                        | Today -50D                 | 1                | looking for work15 |
+	| MULTIPLE_SESSIONS_HISTORIC | 2         | Today -400D           | true                           | Today -400D             | Today -400D                  | 1                        | Today -400D                | 1                | looking for work16 |
 	
 
-#	Given I load action data for the feature
+#	And I load action data for the feature
 #	#Parent for ACTION is ACTION PLAN
 #	| LoaderRef | ParentRef | DateActionAgreed     | DateActionAimsToBeCompletedBy | ActionSummary    | SignpostedTo | ActionType | ActionStatus | PersonResponsible | LastModifiedDate     |
 #	| 18TMRW    | 1         | 2018-07-30T09:00:00Z | 2018-08-08T09:00:00Z          | Details of stuff | Someone      | 1          | 1            | 1                 | 2018-07-30T09:00:00Z |
 
-#	Given I load outcome data for the feature
+	And I load outcome data for the feature
 #	#Parent for OUTCOME is ACTION PLAN
-#	| LoaderRef                  | ParentRef | OutcomeType | OutcomeClaimedDate   | OutcomeEffectiveDate |
-#	| 18TMRW                     | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TMRW                     | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TMRW                     | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18TODAY                    | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18YESTERDAY                | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 18YESTERDAY                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100TMRW                    | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100TODAY                   | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| 100YESTERDAY               | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| DOB_UNKNOWN                | 1         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_B4_CONTRACT_START  | 1         | 4           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_ON_CONTRACT_START  | 1         | 5           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_HAS_CURRENT_DATE   | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| SESSION_NOW                | 1         | 2           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 1           | 2018-07-20T21:45:00Z | Today -50D           |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 1         | 2           | 2018-07-20T21:45:00Z | Today -60D           |
-#	| MULTIPLE_SESSIONS_THIS_YR  | 2         | 3           | 2018-07-20T21:45:00Z | Today -40D           |
-#	| MULTIPLE_SESSIONS_HISTORIC | 1         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 1           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
-#	| MULTIPLE_SESSIONS_HISTORIC | 2         | 3           | 2018-07-20T21:45:00Z | 2018-07-20T21:45:00Z |
+	| LoaderRef                  | ParentRef                | OutcomeType | TouchPointId | ClaimedPriorityGroup | OutcomeClaimedDate | OutcomeEffectiveDate |
+	| 18TMRW                     | 1                        | 1           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18TMRW                     | 1                        | 2           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18TMRW                     | 1                        | 3           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18TODAY                    | 1                        | 1           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18TODAY                    | 1                        | 2           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18TODAY                    | 1                        | 3           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18YESTERDAY                | 1                        | 1           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 18YESTERDAY                | 1                        | 2           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 100TMRW                    | 1                        | 1           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 100TODAY                   | 1                        | 2           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| 100YESTERDAY               | 1                        | 3           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| DOB_UNKNOWN                | 1                        | 3           | 9000000090   | 99                   | Today -140D        | Today -140D          |
+	| SESSION_B4_CONTRACT_START  | 1                        | 4           | 9000000090   | 99                   | Today -9D          | Today -9D            |
+	| SESSION_ON_CONTRACT_START  | 1                        | 5           | 9000000090   | 99                   | Today -9D          | Today -9D            |
+ #                          | SESSION_HAS_CURRENT_DATE | 1           | 1            | 9000000090           | 99                 | Now                  | Now |
+#                          | SESSION_NOW              | 1           | 2            | 9000000090           | 99                 | Today -100D          | Today -100 |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1                        | 1           | 9000000090   | 99                   | Today -50D         | Today -50D           |
+	| MULTIPLE_SESSIONS_THIS_YR  | 1                        | 2           | 9000000090   | 99                   | Today -50D         | Today -50D           |
+	| MULTIPLE_SESSIONS_THIS_YR  | 2                        | 3           | 9000000090   | 99                   | Today -40D         | Today -40D           |
+	| MULTIPLE_SESSIONS_HISTORIC | 1                        | 1           | 9000000090   | 99                   | Today -50D         | Today -50D           |
+	| MULTIPLE_SESSIONS_HISTORIC | 2                        | 1           | 9000000090   | 99                   | Today -50D         | Today -50D           |
+	| MULTIPLE_SESSIONS_HISTORIC | 2                        | 3           | 9000000090   | 99                   | Today -50D         | Today -50D           |
 
-	Given I have completed loading data and don't want to repeat for each test
+	And I have completed loading data and don't want to repeat for each test
 	And I have confirmed all test data is now in the backup data store
 
 #Scenario: Invalid request
@@ -149,7 +146,7 @@ Feature: Post
 
 Scenario: Customer is less than 18 years old
 		Given a request has been made and the report data is available
-#		Then test customer <TOOYOUNG> is not included in the report
+#		Then test customer "TOOYOUNG" is included in the report
 #		Then test customer "18TODAY" is included in the report
 #		And test customer "18YESTERDAY" is included in the report
 
@@ -186,10 +183,10 @@ Scenario: More than one sessions exist which relate to the current financial yea
 		And outcome 2 is included for customer "MULTIPLE_SESSIONS_THIS_YR"
 		And outcome 3 is NOT included for customer "MULTIPLE_SESSIONS_THIS_YR"
 		#2 sessions in different interactions
-		Then test customer "MULTIPLE_SESSIONS_THIS_YR_2" is included in the report
-		And outcome 1 is included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
-		And outcome 2 is NOT included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
-		And outcome 3 is NOT included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
+##		Then test customer "MULTIPLE_SESSIONS_THIS_YR_2" is included in the report
+##		And outcome 1 is included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
+##		And outcome 2 is NOT included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
+##		And outcome 3 is NOT included for customer "MULTIPLE_SESSIONS_THIS_YR_2"
 		#		And The following outcomes are include
 #		| OutcomeType | OutcomeEffectiveDate |
 #		| 1           | Today -50D           |
