@@ -1,4 +1,4 @@
-﻿using DFC.Functions.DI.Standard.Attributes;
+﻿using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.Storage;
 using System;
@@ -10,23 +10,20 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
     public class GetCollectionByIdHtppTriggerService : IGetCollectionByIdHtppTriggerService
     {        
         private readonly IDocumentDBProvider _documentDBProvider;
-        private readonly IStorage _storage;
-        public GetCollectionByIdHtppTriggerService([Inject]IDocumentDBProvider documentDBProvider, IStorage storage)
+        private readonly IDCBlobStorage _storage;
+        public GetCollectionByIdHtppTriggerService(IDocumentDBProvider documentDBProvider, IDCBlobStorage storage)
         {            
             _documentDBProvider = documentDBProvider;
             _storage = storage;
         }
-        public async Task<MemoryStream> ProcessRequestAsync(Guid touchPointId, Guid collectionId)
+        public async Task<MemoryStream> ProcessRequestAsync(string touchPointId, Guid collectionId, ILogger log)
         {
             var collection = await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);
 
-            Stream memoryStream = new MemoryStream();
+            if (collection == null)
+                return null;            
 
-            var file = await _storage.Get(collection.ReportStorageLocation);
-
-            file.DownloadToStreamAsync(memoryStream).Wait();
-
-            return (MemoryStream)memoryStream;
+            return await _storage.Get(collection, log);
         }
     }
 }

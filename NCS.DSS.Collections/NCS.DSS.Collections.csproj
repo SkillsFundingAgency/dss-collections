@@ -14,14 +14,6 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.24" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ESFA.DC.CrossLoad.Dto">
-      <HintPath>..\..\DC-CrossLoad\src\ESFA.DC.CrossLoad.Dto\bin\Debug\netstandard2.0\ESFA.DC.CrossLoad.Dto.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="extensions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

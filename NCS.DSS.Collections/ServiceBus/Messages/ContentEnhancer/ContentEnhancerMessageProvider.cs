@@ -7,17 +7,18 @@ using System.Text;
 namespace NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer
 {
     public class ContentEnhancerMessageProvider : IContentEnhancerMessageProvider
-    {
-        public Message MakeMessage(Collection collection, string reqUrl)
-        {          
+    {        
+        public Message MakeMessage(Collection collection)
+        {
             return new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageModel()
             {
-                TitleMessage = "Collection report avvailable for {" + collection.CollectionId + "} at " + DateTime.UtcNow,
-                CustomerGuid = collection.CollectionId,
+                DataCollections = true,
+                CustomerGuid = Guid.Empty,
                 LastModifiedDate = collection.LastModifiedDate,
-                URL = reqUrl,
+                URL = collection.CollectionReports.AbsoluteUri,
+                TouchpointId = collection.TouchPointId,
                 IsNewCustomer = false,
-                TouchpointId = collection.TouchPointId.ToString()
+                TitleMessage = $"Data Collections report available - CollectionId - {collection.CollectionId}"
             })))
             {
                 ContentType = "application/json",

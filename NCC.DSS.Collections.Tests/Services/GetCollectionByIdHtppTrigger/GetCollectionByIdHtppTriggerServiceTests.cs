@@ -1,5 +1,5 @@
 ﻿using DFC.HTTP.Standard;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.Logging;
 using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
@@ -19,10 +19,11 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     {
         private IHttpRequestHelper _requestHelper;
         private IDocumentDBProvider _documentDBProvider;
-        private IStorage _storage;
-        private Collection _collection;
-        private List<Collection> _collections;
-        private Guid _touchPointId;
+        private IDCBlobStorage _storage;
+        private ILogger _logger;
+        private PersistedCollection _collection;
+        private List<PersistedCollection> _collections;
+        private string _touchPointId;
         private Guid _collectionId;
 
         [SetUp]
@@ -30,11 +31,12 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
         {
             _requestHelper = new HttpRequestHelper();
             _documentDBProvider = MockingHelper.GetMockDBProvider();
-            _collection = Substitute.For<Collection>();
-            _collections = Substitute.For<List<Collection>>();
-            _touchPointId = Guid.NewGuid();
+            _logger = Substitute.For<ILogger>();
+            _collection = Substitute.For<PersistedCollection>();
+            _collections = Substitute.For<List<PersistedCollection>>();
+            _touchPointId = "9000000000";
             _collectionId = Guid.NewGuid();
-            _storage = Substitute.For<IStorage>();
+            _storage = Substitute.For<IDCBlobStorage>();
         }
         [Test]
         public void GetCollectionByIdHtppTriggerService_Create_Test()
@@ -55,7 +57,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
 
             //Act
             IGetCollectionByIdHtppTriggerService service = new GetCollectionByIdHtppTriggerService(_documentDBProvider, _storage);
-            var result = service.ProcessRequestAsync(_touchPointId, _collectionId);
+            var result = service.ProcessRequestAsync(_touchPointId, _collectionId, _logger);
 
             //Assert
             Assert.IsNotNull(service);

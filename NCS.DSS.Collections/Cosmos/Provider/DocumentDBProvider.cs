@@ -13,7 +13,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
 {
     public class DocumentDBProvider : IDocumentDBProvider
     {
-        public async Task<ResourceResponse<Document>> CreateCollectionAsync(Collection collection)
+        public async Task<ResourceResponse<Document>> CreateCollectionAsync(PersistedCollection collection)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
@@ -25,7 +25,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             return await client.CreateDocumentAsync(collectionUri, collection);            
         }
 
-        public async Task<bool> DoesCollectionResourceExist(Collection collection)
+        public async Task<bool> DoesCollectionResourceExist(PersistedCollection collection)
         {
             var documentUri = DocumentDBHelper.CreateCollectionDocumentUri(collection.CollectionId);
 
@@ -47,64 +47,64 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             return false;
         }
 
-        public async Task<Collection> GetCollectionAsync(Guid collectionId)
+        public async Task<PersistedCollection> GetCollectionAsync(Guid collectionId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
             var client = DocumentDBClient.CreateDocumentClient();
 
-            var collectionForCollectionIdQuery = client?.CreateDocumentQuery<Collection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
+            var collectionForCollectionIdQuery = client?.CreateDocumentQuery<PersistedCollection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
                                                     .Where(x => x.CollectionId == collectionId)
                                                     .AsDocumentQuery();
 
             if (collectionForCollectionIdQuery == null)
                 return null;
 
-            var collection = await collectionForCollectionIdQuery.ExecuteNextAsync<Collection>();
+            var collection = await collectionForCollectionIdQuery.ExecuteNextAsync<PersistedCollection>();
 
             return collection?.FirstOrDefault();
         }
 
-        public async Task<Collection> GetCollectionForTouchpointAsync(Guid touchPointId, Guid collectionId)
+        public async Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, Guid collectionId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
             var client = DocumentDBClient.CreateDocumentClient();
 
             var collectionForTouchpointQuery = client
-                ?.CreateDocumentQuery<Collection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
+                ?.CreateDocumentQuery<PersistedCollection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
                 .Where(x => x.TouchPointId == touchPointId && x.CollectionId == collectionId)
                 .AsDocumentQuery();
 
             if (collectionForTouchpointQuery == null)
                 return null;
 
-            var collections = await collectionForTouchpointQuery.ExecuteNextAsync<Collection>();
+            var collections = await collectionForTouchpointQuery.ExecuteNextAsync<PersistedCollection>();
 
             return collections?.FirstOrDefault();
         }
 
-        public async Task<List<Collection>> GetCollectionsForTouchpointAsync(Guid touchpointId)
+        public async Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
             var client = DocumentDBClient.CreateDocumentClient();
 
-            var collectionsQuery = client.CreateDocumentQuery<Collection>(collectionUri)
+            var collectionsQuery = client.CreateDocumentQuery<PersistedCollection>(collectionUri)
                 .Where(so => so.TouchPointId == touchpointId).AsDocumentQuery();
 
-            var collections = new List<Collection>();
+            var collections = new List<PersistedCollection>();
 
             while (collectionsQuery.HasMoreResults)
             {
-                var response = await collectionsQuery.ExecuteNextAsync<Collection>();
+                var response = await collectionsQuery.ExecuteNextAsync<PersistedCollection>();
                 collections.AddRange(response);
             }
 
             return collections.Any() ? collections : null;
         }
 
-        public async Task<ResourceResponse<Document>> UpdateCollectionAsync(Collection collection)
+        public async Task<ResourceResponse<Document>> UpdateCollectionAsync(PersistedCollection collection)
         {
             var documentUri = DocumentDBHelper.CreateCollectionDocumentUri(collection.CollectionId);
 

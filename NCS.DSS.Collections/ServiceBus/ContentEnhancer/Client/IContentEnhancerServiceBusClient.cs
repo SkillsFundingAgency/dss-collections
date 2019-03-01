@@ -4,6 +4,6 @@ namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
 {
     public interface IContentEnhancerServiceBusClient
     {
-        Task SendAsync(Models.Collection collection, string reqUrl);
+        Task SendAsync(Models.PersistedCollection collection);
     }
 }

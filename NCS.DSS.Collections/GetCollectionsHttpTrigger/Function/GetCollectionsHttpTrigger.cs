@@ -49,12 +49,9 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             if (string.IsNullOrEmpty(touchpointId))
             {                
                 return responseMessageHelper.BadRequest();
-            }
+            }           
 
-            if (!Guid.TryParse(touchpointId, out var touchpointGuid))
-                return responseMessageHelper.BadRequest(touchpointGuid);
-
-            var results = await service.ProcessRequestAsync(touchpointGuid);
+            var results = await service.ProcessRequestAsync(touchpointId);
 
             if (results.Count == 0)
             {

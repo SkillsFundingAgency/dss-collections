@@ -9,11 +9,11 @@ namespace NCS.DSS.Collections.Cosmos.Provider
 {
     public interface IDocumentDBProvider
     {
-        Task<bool> DoesCollectionResourceExist(Collection collection);
-        Task<ResourceResponse<Document>> CreateCollectionAsync(Collection collection);
-        Task<List<Collection>> GetCollectionsForTouchpointAsync(Guid touchpointId);
-        Task<Collection> GetCollectionForTouchpointAsync(Guid touchPointId, Guid collectionId);
-        Task<Collection> GetCollectionAsync(Guid collectionId);
-        Task<ResourceResponse<Document>> UpdateCollectionAsync(Models.Collection collection);
+        Task<bool> DoesCollectionResourceExist(PersistedCollection collection);
+        Task<ResourceResponse<Document>> CreateCollectionAsync(PersistedCollection collection);
+        Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId);
+        Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, Guid collectionId);
+        Task<PersistedCollection> GetCollectionAsync(Guid collectionId);
+        Task<ResourceResponse<Document>> UpdateCollectionAsync(PersistedCollection collection);
     }
 }

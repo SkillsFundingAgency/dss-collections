@@ -14,11 +14,11 @@ namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
             _config = config;
             _messageProvider = messageProvider;
         }
-        public async Task SendAsync(Collection collection, string reqUrl)
+        public async Task SendAsync(PersistedCollection collection)
         {
             var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);            
 
-            await queueClient.SendAsync(_messageProvider.MakeMessage(collection, reqUrl));
+            await queueClient.SendAsync(_messageProvider.MakeMessage(collection));
         }
     }
 }

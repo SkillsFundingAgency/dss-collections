@@ -10,14 +10,14 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Function
 {
     public static class DataCollectionsQueueProcessor
     {
-        private const string _dataCollectionsQueueName = "DataCollectionsQueueName_In";
-        private const string _dataCollectionsConnectionString = "DataCollectionsServiceBusConnectionString_In";
+        private const string _dataCollectionsQueueName = "ljd-test-dcc-in";
+        private const string _dataCollectionsConnectionString = "%DCServiceBusConnectionString_In%";
 
         [FunctionName("DataCollectionsQueueProcessor")]
         public static async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName,
                                                 Connection = _dataCollectionsConnectionString)]
                                                 string queueItem,
-                                                ILogger log,                 
+                                                ILogger log,
                                                 [Inject]ILoggerHelper loggerHelper,
                                                 [Inject]IDataCollectionsQueueProcessorService dataCollectionsQueueProcessorService)
         {
@@ -26,14 +26,14 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Function
             var correlationId = Guid.NewGuid();
 
             try
-            {                
+            {
                 if (queueItem == null)
                 {
                     loggerHelper.LogError(log, correlationId, new NullReferenceException("Message cannot be null"));
                     return;
                 }
 
-                await dataCollectionsQueueProcessorService.ProcessMessageAsync(queueItem);
+                await dataCollectionsQueueProcessorService.ProcessMessageAsync(queueItem, log);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Function
             finally
             {
                 loggerHelper.LogMethodExit(log);
-            }            
+            }
         }
     }
 }

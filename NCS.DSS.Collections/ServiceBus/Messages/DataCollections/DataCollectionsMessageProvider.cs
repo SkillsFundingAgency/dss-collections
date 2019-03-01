@@ -1,6 +1,6 @@
-﻿using ESFA.DC.CrossLoad.Dto;
-using Microsoft.Azure.ServiceBus;
+﻿using Microsoft.Azure.ServiceBus;
 using NCS.DSS.Collections.Models;
+using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -8,23 +8,22 @@ using System.Text;
 namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
 {
     public class DataCollectionsMessageProvider : IDataCollectionsMessageProvider
-    {
-        private readonly IDataCollectionsMessageProvider _messageProvider;
-        public DataCollectionsMessageProvider(IDataCollectionsMessageProvider messageProvider)
+    {        
+        public MessageCrossLoadToNCSDto DeserializeMessage(string message)
         {
-            _messageProvider = messageProvider;
+            return JsonConvert.DeserializeObject<MessageCrossLoadToNCSDto>(message);
         }
 
-        public MessageCrossLoadDcftToDctDto DeserializeMessage(string message)
+        public Message MakeMessage(PersistedCollection collection)
         {
-            throw new NotImplementedException();
-        }
-
-        public Message MakeMessage(Collection collection)
-        {
-            return new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageCrossLoadDcftToDctDto
+            return new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageCrossLoadFromNCSDto
             {
-                DcftJobId = collection.CollectionId.ToString()
+                ContainerName = collection.ContainerName,
+                JobId = collection.CollectionId,
+                ReportFilename = collection.ReportFileName,
+                Timestamp = DateTime.Now,
+                TouchpointId = collection.TouchPointId,
+                Ukprn = int.Parse(collection.Ukprn)
             })))
             {
                 ContentType = "application/json",

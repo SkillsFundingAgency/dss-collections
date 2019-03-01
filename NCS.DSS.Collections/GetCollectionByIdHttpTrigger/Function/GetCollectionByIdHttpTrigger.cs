@@ -15,6 +15,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
@@ -53,26 +54,22 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
                     return responseMessageHelper.BadRequest();
                 }
 
-                if (!Guid.TryParse(touchpointId, out var touchpointGuid))
-                {
-                    log.LogInformation("Unable to parse 'DssTouchpointId' to a Guid");                    
-                }
-
                 if (!Guid.TryParse(collectionId, out var collectionGuid))
                     return responseMessageHelper.BadRequest(collectionGuid);
 
-                var result = await service.ProcessRequestAsync(touchpointGuid, collectionGuid);
+                var result = await service.ProcessRequestAsync(touchpointId, collectionGuid, log);
                 
                 if (result == null)
                 {
                     return responseMessageHelper.NoContent();
                 }
 
-                return new HttpResponseMessage()
-                {
-                    Content = new StreamContent(result),
-                    StatusCode = HttpStatusCode.OK                    
-                };
+                result.Position = 0;
+                
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StreamContent(result);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                return response;                
             }
             catch (Exception ex)
             {

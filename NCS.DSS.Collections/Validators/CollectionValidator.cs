@@ -16,17 +16,17 @@ namespace NCS.DSS.Collections.Validators
                 entity.CollectionId = Guid.NewGuid();
             }
 
-            if (entity.TouchPointId == Guid.Empty)
+            if (string.IsNullOrEmpty(entity.TouchPointId))
             {
                 result.Add(new ValidationError("Null TouchPointId"));
             }
 
-            if (string.IsNullOrWhiteSpace(entity.UKPRN))
+            if (string.IsNullOrWhiteSpace(entity.Ukprn))
             {
                 result.Add(new ValidationError("Null UKPRN"));
             }
 
-            if (entity.UKPRN.Length != 8)
+            if (entity.Ukprn.Length != 8)
             {
                 result.Add(new ValidationError("Invalid Length UKPRN"));
             }

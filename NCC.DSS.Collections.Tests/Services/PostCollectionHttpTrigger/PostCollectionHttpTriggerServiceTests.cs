@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private const string ValidCustomerId = "7E467BDB-213F-407A-B86A-1954053D3C24";
         private const string ValidInteractionId = "1e1a555c-9633-4e12-ab28-09ed60d51cb3";
         private const string ValidDssCorrelationId = "452d8e8c-2516-4a6b-9fc1-c85e578ac066";
+        private const string ValidTouchPointId = "9000000093";
         private const string InValidId = "1111111-2222-3333-4444-555555555555";
 
         private ILogger _log;
@@ -78,23 +80,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             // Assert
             Assert.IsInstanceOf<HttpResponseMessage>(result);
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
-        }
-
-        [Test]
-        public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenCorrelationIdIsNotProvided()
-        {
-            //Assign
-            _httpRequestHelper.GetDssCorrelationId(_request).Returns((string)null);
-
-            _httpResponseMessageHelper.BadRequest().Returns(x => new HttpResponseMessage(HttpStatusCode.BadRequest));
-
-            // Act
-            var result = await RunFunction();
-
-            // Assert
-            Assert.IsInstanceOf<HttpResponseMessage>(result);
-            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
-        }
+        }       
 
         [Test]
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenApimUrlIsNotProvided()

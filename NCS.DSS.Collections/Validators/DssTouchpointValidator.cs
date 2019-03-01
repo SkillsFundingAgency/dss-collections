@@ -5,10 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace NCS.DSS.Collections.Validators
 {
-    public interface IDssTouchpointValidator
-    {
-        string Extract(HttpRequest req, ILogger logger);
-    }
     public class DssTouchpointValidator : IDssTouchpointValidator
     {
         private readonly IHttpRequestHelper _httpRequestHelper;

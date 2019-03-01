@@ -57,20 +57,22 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             try
             {
                 collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);
+
+                collection.TouchPointId = touchpointId;
+
+                var result = await service.ProcessRequestAsync(collection, ApimUrl);
+
+                if (result == null)
+                {
+                    return httpResponseMessageHelper.BadRequest();
+                }
+
+                return httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(result, "id", "CollectionId"));
             }
             catch (JsonException ex)
             {
                 return httpResponseMessageHelper.UnprocessableEntity(ex);
-            }
-            
-            var result = await service.ProcessRequestAsync(collection, ApimUrl);
-
-            if (result == null)
-            {
-                return httpResponseMessageHelper.BadRequest();
             }            
-
-            return httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(result, "id", "CollectionId"));            
         }
     }
 }

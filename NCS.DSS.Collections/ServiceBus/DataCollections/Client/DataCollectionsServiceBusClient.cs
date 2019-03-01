@@ -16,7 +16,7 @@ namespace NCS.DSS.Collections.ServiceBus
             _busConfig = busConfig;
             _messageProvider = messageProvider;
         }
-        public async Task SendPostMessageAsync(Collection collection, string reqUrl)
+        public async Task SendPostMessageAsync(PersistedCollection collection)
         {            
             var queueClient = new QueueClient(_busConfig.ServiceBusConnectionString, _busConfig.QueueName);            
 
