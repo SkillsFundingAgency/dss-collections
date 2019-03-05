@@ -6,6 +6,6 @@ namespace NCS.DSS.Collections.Storage.Configuration
     {
         public string ConnectionString => Environment.GetEnvironmentVariable("StorageConnectionString");
 
-        public string ShareReference => Environment.GetEnvironmentVariable("StorageShareReference");
+        //public string ShareReference => Environment.GetEnvironmentVariable("StorageShareReference");
     }
 }

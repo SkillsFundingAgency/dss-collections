@@ -10,8 +10,8 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Function
 {
     public static class DataCollectionsQueueProcessor
     {
-        private const string _dataCollectionsQueueName = "ljd-test-dcc-in";
-        private const string _dataCollectionsConnectionString = "%DCServiceBusConnectionString_In%";
+        private const string _dataCollectionsQueueName = "%DCQueueName_In%";
+        private const string _dataCollectionsConnectionString = "ServiceBusConnectionString";
 
         [FunctionName("DataCollectionsQueueProcessor")]
         public static async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName,

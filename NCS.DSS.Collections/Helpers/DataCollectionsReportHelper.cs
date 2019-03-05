@@ -1,14 +1,14 @@
 ﻿using NCS.DSS.Collections.Models;
+using System;
 
 namespace NCS.DSS.Collections.Helpers
 {
     public class DataCollectionsReportHelper : IDataCollectionsReportHelper
     {
-        private const string reportName = "NCS-Reports.zip";
-        private const string containerName = "datacollections";
-        private const string fileNameSeparator = "-";
+        private const string reportName = "NCS-Reports.zip";        
+        private const string fileNameSeparator = "/";
 
-        public string ContainerName => containerName;
+        public string ContainerName => Environment.GetEnvironmentVariable("DCContainerName");
 
         public string FileName(Collection collection)
         {

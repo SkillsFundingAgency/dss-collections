@@ -19,8 +19,6 @@ using NCS.DSS.Collections.ServiceBus.Configs;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
-using NCS.DSS.Collections.ServiceBus.Dss.Client;
-using NCS.DSS.Collections.ServiceBus.Dss.Configuration;
 using NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
 using NCS.DSS.Collections.ServiceBus.Processor.Service;
@@ -66,15 +64,13 @@ namespace NCS.DSS.Collections.IoC
         private void ConfigureServiceBusConfigurations(IWebJobsBuilder builder)
         {
             builder.Services.AddScoped<IContentEnhancerMessageBusConfig, ContentEnhancerMessageBusConfig>();
-            builder.Services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();
-            builder.Services.AddScoped<IDssServiceBusConfig, DssServiceBusConfig>();
+            builder.Services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();            
         }
 
         private void ConfigureServiceBusClients(IWebJobsBuilder builder)
         {
             builder.Services.AddScoped<IContentEnhancerServiceBusClient, ContentEnhancerServiceBusClient>();
-            builder.Services.AddScoped<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
-            builder.Services.AddScoped<IDssServiceBusClient, DssServiceBusClient>();
+            builder.Services.AddScoped<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();            
         }
 
         private void ConfigureMessageProviders(IWebJobsBuilder builder)
@@ -111,7 +107,7 @@ namespace NCS.DSS.Collections.IoC
 
         private void ConfigureCosmosProvider(IWebJobsBuilder builder)
         {
-            builder.Services.AddSingleton<IDocumentDBProvider, DocumentDBProvider>();
+            builder.Services.AddScoped<IDocumentDBProvider, DocumentDBProvider>();
         }
 
         private void ConfigureMappers(IWebJobsBuilder builder)

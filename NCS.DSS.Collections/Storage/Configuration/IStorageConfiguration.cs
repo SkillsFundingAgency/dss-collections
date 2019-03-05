@@ -3,6 +3,6 @@
     public interface IStorageConfiguration
     {
         string ConnectionString { get; }
-        string ShareReference { get; }
+        //string ShareReference { get; }
     }
 }

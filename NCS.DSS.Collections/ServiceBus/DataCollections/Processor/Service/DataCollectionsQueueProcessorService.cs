@@ -1,7 +1,6 @@
 ﻿using DFC.Common.Standard.Logging;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Provider;
-using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
 using System;
@@ -35,18 +34,20 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 
             if (!message.Status.Contains("SUCCESS"))
             {
-                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections returned failure for CollectionId - {message.JobId}"));
-            }
-
-            var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
-
-            if (collection == null)
-            {
-                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections - Could not location Collection in CosmosDB CollectionId -{message.JobId}"));
+                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections returned failure for CollectionId - {message.JobId}-{message.Status}"));
             }
             else
             {
-                await _contentEnhancerServiceBusClient.SendAsync(collection);
+                var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
+
+                if (collection == null)
+                {
+                    _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId -{message.JobId}"));
+                }
+                else
+                {
+                    await _contentEnhancerServiceBusClient.SendAsync(collection);
+                }
             }
         }
     }
