@@ -44,12 +44,47 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             return false;
         }
 
-		public static string InsertDocumentFromJson(string database, string collection, string json)
+		public static bool InsertDocumentFromJson(string database, string collection, string json, out string response)
 		{
-			dynamic doc = JsonConvert.DeserializeObject(json);
-			var returnDoc = client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(database, collection), doc).GetAwaiter().GetResult();
-            var  res = returnDoc.Resource;
-			return res.ToString();
+            dynamic obj = JsonConvert.DeserializeObject(json);
+            return InsertDocumentFromJson<dynamic>(database, collection, obj, out response);
+            bool returnValue = true;
+            try
+            {
+                dynamic doc = JsonConvert.DeserializeObject(json);
+                var returnDoc = client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(database, collection), doc).GetAwaiter().GetResult();
+                var res = returnDoc.Resource;
+                response = res.ToString();
+            }
+            catch (DocumentClientException de)
+            {
+                Exception baseException = de.GetBaseException();
+                Console.WriteLine("{0} error occurred: {1}, Message: {2}", de.StatusCode, de.Message, baseException.Message);
+                response = "";
+                returnValue = false;
+            }
+            return returnValue;
+		
 		}
+
+        public static bool InsertDocumentFromJson<T>(string database, string collection, T obj, out string response)
+        {
+            bool returnValue = true;
+            try
+            {
+                var returnDoc = client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(database, collection), obj).GetAwaiter().GetResult();
+                var res = returnDoc.Resource;
+                response = res.ToString();
+            }
+            catch (DocumentClientException de)
+            {
+                Exception baseException = de.GetBaseException();
+                Console.WriteLine("{0} error occurred: {1}, Message: {2}", de.StatusCode, de.Message, baseException.Message);
+                response = "";
+                returnValue = false;
+            }
+            return returnValue;
+
+        }
     }
 }

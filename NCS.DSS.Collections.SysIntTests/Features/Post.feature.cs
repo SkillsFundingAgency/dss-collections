@@ -73,8 +73,8 @@ namespace NCS.DSS.Collections.SysIntTests.Features
         
         public virtual void FeatureBackground()
         {
-#line 6
- #line hidden
+#line 4
+#line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "TouchPoint",
@@ -92,139 +92,11 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "IntroducedByAdditionalInfo",
                         "LastModifiedDate"});
             table1.AddRow(new string[] {
-                        "18TMRW",
+                        "OUTCOMES1",
                         "9000000001",
                         "4",
-                        "Bob Joel",
-                        "Mc\'Bride",
-                        "Today -18Y -1D",
-                        "Now -3D",
-                        "9999900001",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "18TODAY",
-                        "9000000001",
-                        "4",
-                        "Dawn-Lucy",
-                        "O\'Hent",
-                        "Today -18Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "9000000001",
-                        "4",
-                        "Karen -Alice",
-                        "Mc\'Dwyre",
-                        "Today -18Y +1D",
-                        "Now -3D",
-                        "9999900003",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "100TMRW",
-                        "9000000001",
-                        "4",
-                        "Katy - May",
-                        "Ja\'Flip",
-                        "Today -100Y -1D",
-                        "Now -3D",
-                        "9999900001",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "100TODAY",
-                        "9000000001",
-                        "4",
-                        "Tony- Spruce",
-                        "Mc\'Nano-hara",
-                        "Today -100Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "9000000001",
-                        "4",
-                        "May, Dean-Alice",
-                        "Mc\'BRIDE",
-                        "Today -100Y +1D",
-                        "Now -3D",
-                        "9999900003",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "DOB_UNKNOWN",
-                        "9000000001",
-                        "4",
-                        "Gva.Mint - Spice",
-                        "Mc-Jones",
-                        "",
-                        "Now -3D",
-                        "9999900003",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "SESSION_B4_CONTRACT_START",
-                        "9000000001",
-                        "4",
-                        "darren",
-                        "Di-Bones",
-                        "Today -21Y",
-                        "Now -3D",
-                        "9999900001",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "SESSION_ON_CONTRACT_START",
-                        "9000000001",
-                        "4",
-                        "Bill",
-                        "Smithe",
+                        "outcomeone",
+                        "outcomeone",
                         "Today -21Y",
                         "Now -3D",
                         "9999900002",
@@ -235,248 +107,10 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "1",
                         "ZZ_TESTDATA_ANON",
                         "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "SESSION_HAS_CURRENT_DATE",
-                        "9000000001",
-                        "4",
-                        "Doris",
-                        "Smithe",
-                        "Today -21Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "9000000001",
-                        "4",
-                        "Denis",
-                        "Smithe",
-                        "Today -21Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR_2",
-                        "9000000001",
-                        "4",
-                        "Denis",
-                        "Smithers",
-                        "Today -21Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-            table1.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "9000000001",
-                        "4",
-                        "Denbb",
-                        "Smit",
-                        "Today -21Y",
-                        "Now -3D",
-                        "9999900002",
-                        "true",
-                        "false",
-                        "",
-                        "",
-                        "1",
-                        "ZZ_TESTDATA_ANON",
-                        "2019-01-17T00:00:00Z"});
-#line 7
- testRunner.Given("I load test customer data for this feature:", ((string)(null)), table1, "Given ");
+#line 6
+testRunner.Given("I load test customer data for this feature:", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "LoaderRef",
-                        "Address1",
-                        "Address2",
-                        "Address3",
-                        "Address4",
-                        "Address5",
-                        "PostCode",
-                        "AlternativePostCode",
-                        "Longitude",
-                        "Latitude",
-                        "EffectiveFrom",
-                        "EffectiveTo",
-                        "LastModifiedDate",
-                        "LastModifiedTouchpointId"});
-            table2.AddRow(new string[] {
-                        "18TMRW",
-                        "1 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table2.AddRow(new string[] {
-                        "18TODAY",
-                        "2 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table2.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "3 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table2.AddRow(new string[] {
-                        "100TMRW",
-                        "4 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table2.AddRow(new string[] {
-                        "100TODAY",
-                        "5 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table2.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "6 Lake Street",
-                        "North Walsham",
-                        "",
-                        "",
-                        "",
-                        "B44 9UX",
-                        "EC2P 2AG",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-#line 26
- testRunner.And("I load test address data for this feature:", ((string)(null)), table2, "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "LoaderRef",
-                        "PreferredContactMethod",
-                        "MobileNumber",
-                        "HomeNumber",
-                        "AlternativeNumber",
-                        "EmailAddress",
-                        "LastModifiedDate",
-                        "LastModifiedTouchpointId"});
-            table3.AddRow(new string[] {
-                        "18TMRW",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email1@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table3.AddRow(new string[] {
-                        "18TODAY",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email2@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table3.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email3@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table3.AddRow(new string[] {
-                        "100TMRW",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email4@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table3.AddRow(new string[] {
-                        "100TODAY",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email5@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table3.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "4",
-                        "07484503700",
-                        "05100924950",
-                        "08483057675",
-                        "email6@domain2.test",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-#line 36
-  testRunner.And("I load test contact data for this feature:", ((string)(null)), table3, "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "TouchpointId",
                         "AdviserDetailsId",
@@ -485,17 +119,8 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "InteractionType",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-            table4.AddRow(new string[] {
-                        "18TMRW",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "1",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "18TODAY",
+            table2.AddRow(new string[] {
+                        "OUTCOMES1",
                         "4",
                         "bb940afb-1423-4999-a234-5a64a5c00831",
                         "Today -180D",
@@ -503,109 +128,10 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "3",
                         "2019-01-23T00:00:00Z",
                         "90000001"});
-            table4.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "100TMRW",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "1",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "100TODAY",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "DOB_UNKNOWN",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "SESSION_B4_CONTRACT_START",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "SESSION_ON_CONTRACT_START",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR_2",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR_2",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table4.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "4",
-                        "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
-                        "2",
-                        "3",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-#line 46
- testRunner.And("I load test interaction data for this feature", ((string)(null)), table4, "And ");
+#line 11
+ testRunner.And("I load test interaction data for this feature", ((string)(null)), table2, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "DateandTimeOfSession",
@@ -614,116 +140,8 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "ReasonForNonAttendance",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-            table5.AddRow(new string[] {
-                        "18TMRW",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "18TODAY",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "100TMRW",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "100TODAY",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "DOB_UNKNOWN",
-                        "1",
-                        "Today -180D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "SESSION_B4_CONTRACT_START",
-                        "1",
-                        "2018-09-30T00:00:00Z",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "SESSION_ON_CONTRACT_START",
-                        "1",
-                        "2018-10-01T00:00:00Z",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "1",
-                        "Today -100D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "1",
-                        "Today -50D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "1",
-                        "Today -50D",
-                        "NE9 7RG",
-                        "true",
-                        "",
-                        "2019-01-23T00:00:00Z",
-                        "90000001"});
-            table5.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
+            table3.AddRow(new string[] {
+                        "OUTCOMES1",
                         "1",
                         "Today -400D",
                         "NE9 7RG",
@@ -731,10 +149,19 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "",
                         "2019-01-23T00:00:00Z",
                         "90000001"});
-#line 66
- testRunner.And("I load test session data for the feature", ((string)(null)), table5, "And ");
+            table3.AddRow(new string[] {
+                        "OUTCOMES1",
+                        "1",
+                        "Today -300D",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+#line 16
+ testRunner.And("I load test session data for the feature", ((string)(null)), table3, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "DateActionPlanCreated",
@@ -745,141 +172,9 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "DateActionPlanAcknowledged",
                         "PriorityCustomer",
                         "CurrentSituation"});
-            table6.AddRow(new string[] {
-                        "18TMRW",
+            table4.AddRow(new string[] {
+                        "OUTCOMES1",
                         "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work1"});
-            table6.AddRow(new string[] {
-                        "18TODAY",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work2"});
-            table6.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work3"});
-            table6.AddRow(new string[] {
-                        "100TMRW",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work4"});
-            table6.AddRow(new string[] {
-                        "100TODAY",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work5"});
-            table6.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work6"});
-            table6.AddRow(new string[] {
-                        "DOB_UNKNOWN",
-                        "1",
-                        "Today -160D",
-                        "true",
-                        "Today -160D",
-                        "Today -160D",
-                        "1",
-                        "Today -160D",
-                        "1",
-                        "looking for work7"});
-            table6.AddRow(new string[] {
-                        "SESSION_B4_CONTRACT_START",
-                        "1",
-                        "Today -10D",
-                        "true",
-                        "Today -10D",
-                        "Today -10D",
-                        "1",
-                        "Today -10D",
-                        "1",
-                        "looking for work8"});
-            table6.AddRow(new string[] {
-                        "SESSION_ON_CONTRACT_START",
-                        "1",
-                        "Today -10D",
-                        "true",
-                        "Today -10D",
-                        "Today -10D",
-                        "1",
-                        "Today -10D",
-                        "1",
-                        "looking for work9"});
-            table6.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "1",
-                        "Today -100D",
-                        "true",
-                        "Today -100D",
-                        "Today -100D",
-                        "1",
-                        "Today -100D",
-                        "1",
-                        "looking for work13"});
-            table6.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "2",
-                        "Today -50D",
-                        "true",
-                        "Today -50D",
-                        "Today -50D",
-                        "1",
-                        "Today -50D",
-                        "1",
-                        "looking for work14"});
-            table6.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "1",
-                        "Today -50D",
-                        "true",
-                        "Today -50D",
-                        "Today -50D",
-                        "1",
-                        "Today -50D",
-                        "1",
-                        "looking for work15"});
-            table6.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "2",
                         "Today -400D",
                         "true",
                         "Today -400D",
@@ -887,11 +182,11 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "1",
                         "Today -400D",
                         "1",
-                        "looking for work16"});
-#line 89
- testRunner.And("I load action plan data for the feature", ((string)(null)), table6, "And ");
+                        "looking for work17"});
+#line 21
+testRunner.And("I load action plan data for the feature", ((string)(null)), table4, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "OutcomeType",
@@ -899,187 +194,57 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "ClaimedPriorityGroup",
                         "OutcomeClaimedDate",
                         "OutcomeEffectiveDate"});
-            table7.AddRow(new string[] {
-                        "18TMRW",
+            table5.AddRow(new string[] {
+                        "OUTCOMES1",
                         "1",
                         "1",
                         "9000000090",
                         "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18TMRW",
+                        "Today -300D",
+                        "Today -300D"});
+            table5.AddRow(new string[] {
+                        "OUTCOMES1",
                         "1",
                         "2",
                         "9000000090",
                         "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18TMRW",
+                        "Today -200D",
+                        "Today -200D"});
+            table5.AddRow(new string[] {
+                        "OUTCOMES1",
                         "1",
                         "3",
                         "9000000090",
                         "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18TODAY",
-                        "1",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18TODAY",
-                        "1",
-                        "2",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18TODAY",
-                        "1",
-                        "3",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "1",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "18YESTERDAY",
-                        "1",
-                        "2",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "100TMRW",
-                        "1",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "100TODAY",
-                        "1",
-                        "2",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "100YESTERDAY",
-                        "1",
-                        "3",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "DOB_UNKNOWN",
-                        "1",
-                        "3",
-                        "9000000090",
-                        "99",
-                        "Today -140D",
-                        "Today -140D"});
-            table7.AddRow(new string[] {
-                        "SESSION_B4_CONTRACT_START",
-                        "1",
-                        "4",
-                        "9000000090",
-                        "99",
-                        "Today -9D",
-                        "Today -9D"});
-            table7.AddRow(new string[] {
-                        "SESSION_ON_CONTRACT_START",
-                        "1",
-                        "5",
-                        "9000000090",
-                        "99",
-                        "Today -9D",
-                        "Today -9D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "1",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -50D",
-                        "Today -50D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "1",
-                        "2",
-                        "9000000090",
-                        "99",
-                        "Today -50D",
-                        "Today -50D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_THIS_YR",
-                        "2",
-                        "3",
-                        "9000000090",
-                        "99",
-                        "Today -40D",
-                        "Today -40D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "1",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -50D",
-                        "Today -50D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "2",
-                        "1",
-                        "9000000090",
-                        "99",
-                        "Today -50D",
-                        "Today -50D"});
-            table7.AddRow(new string[] {
-                        "MULTIPLE_SESSIONS_HISTORIC",
-                        "2",
-                        "3",
-                        "9000000090",
-                        "99",
-                        "Today -50D",
-                        "Today -50D"});
-#line 115
- testRunner.And("I load outcome data for the feature", ((string)(null)), table7, "And ");
-#line 141
+                        "Today -100D",
+                        "Today -100D"});
+#line 25
+testRunner.And("I load outcome data for the feature", ((string)(null)), table5, "And ");
+#line 36
  testRunner.And("I have completed loading data and don\'t want to repeat for each test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 142
+#line 37
  testRunner.And("I have confirmed all test data is now in the backup data store", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Customer is less than 18 years old")]
-        public virtual void CustomerIsLessThan18YearsOld()
+        [NUnit.Framework.DescriptionAttribute("Multiple Outcomes")]
+        public virtual void MultipleOutcomes()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer is less than 18 years old", null, ((string[])(null)));
-#line 147
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple Outcomes", null, ((string[])(null)));
+#line 38
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 148
-  testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 4
+this.FeatureBackground();
+#line 39
+  testRunner.Given("the report period start date is \"Today -365D\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 40
+  testRunner.And("the report period end date is \"Today\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 41
+  testRunner.And("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 42
+  testRunner.Then("Outcome 1 for test customer \"OUTCOMES1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -1089,18 +254,18 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CustomerIsMoreThan100YearsOld()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer is more than 100 years old", null, ((string[])(null)));
-#line 154
+#line 45
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 155
+#line 4
+this.FeatureBackground();
+#line 46
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 156
+#line 47
   testRunner.Then("test customer \"100TMRW\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 157
+#line 48
   testRunner.And("test customer \"100TODAY\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 158
+#line 49
   testRunner.And("test customer \"100YESTERDAY\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -1111,14 +276,14 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CustomerDOBIsNotKnown()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer DOB is not known", null, ((string[])(null)));
-#line 163
+#line 54
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 164
+#line 4
+this.FeatureBackground();
+#line 55
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 165
+#line 56
   testRunner.Then("test customer \"DOB_UNKNOWN\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1129,16 +294,16 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void ASessionExistsWhichIsDatedBeforeTheContractStartDate()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A session exists which is dated before the contract start date", null, ((string[])(null)));
-#line 167
+#line 58
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 168
+#line 4
+this.FeatureBackground();
+#line 59
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 169
+#line 60
   testRunner.Then("test customer \"SESSION_ON_CONTRACT_START\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 170
+#line 61
   testRunner.And("test customer \"SESSION_B4_CONTRACT_START\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -1149,18 +314,18 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void ASessionExistsWhichIsDatedInTheFuture()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A session exists which is dated in the future", null, ((string[])(null)));
-#line 172
+#line 63
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 173
+#line 4
+this.FeatureBackground();
+#line 64
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 174
+#line 65
   testRunner.Then("test customer \"SESSION_HAS_CURRENT_DATE\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 175
+#line 66
         testRunner.And("test customer \"SESSION_NOW\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 176
+#line 67
   testRunner.And("test customer \"SESSION_HAS_FUTURE_DATE\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -1171,20 +336,20 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void MoreThanOneSessionsExistWhichRelateToTheCurrentFinancialYear()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("More than one sessions exist which relate to the current financial year", null, ((string[])(null)));
-#line 178
+#line 69
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
- this.FeatureBackground();
-#line 179
+#line 4
+this.FeatureBackground();
+#line 70
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 181
+#line 72
   testRunner.Then("test customer \"MULTIPLE_SESSIONS_THIS_YR\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 182
+#line 73
   testRunner.And("outcome 1 is included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 183
+#line 74
   testRunner.And("outcome 2 is included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 184
+#line 75
   testRunner.And("outcome 3 is NOT included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

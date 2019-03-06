@@ -36,6 +36,8 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         private List<Models.ReportRow> ReportRows;
         private readonly ScenarioContext scenarioContext;
         private readonly FeatureContext featureContext;
+        private DateTime ReportPeriodStartDate = DateTime.Today;
+        private DateTime ReportPeriodEndDate = DateTime.Today;
 
         private DateTime ReportDate = DateTime.Today;
 
@@ -306,6 +308,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load test customer data for this feature:")]
         public void GivenILoadTestCustomerDataForThisFeature(Table table)
         {
+            //CustomerDataLoad.DataSetupExecuted = true;
             if (CustomerDataLoad.DataSetupExecuted)
             {
                 return;
@@ -377,6 +380,8 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
                 return;
             }
             DataLoadHelper<LoadActionPlan> dataLoadHelper = new DataLoadHelper<LoadActionPlan>();
+            dataLoadHelper.FieldToAddToJsonBeforeMakingRequest = constants.SessionId;
+           // dataLoadHelper.FieldToRemoveFromJsonBeforeSQLInsert = constants.SessionId;
             var list = dataLoadHelper.ProcessDataTable(table, LoaderData, constants.ActionPlansPathV2, constants.SessionId, constants.ActionPlanId );
             LoaderData.AddRange(list);
          }
@@ -402,9 +407,59 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
                 return;
             }
             DataLoadHelper<LoadOutcome> dataLoadHelper = new DataLoadHelper<LoadOutcome>();
+            dataLoadHelper.FieldToAddToJsonBeforeMakingRequest = constants.SessionId;
+            dataLoadHelper.FieldToRemoveFromJsonBeforeSQLInsert = constants.SessionId;
             var list = dataLoadHelper.ProcessDataTable(table, LoaderData, constants.OutcomesPathV2, constants.ActionPlanId, constants.OutcomeId);
             LoaderData.AddRange(list);
         }
+
+        [Given(@"I update the following sessions")]
+        public void GivenIUpdateTheFollowingSessions(Table table)
+        {
+            if (CustomerDataLoad.DataSetupExecuted)
+            {
+                return;
+            }
+            Table detokenisedTable = DataLoadHelper<ILoader>.ReplaceTokensInTable(table);
+            // find the passing in string in the DataLoad collection and get the customer id
+            //List<Loader> testData = (List<Loader>)featureContext["TestData"];
+
+            foreach ( var row in detokenisedTable.Rows)
+            {
+
+                string loaderReference = row["LoaderRef"];
+                string sessionRef = row["SessionRef"];
+                string newSessionDate = row["DateandTimeOfSession"];
+                string url = constants.SessionsPath;// + "/SessionId";
+
+                var list = LoaderData.Where((i, index) => i.LoaderReference == loaderReference && i.ParentType == constants.SessionId);// && index == Convert.ToInt32(sessionRef) );
+
+                //list.Count().Should().Be(1, "Because we are looking for 1 record which matches of patch criteria");
+                Session patchSession = new Session();
+
+                patchSession.CustomerId = list.ElementAt(Convert.ToInt32(sessionRef) - 1).AllParents.Where( j => j.Key == constants.CustomerId).ElementAt(0).Value;
+                patchSession.InteractionId = list.ElementAt(Convert.ToInt32(sessionRef) -1).AllParents.Where(j => j.Key == constants.InteractionId).ElementAt(0).Value;
+                patchSession.SessionId = list.ElementAt(Convert.ToInt32(sessionRef) -1).ParentId;
+                patchSession.DateandTimeOfSession = newSessionDate;
+
+                url = url.Replace(constants.CustomerId, patchSession.CustomerId);
+                url = url.Replace(constants.InteractionId, patchSession.InteractionId);
+              //  url = url.Replace(constants.SessionId, patchSession.SessionID);
+
+                // Now patch
+
+                var response = RestHelper.Patch(envSettings.BaseUrl + url, JsonConvert.SerializeObject(patchSession), envSettings.TouchPointId, envSettings.SubscriptionKey, patchSession.SessionId);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);//, "Because  " + item.LoaderRef + ": " + response.Content);
+
+                // load to SQL
+                SQLServerHelper sqlHelper = new SQLServerHelper();
+                sqlHelper.SetConnection(envSettings.SqlConnectionString);
+                sqlHelper.AddReplacementRule(constants.SessionId, "id");
+                sqlHelper.UpdateRecordFromJson(constants.BackupTableNameFromId(constants.SessionId), JsonConvert.SerializeObject(patchSession), constants.SessionId);
+                //sqlHelper.AddReplacementRule(tokenToStore, "id");
+            }        
+        }
+
 
         [Given(@"I have completed loading data and don't want to repeat for each test")]
         public void GivenIHaveCompletedLoadingDataAndDonTWantToRepeatForEachTest()
@@ -450,17 +505,17 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             SQLServerHelper sqlInstance = new SQLServerHelper();
             sqlInstance.SetConnection(envSettings.SqlConnectionString);
 
-            int dateOffSet = ( ReportDate - DateTime.Today).Days;
-          sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", dateOffSet.ToString());
+      //      int dateOffSet = ( ReportDate - DateTime.Today).Days;
+      //    sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", dateOffSet.ToString());
 
 
             //int feedinDate = (ReportDate - DateTime.Today).Days;
-            sqlInstance.UpsertParameterValue("dss-data-collections-params", "FeedStartDate", FeedStartDate.ToShortDateString());
+       //     sqlInstance.UpsertParameterValue("dss-data-collections-params", "FeedStartDate", FeedStartDate.ToShortDateString());
 
-            var ds = sqlInstance.ExecuteTableFunction("dcc-collections", new string[] { "9000000000", "1718" });
+            var ds = sqlInstance.ExecuteTableFunction("dcc-collections", new string[] { "9000000095", ReportPeriodStartDate.ToString("yyyy-MM-dd"), ReportPeriodEndDate.ToString("yyyy-MM-dd") });
 
             //revert time travel setting
-            sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", "0");
+      //      sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", "0");
 
             //var ds = sqlInstance.ExecuteStoredProcedure("GetReportData");
             ds.Tables[0].Rows.Count.Should().BeGreaterThan(0, "Because we want data to be present in the report");
@@ -469,15 +524,16 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
                             dataRow => new ReportRow
                             {
                                 CustomerId = dataRow.Field<Guid>("CustomerId").ToString(),
-                                DateofBirth = dataRow.Field<DateTime>("DateofBirth").ToString(),
+                           //     DateofBirth = ( dataRow.IsNull("DateofBirth") ? "": dataRow.Field<String>("DateofBirth").ToString()),
                                 HomePostCode = dataRow.Field<string>("HomePostCode"),
                                 ActionPlanID = dataRow.Field <Guid> ("ActionPlanID").ToString(),
-                                SessionDate  = dataRow.Field<DateTime>("SessionDate").ToString(),
-                                SubContractorId = dataRow.Field<string>("SubContractorId").ToString(),
-                                AdviserName = dataRow.Field<string>("AdviserName").ToString(),
+                          //     SessionDate  = dataRow.Field<DateTime>("SessionDate").ToString(),
+                                SubContractorId = (dataRow.IsNull("SubContractorId") ? "" : dataRow.Field<string>("SubContractorId").ToString()),
+                                AdviserName = dataRow.Field<string>("AdviserName").ToString()??"",
                                 OutcomeID = dataRow.Field<Guid>("OutcomeID").ToString(),
-                                OutcomeType = dataRow.Field<int>("OutcomeType").ToString(),
-                               // OutcomePriorityCustomer = dataRow.Field<int>("OutcomePriorityCustomer").ToString()
+                                OutcomeType = dataRow.Field<int>("OutcomeType").ToString()/*,
+                                OutcomeEffectiveDate = dataRow.Field<DateTime>("OutcomeEffectiveDate").ToString()//,
+                             //   OutcomePriorityCustomer = dataRow.Field<int>("OutcomePriorityCustomer").ToString()*/
                             }).ToList();
         }
 
@@ -486,7 +542,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenTestCustomerIsIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)scenarioContext["TestData"];
+            List<Loader> testData = (List<Loader>)featureContext["TestData"];
  
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
@@ -501,7 +557,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenTestCustomerIsNotIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)scenarioContext["TestData"];
+            List<Loader> testData = (List<Loader>)featureContext["TestData"];
 
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
@@ -511,6 +567,23 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             var checkList = ReportRows.Where(j => j.CustomerId == customerId);
             checkList.Count().Should().Be(0, "Because otherwise the test customer " + p0 + "has been unexpectedly found in the report");
         }
+
+        [Then(@"Outcome (.*) for test customer ""(.*)"" is included in the report")]
+        public void ThenOutcomeForTestCustomerIsIncludedInTheReport(int p0, string p1)
+        {
+            // find the passing in string in the DataLoad collection and get the customer id
+            List<Loader> testData = (List<Loader>)featureContext["TestData"];
+
+            // get records matching this customer
+            var list = testData.Where(i => i.LoaderReference == p1 && i.ParentType == constants.OutcomeId);
+            list.Count().Should().BeGreaterOrEqualTo(p0, "Because otherwise not enough outcomes have been loaded for this customer");
+            var item = list.ElementAt(p0 - 1);
+
+            // check that this outcome is included in the report
+            var checkList = ReportRows.Where(j => j.OutcomeID == item.ParentId);
+            checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
+        }
+
 
         [Given(@"The current date is ""(.*)""")]
         public void GivenTheCurrentDateIs(string p0)
@@ -525,6 +598,17 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             FeedStartDate = DateTime.Parse(p0);
         }
 
+        [Given(@"the report period start date is ""(.*)""")]
+        public void GivenTheReportPeriodStartDateIs(string p0)
+        {
+            ReportPeriodStartDate = DataLoadHelper<ILoader>.TranslateDateToken(p0);
+        }
+
+        [Given(@"the report period end date is ""(.*)""")]
+        public void GivenTheReportPeriodEndDateIs(string p0)
+        {
+            ReportPeriodEndDate = DataLoadHelper<ILoader>.TranslateDateToken(p0);
+        }
 
     }
 }

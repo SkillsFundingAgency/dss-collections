@@ -9,9 +9,9 @@ namespace NCS.DSS.Collections.SysIntTests.Models
     class Session
     {
 
-        public string SessionID { get; set; }
-        public string CustomerID { get; set; }
-        public string InteractionID { get; set; }
+        public string SessionId { get; set; }
+        public string CustomerId { get; set; }
+        public string InteractionId { get; set; }
         public string DateandTimeOfSession { get; set; }
         public string VenuePostCode { get; set; }
         public string SessionAttended { get; set; }

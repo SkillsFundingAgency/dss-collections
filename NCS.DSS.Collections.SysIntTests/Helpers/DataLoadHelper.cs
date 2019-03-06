@@ -23,6 +23,8 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
         public bool LoadToBackupStore { get; set; } = true;
         public string FieldToRemoveFromJsonBeforeSQLInsert { get; set; } = "";
 
+        public string FieldToAddToJsonBeforeMakingRequest { get; set; } = "";
+
         public DataLoadHelper()
         {
             string tmp = DateTime.Now.ToString("yyMMddHHMMss");
@@ -39,6 +41,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
         {
             Table updatedData = ReplaceTokensInTable(data);
             var collection = updatedData.CreateSet<T>();
+            string extraValue = "";
             List<Loader> localList = new List<Loader>();
             SQLServerHelper sqlHelper = new SQLServerHelper();
             sqlHelper.SetConnection(envSettings.SqlConnectionString);
@@ -46,6 +49,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
 
             foreach (T item in collection)
             {
+                Console.WriteLine("Process entity " + item.LoaderRef + "of type: " + tokenToStore);
                 Loader newLoad = new Loader();// ("", "");
                 var pathToUse = path;
                 //if a parent name is supplied want to look up the parent ID in the list of loader items (list) 
@@ -70,6 +74,10 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                     foreach (var refIndex in newLoad.AllParents)
                     {
                         pathToUse = pathToUse.Replace(refIndex.Key, refIndex.Value);
+                        if (FieldToAddToJsonBeforeMakingRequest.Length > 0 && refIndex.Key == FieldToAddToJsonBeforeMakingRequest)
+                        {
+                            extraValue = refIndex.Value;
+                        }
                     }
 
                 }
@@ -81,18 +89,25 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 json = JsonHelper.RemovePropertyFromJsonString(json, "LoaderRef");
                 json = JsonHelper.RemovePropertyFromJsonString(json, "ParentRef");
 
+                if (FieldToAddToJsonBeforeMakingRequest.Length > 0)
+                {
+                    extraValue.Should().NotBeEmpty();
+                    json = JsonHelper.AddPropertyToJsonString(json, FieldToAddToJsonBeforeMakingRequest, extraValue);
+
+                }
+
                 //submit the request
-                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, envSettings.TouchPointId, envSettings.SubscriptionKey);
-                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, envSettings.TouchPointId, envSettings.SubscriptionKey, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 1: 2) );
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created, "Because  " + item.LoaderRef + ": " + response.Content); 
 
                 // do we want to push this to the data store?
                 newLoad.LoadedToSqlServer = false;
                 switch ( tokenToStore )
                 {
                     //case "CustomerId":
-                    case "OutcomeId":
-                    case "ActionPlanId":
-                        break;
+                 //   case "OutcomeId":
+                 //   case "ActionPlanId":Thanks
+                 //       break;
                     default:
                         if (LoadToBackupStore)
                         {
@@ -126,6 +141,55 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
             return localList;
         }
 
+        public static DateTime TranslateDateToken(string inString)
+        {
+            DateTime extractedDateTime = DateTime.MinValue;
+            if (inString.Contains(" "))
+            {
+                // extract to componets
+                var parts = System.Text.RegularExpressions.Regex.Split(inString, @"\s+");
+                Regex rxv = new Regex(@"[+-]{0,1}\d+");
+
+                foreach (var part in parts)
+                {
+                    switch (part.ToLower())
+                    {
+                        case "today":
+                            extractedDateTime = DateTime.Today;
+                            break;
+                        case "now":
+                            extractedDateTime = DateTime.Now;
+//                            longDate = true;
+                            break;
+                        default:
+                            var number = rxv.Match(part).Value;
+                            if (Regex.IsMatch(part, @"[+-]{0,1}\d+[Y]"))
+                            {
+                                extractedDateTime = extractedDateTime.AddYears(Convert.ToInt32(number));
+                            }
+                            else if (Regex.IsMatch(part, @"[+-]{0,1}\d+[D]"))
+                            {
+                                extractedDateTime = extractedDateTime.AddDays(Convert.ToInt32(number));
+                            }
+                            break;
+
+                    }
+                }
+            }
+            else if (inString.ToLower() == "today")
+            {
+                extractedDateTime = DateTime.Today;
+            }
+            else if (inString.ToLower() == "now")
+            {
+                extractedDateTime = DateTime.Now;
+            }
+            else
+            {
+                DateTime.TryParse(inString, out extractedDateTime);
+            }
+            return extractedDateTime;
+        }
         public static Table ReplaceTokensInTable(Table table)
         {
             string[] headers = table.Header.ToArray();
@@ -137,11 +201,12 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 {
                     string newValue = string.Empty;
                     DateTime extractedDateTime = DateTime.MinValue;
-                    bool longDate = false;
+        //            bool longDate = false;
 
                     if (value.Key.ToLower().Contains("date"))
                     {
-                        if (value.Value.Contains(" "))
+                        extractedDateTime = TranslateDateToken(value.Value);
+                        /*if (value.Value.Contains(" "))
                         {
                             // extract to componets
                             var parts = System.Text.RegularExpressions.Regex.Split(value.Value, @"\s+");
@@ -174,7 +239,17 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                             }
                             newValue = extractedDateTime.ToString("yyyy-MM-dd" + (longDate ? "THH:mm:ssZ" : "T00:00:00Z"));
                         }
-
+                        else if (value.Value.ToLower() == "today")
+                        {
+                            extractedDateTime = DateTime.Today;
+                            newValue = extractedDateTime.ToString("yyyy-MM-ddT00:00:00Z");
+                        }
+                        else if (value.Value.ToLower() == "now")
+                        {
+                            extractedDateTime = DateTime.Now;
+                            newValue = extractedDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                        }*/
+                        newValue = (extractedDateTime == DateTime.MinValue  ? "" : extractedDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ") );
                     }
                     else if (value.Value.Contains("[FEATURE_TS]"))
                     {

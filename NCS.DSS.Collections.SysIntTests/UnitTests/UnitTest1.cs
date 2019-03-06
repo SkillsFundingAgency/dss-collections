@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -45,8 +46,34 @@ namespace NCS.DSS.Collections.SysIntTests.UnitTests
 
         [TestMethod]
         [Ignore]
-        public void Test1()
-        {         
+        public void CreateCosmosRecordFromJson()
+        {
+            CosmosHelper.Initialise(envSettings.CosmosEndPoint, envSettings.CosmosAccountKey);
+            Customer c = new Customer();
+            c.DateofBirth = DateTime.Today.ToShortDateString();
+            string response;
+
+            bool retVl =  CosmosHelper.InsertDocumentFromJson("notifications", "notifications", JsonConvert.SerializeObject(c), out response);
+            retVl.Should().BeTrue("Because a record should have been created");
+            var id = JsonHelper.GetPropertyFromJsonString(response, "id");
+            retVl = CosmosHelper.DeleteDocument("notifications", "notifications", id);
+            retVl.Should().BeTrue("Because a record should have been deleted");
+
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void CreateCosmosRecordFromObj()
+        {
+            CosmosHelper.Initialise(envSettings.CosmosEndPoint, envSettings.CosmosAccountKey);
+            Customer c = new Customer();
+            c.DateofBirth = DateTime.Today.ToShortDateString();
+            string response;
+            bool retVl = CosmosHelper.InsertDocumentFromJson("notifications", "notifications", c, out response);
+            retVl.Should().BeTrue("Because a record should have been created");
+            var id = JsonHelper.GetPropertyFromJsonString(response, "id");
+            retVl = CosmosHelper.DeleteDocument("notifications", "notifications", id);
+            retVl.Should().BeTrue("Because a record should have been deleted");
         }
     }
 }

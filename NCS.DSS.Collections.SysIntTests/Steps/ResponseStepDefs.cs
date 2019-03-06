@@ -48,7 +48,8 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             var jsonString = JsonConvert.SerializeObject(CollectionRequest);
 
             CosmosHelper.Initialise(Env.CosmosEndPoint, Env.CosmosAccountKey);
-            string document = CosmosHelper.InsertDocumentFromJson("collections", "collections", JsonConvert.SerializeObject(CollectionRequest));
+            string document;
+            var response = CosmosHelper.InsertDocumentFromJson("collections", "collections", JsonConvert.SerializeObject(CollectionRequest), out document);
             document.Should().Contain(CollectionRequest.CollectionId.ToString());
 
             //store document details for teardown

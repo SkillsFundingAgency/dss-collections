@@ -8,10 +8,10 @@ namespace NCS.DSS.Collections.SysIntTests.Models
 {
     class ActionPlan
     {
-
         public string ActionPlanId { get; set; }
         public string CustomerId { get; set; }
         public string InteractionId { get; set; }
+        public string SessionId { get; set; }
         public string DateActionPlanCreated { get; set; }
         public string CustomerCharterShownToCustomer { get; set; }
         public string DateAndTimeCharterShown { get; set; }
@@ -22,6 +22,5 @@ namespace NCS.DSS.Collections.SysIntTests.Models
         public string CurrentSituation { get; set; }
         public string LastModifiedDate { get; set; }
         public string LastModifiedTouchpointId { get; set; }
-
     }
 }

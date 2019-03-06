@@ -17,6 +17,7 @@ namespace NCS.DSS.Collections.SysIntTests.Models
         public string AdviserName { get; set; }
         public string OutcomeID { get; set; }
         public string OutcomeType { get; set; }
+        public string OutcomeEffectiveDate { get; set; }
         public string OutcomePriorityCustomer { get; set; }
     }
 }

@@ -26,9 +26,9 @@ namespace NCS.DSS.Collections.SysIntTests
         public const string ActionsPath = "actions/api/Customers/CustomerId/Interactions/InteractionId/ActionPlans/ActionPlanId/actions/";
         public const string OutcomesPath = "outcomes/api/Customers/CustomerId/Interactions/InteractionId/ActionPlans/ActionPlanId/outcomes/";
 
-        public const string ActionPlansPathV2 = "actionplans/api/Customers/CustomerId/Interactions/InteractionId/Sessions/SessionId/ActionPlans/";
-        public const string ActionsPathV2 = "actions/api/Customers/CustomerId/Interactions/InteractionId/Sessions/SessionId/ActionPlans/ActionPlanId/actions/";
-        public const string OutcomesPathV2 = "outcomes/api/Customers/CustomerId/Interactions/InteractionId/Sessions/SessionId/ActionPlans/Sessions/SessionId/ActionPlanId/outcomes/";
+        public const string ActionPlansPathV2 = "actionplans/api/Customers/CustomerId/Interactions/InteractionId/ActionPlans/";
+        public const string ActionsPathV2 = "actions/api/Customers/CustomerId/Interactions/InteractionId/ActionPlans/ActionPlanId/actions/";
+        public const string OutcomesPathV2 = "outcomes/api/Customers/CustomerId/Interactions/InteractionId/ActionPlans/ActionPlanId/outcomes/";
 
         public static string BackupTableNameFromId(string primaryKey)
         {

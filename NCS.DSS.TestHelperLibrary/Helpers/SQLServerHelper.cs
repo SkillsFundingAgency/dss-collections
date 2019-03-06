@@ -99,6 +99,39 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             return true;
         }
 
+        public bool UpdateRecordFromJson(string table, string json, string keyField)
+        {
+            string sqlString = "update [" + table + "] set ";
+            string sqlValuesString = "where " + checkForReplacements(keyField)  + " = '";
+            bool firstOne = true;
+            // check if connected
+            if (Connection.State == System.Data.ConnectionState.Open || OpenConnection())
+            {
+                //translate json into sql insert statement  
+                Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                foreach (var item in dict.Where( d => d.Key.ToLower() != keyField.ToLower()))
+                {
+                    if (item.Value != null)
+                    {
+                        sqlString += (firstOne ? "" : ",") + checkForReplacements(item.Key) + " = '" + item.Value + "'";
+                    }
+                    firstOne = false;
+                }
+                sqlValuesString = sqlValuesString + dict[keyField] + "'";
+                sqlString += sqlValuesString;
+                try
+                {
+                    SqlCommand newCommand = new SqlCommand(sqlString, Connection);
+                    newCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+            }
+            return true;
+        }
+
         public DataSet ExecuteTableFunction(string functionName, string[] parameters)
         {
             DataSet ds = new DataSet(functionName);

@@ -13,3 +13,8 @@ Scenario: TouchPoint is notified that a report is ready and retrieves it
 	# SPECFLOW makes a GET request to the collections API with the URI included in the push message
 
 
+#Scenario: TouchPoint attempts to retrieve a report that doesn't exist
+# will reports remain indefinitely or will they be removed afte retreival?
+
+#Scenario: 
+

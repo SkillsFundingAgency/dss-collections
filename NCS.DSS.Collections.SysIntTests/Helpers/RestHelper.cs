@@ -45,7 +45,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
         }
 
 
-        internal static IRestResponse Post(string url, string json, string touchPointId, string subscriptionKey)
+        internal static IRestResponse Post(string url, string json, string touchPointId, string subscriptionKey, int version = 2)
         {
             Console.WriteLine("Attempt to POST: " + url);
             Console.WriteLine("Header value: touchPointId: " + touchPointId);
@@ -58,6 +58,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 request.AddHeader("cache-control", "no-cache");
                 request.AddHeader("TouchpointId", touchPointId);
                 request.AddHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                request.AddHeader("Version", "V" + version.ToString());
                 request.AddParameter("undefined", json, ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
                 return response;
@@ -76,7 +77,9 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 request.AddHeader("cache-control", "no-cache");
                 request.AddHeader("TouchpointId", touchPointId);
                 request.AddHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                request.AddHeader("Version", "V2");
                 request.AddParameter("undefined", json, ParameterType.RequestBody);
+
                 IRestResponse response = client.Execute(request);
                 return response;
             }
