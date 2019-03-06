@@ -7,6 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCS.DSS.Collections", "NCS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCC.DSS.Collections.Tests", "NCC.DSS.Collections.Tests\NCC.DSS.Collections.Tests.csproj", "{106B7B6B-A74A-48FF-9FD4-432918997292}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{EAEAB570-13F1-4518-B731-5FC2DF3579CC}"
+	ProjectSection(SolutionItems) = preProject
+		template.json = template.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CosmosDb", "CosmosDb", "{BFF7928B-8862-4207-B00C-FB63820C8AB6}"
+	ProjectSection(SolutionItems) = preProject
+		Configuration.json = Configuration.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployments", "deployments", "{6E7E8E22-19AF-45BE-8C28-AB6FDCD4ED71}"
+	ProjectSection(SolutionItems) = preProject
+		function-app-resources.json = function-app-resources.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +39,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BFF7928B-8862-4207-B00C-FB63820C8AB6} = {EAEAB570-13F1-4518-B731-5FC2DF3579CC}
+		{6E7E8E22-19AF-45BE-8C28-AB6FDCD4ED71} = {EAEAB570-13F1-4518-B731-5FC2DF3579CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C085CDE-ABBF-4B47-8DB4-FC5131C531E8}

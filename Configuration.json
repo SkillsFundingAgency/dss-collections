@@ -1,0 +1,27 @@
+{
+
+  "Databases": [
+
+    {
+
+      "DatabaseName": "collections",
+
+      "Collections": [
+
+        {
+
+          "CollectionName": "collections",
+
+          "OfferThroughput": 400,
+
+          "StoredProcedures": []
+
+        }
+
+      ]
+
+    }
+
+  ]
+
+}
