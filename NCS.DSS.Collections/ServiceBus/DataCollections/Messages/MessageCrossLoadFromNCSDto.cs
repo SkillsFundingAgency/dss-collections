@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NCS.DSS.Collections.Mappers;
+using Newtonsoft.Json;
+using System;
 
 namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
 {
@@ -19,6 +21,7 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
         /// <summary>
         /// The timestamp of the report request
         /// </summary>
+        [JsonConverter(typeof(CustomerDateTimeConverter), "yyyy-MM-dd HH:mm:ss")]
         public DateTime Timestamp { get; set; }
 
         /// <summary>

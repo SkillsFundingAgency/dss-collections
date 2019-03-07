@@ -27,7 +27,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
             })))
             {
                 ContentType = "application/json",
-                MessageId = collection.CollectionId+ " " + DateTime.UtcNow
+                MessageId = $"{collection.CollectionId} {DateTime.UtcNow}"
             };            
         }
     }
