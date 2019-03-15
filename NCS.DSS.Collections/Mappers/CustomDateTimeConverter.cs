@@ -2,11 +2,11 @@
 
 namespace NCS.DSS.Collections.Mappers
 {
-    public class CustomerDateTimeConverter : IsoDateTimeConverter
+    public class CustomDateTimeConverter : IsoDateTimeConverter
     {
-        public CustomerDateTimeConverter(string format)
+        public CustomDateTimeConverter(string format)
         {
             DateTimeFormat = format;
-        }
+        }  
     }
 }

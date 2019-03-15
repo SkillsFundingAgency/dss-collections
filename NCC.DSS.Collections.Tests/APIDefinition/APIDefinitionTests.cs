@@ -18,10 +18,24 @@ namespace NCC.DSS.Collections.Tests
             ISwaggerDocumentGenerator swaggerGenerator = new SwaggerDocumentGenerator();
 
             //Act
-            //var res = ApiDefinition.Run(req, MockingHelper.GetMockLogger(), swaggerGenerator);
+            var res = ApiDefinition.Run(req, MockingHelper.GetMockLogger(), swaggerGenerator);
 
             //Assert
-            //Assert.IsNotNull(res);
+            Assert.IsNotNull(res);
+        }
+
+        [TestMethod]
+        public void API_Definition_RunAsync_Cause_Exception()
+        {
+            //Assign
+            HttpRequest req = null;
+            ISwaggerDocumentGenerator swaggerGenerator = new SwaggerDocumentGenerator();
+
+            //Act
+            var res = ApiDefinition.Run(req, MockingHelper.GetMockLogger(), swaggerGenerator);
+
+            //Assert
+            Assert.IsNotNull(res);
         }
     }
 }
