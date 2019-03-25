@@ -35,6 +35,39 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             return obj.ToString();
         }
 
+        public static Dictionary<string,string> ReplaceFutureDates(ref string json, DateTime replacement, Dictionary<string,int> offsets)
+        {
+            Dictionary<string, string> returnDict = new Dictionary<string, string>();
+            var obj = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+            int offset;
+            foreach( var property in obj )
+            {
+                if (property.Key.ToLower().Contains("date"))
+                {
+                    DateTime dateCheck;
+                    if (DateTime.TryParse(property.Value.ToString(), out dateCheck)
+                            && dateCheck > DateTime.Today/*.AddDays(-365) */)
+                    {
+                        try
+                        {
+                            offset = offsets[property.Key];
+                        }
+                        catch
+                        {
+                            offset = 0;
+                        }
+                        obj[property.Key] = DateTime.Today.AddDays(offset).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                        returnDict.Add(property.Key, dateCheck.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    }
+                }
+            }
+            if (returnDict.Count() > 0)
+            {
+                json = obj.ToString();
+            }
+            return returnDict;
+        }
+
 		public static string AddPropertyToJsonString(string json, string property, string value)
 		{
             if (CheckJsonPropertyIsPresent(json, property) )

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
@@ -85,6 +88,41 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             }
             return returnValue;
 
+        }
+
+        public static Document RetrieveDocument(string database, string collection, string id)
+        {
+            Document doc =  client.CreateDocumentQuery(
+                UriFactory.CreateDocumentCollectionUri(database, collection))
+                          .Where(x =>  x.Id == id.ToString() )
+                          .AsEnumerable()
+                          .First();
+            return doc;
+        }
+
+        public static bool UpdateDocument(string database, string collection, string id, Dictionary <string, string> updateFields)
+        {
+            // first of all retreive the document
+            var doc = RetrieveDocument(database, collection, id);
+
+            foreach ( var item in updateFields)
+            {
+                doc.SetPropertyValue(item.Key, item.Value);
+            }
+            // update doc
+            
+            //doc.GetType().GetProperty(property).SetValue(doc, newValue);
+
+            var updated = client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(database, collection, id.ToString()), doc).Result.Resource;
+
+            return true;
+        }
+
+        public static bool UpsertDocument<T>(string database, string collection, T document)
+        {
+            var collectionLink = UriFactory.CreateDocumentCollectionUri(database, collection);
+            var ret = client.UpsertDocumentAsync(collectionLink, document).GetAwaiter().GetResult();
+            return true;
         }
     }
 }

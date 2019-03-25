@@ -162,7 +162,7 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
             return ds;
         }
 
-        public DataSet ExecuteStoredProcedure(string procName)
+        public DataSet ExecuteStoredProcedure(string procName, List<SqlParameter> parameters)
         {
             DataSet ds = new DataSet(procName);
 
@@ -172,10 +172,14 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
                 {
                     SqlCommand myCommand = new SqlCommand(procName, Connection);
                     myCommand.CommandType = CommandType.StoredProcedure;
-
-                    myCommand.Parameters.Add("@TouchPointId", SqlDbType.VarChar).Value = "9000000001";
-                    myCommand.Parameters.Add("@TaxYear", SqlDbType.VarChar).Value = "1920";
-
+                    myCommand.Parameters.AddRange(parameters.ToArray());
+/*                    DateTime startDate = DateTime.ParseExact("2019-04-01", "yyyy-MM-dd",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+                    DateTime endDate = DateTime.ParseExact("2020-03-31", "yyyy-MM-dd",
+                                   System.Globalization.CultureInfo.InvariantCulture);
+                    myCommand.Parameters.Add("@TouchPointId", SqlDbType.VarChar).Value = "9000009001";
+                    myCommand.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = startDate;
+                    myCommand.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = endDate;*/
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = myCommand;
                     da.Fill(ds);

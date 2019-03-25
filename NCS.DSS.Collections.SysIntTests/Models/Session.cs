@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using TechTalk.SpecFlow.Assist.Attributes;
 
 namespace NCS.DSS.Collections.SysIntTests.Models
 {
     class Session
     {
-
+    //    [TableAliases("id")]
         public string SessionId { get; set; }
         public string CustomerId { get; set; }
         public string InteractionId { get; set; }

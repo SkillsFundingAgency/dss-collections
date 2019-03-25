@@ -49,6 +49,7 @@ namespace NCS.DSS.Collections.SysIntTests.Hooks
 
         private static bool TearDownData(List<Loader> testData)
         {
+            return true;
             SQLServerHelper sqlHelper = new SQLServerHelper();
             EnvironmentSettings envSettings = new EnvironmentSettings();
             CosmosHelper.Initialise(envSettings.CosmosEndPoint, envSettings.CosmosAccountKey);

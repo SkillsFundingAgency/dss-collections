@@ -96,6 +96,24 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
 
                 }
 
+                Dictionary<string, int> dateOffsets = new Dictionary<string, int>();
+        /*        dateOffsets.Add("DateandTimeOfInteraction", -2);
+                dateOffsets.Add("DateandTimeOfSession", -2);
+
+                dateOffsets.Add("DateActionPlanCreated", -1);
+                dateOffsets.Add("DateAndTimeCharterShown", 0);
+                dateOffsets.Add("DateActionPlanSentToCustomer", 0);
+                dateOffsets.Add("DateActionPlanAcknowledged", 0);
+                dateOffsets.Add("OutcomeClaimedDate", 0);
+                dateOffsets.Add("OutcomeEffectiveDate", 0);
+*/
+                var dic = JsonHelper.ReplaceFutureDates(ref json, DateTime.Today, dateOffsets);
+
+                if (dic.Count() > 0)
+                {
+                    newLoad.requiresPostProcessing = true;
+                    newLoad.DateOverrides = new Dictionary<string, string>(dic);
+                }
                 //submit the request
                 var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, envSettings.TouchPointId, envSettings.SubscriptionKey, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 1: 2) );
                 response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created, "Because  " + item.LoaderRef + ": " + response.Content); 
@@ -106,8 +124,8 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 {
                     //case "CustomerId":
                  //   case "OutcomeId":
-                 //   case "ActionPlanId":Thanks
-                 //       break;
+                    case "ActionPlanId":
+                        break;
                     default:
                         if (LoadToBackupStore)
                         {

@@ -32,7 +32,7 @@ namespace NCS.DSS.Collections.SysIntTests.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Post", "\tThe ABCs will request a year to day report via a POST to an Rest API service", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-GB"), "Post", "\tThe ABCs will request a year to day report via a POST to an Rest API service", ProgrammingLanguage.CSharp, new string[] {
                         "Collections"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -92,14 +92,302 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "IntroducedByAdditionalInfo",
                         "LastModifiedDate"});
             table1.AddRow(new string[] {
-                        "OUTCOMES1",
+                        "TS_001_SIMPLECASE1",
                         "9000000001",
                         "4",
-                        "outcomeone",
-                        "outcomeone",
+                        "Barry",
+                        "tsone",
                         "Today -21Y",
                         "Now -3D",
-                        "9999900002",
+                        "9999900030",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "9000000001",
+                        "4",
+                        "Terry",
+                        "tstwo",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900031",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "9000000001",
+                        "4",
+                        "Quest",
+                        "tsthree",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900032",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "9000000001",
+                        "4",
+                        "Sam",
+                        "tsfour",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900033",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "9000000001",
+                        "4",
+                        "Gerry",
+                        "tsfive",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900034",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "9000000001",
+                        "4",
+                        "Flat",
+                        "tssix",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900035",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "9000000001",
+                        "4",
+                        "Chop",
+                        "tsseven",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900036",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "9000000001",
+                        "4",
+                        "Harry",
+                        "tseight",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900037",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "9000000001",
+                        "4",
+                        "Garry",
+                        "tsnine",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900038",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "9000000001",
+                        "4",
+                        "Shim",
+                        "tsten",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900039",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "9000000001",
+                        "4",
+                        "Connie",
+                        "tseleven",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900040",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "9000000001",
+                        "4",
+                        "Bas",
+                        "tstwelve",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_013_B4CONTRACTSTART",
+                        "9000000001",
+                        "4",
+                        "Tim",
+                        "tsthirteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_014_AFTERREPORTEND",
+                        "9000000001",
+                        "4",
+                        "Gray",
+                        "tsfourteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_015_OUTCOMEGT12MNTHS1",
+                        "9000000001",
+                        "4",
+                        "Carter",
+                        "tsfifteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_016_OUTCOMEGT12MNTHS2",
+                        "9000000001",
+                        "4",
+                        "Lil",
+                        "tssixteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_017_OUTCOMEGT12MNTHS3",
+                        "9000000001",
+                        "4",
+                        "Marge",
+                        "tsseventeen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_018_OUTCOMEGT12MNTHS4",
+                        "9000000001",
+                        "4",
+                        "Sarah",
+                        "tseighteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "1",
+                        "ZZ_TESTDATA_ANON",
+                        "2019-01-17T00:00:00Z"});
+            table1.AddRow(new string[] {
+                        "TS_019_OUTCOMEGT13MNTHS1",
+                        "9000000001",
+                        "4",
+                        "Dan",
+                        "tsnineteen",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900041",
                         "true",
                         "false",
                         "",
@@ -112,6 +400,216 @@ testRunner.Given("I load test customer data for this feature:", ((string)(null))
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
+                        "Address1",
+                        "Address2",
+                        "Address3",
+                        "Address4",
+                        "Address5",
+                        "PostCode",
+                        "AlternativePostCode",
+                        "Longitude",
+                        "Latitude",
+                        "EffectiveFrom",
+                        "EffectiveTo",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+            table2.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
+                        "1 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B30 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "2 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B31 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "3 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B32 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "4 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B33 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "5 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B34 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "6 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B35 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "7 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B36 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "8 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B37 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "9 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B38 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "10 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B39 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "11 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B40 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table2.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "12 Lake Street",
+                        "North Walsham",
+                        "",
+                        "",
+                        "",
+                        "B41 9UX",
+                        "EC2P 2AG",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+#line 29
+testRunner.And("I load test address data for this feature:", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "PreferredContactMethod",
+                        "MobileNumber",
+                        "HomeNumber",
+                        "AlternativeNumber",
+                        "EmailAddress",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+#line 44
+testRunner.And("I load test contact data for this feature:", ((string)(null)), table3, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
                         "TouchpointId",
                         "AdviserDetailsId",
                         "DateandTimeOfInteraction",
@@ -119,19 +617,244 @@ testRunner.Given("I load test customer data for this feature:", ((string)(null))
                         "InteractionType",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-            table2.AddRow(new string[] {
-                        "OUTCOMES1",
-                        "4",
+            table4.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
+                        "90000001",
                         "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "Today -180D",
+                        "2019-04-05T00:00:00Z",
                         "2",
                         "3",
                         "2019-01-23T00:00:00Z",
                         "90000001"});
-#line 11
- testRunner.And("I load test interaction data for this feature", ((string)(null)), table2, "And ");
+            table4.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-04-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-02-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-04-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-04-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-04T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-04T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-04T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-06T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-06T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-10-05T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-10-06T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_013_B4CONTRACTSTART",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2018-09-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_014_AFTERREPORTEND",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-05-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_015_OUTCOMEGT12MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_016_OUTCOMEGT12MNTHS2",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_017_OUTCOMEGT12MNTHS3",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_018_OUTCOMEGT12MNTHS4",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "TS_019_OUTCOMEGT13MNTHS1",
+                        "90000001",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+#line 47
+ testRunner.And("I load test interaction data for this feature", ((string)(null)), table4, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "DateandTimeOfSession",
@@ -140,28 +863,244 @@ testRunner.Given("I load test customer data for this feature:", ((string)(null))
                         "ReasonForNonAttendance",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-            table3.AddRow(new string[] {
-                        "OUTCOMES1",
+            table5.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
                         "1",
-                        "Today -400D",
+                        "2019-04-05T00:00:00Z",
                         "NE9 7RG",
                         "true",
                         "",
-                        "2019-01-23T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
                         "90000001"});
-            table3.AddRow(new string[] {
-                        "OUTCOMES1",
+            table5.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
                         "1",
-                        "Today -300D",
+                        "2019-04-05T00:00:00Z",
                         "NE9 7RG",
                         "true",
                         "",
-                        "2019-01-23T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
                         "90000001"});
-#line 16
- testRunner.And("I load test session data for the feature", ((string)(null)), table3, "And ");
+            table5.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "1",
+                        "2019-02-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-02-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-04-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-04-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-04T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-04T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-04T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "2",
+                        "2019-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-06T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-06T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-10-05T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-10-06T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_013_B4CONTRACTSTART",
+                        "1",
+                        "2018-09-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2018-09-01T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_014_AFTERREPORTEND",
+                        "1",
+                        "2019-05-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-05-01T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_015_OUTCOMEGT12MNTHS1",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_016_OUTCOMEGT12MNTHS2",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_017_OUTCOMEGT12MNTHS3",
+                        "1",
+                        "2019-03-02T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-02T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_018_OUTCOMEGT12MNTHS4",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+            table5.AddRow(new string[] {
+                        "TS_019_OUTCOMEGT13MNTHS1",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+#line 77
+ testRunner.And("I load test session data for the feature", ((string)(null)), table5, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "DateActionPlanCreated",
@@ -172,21 +1111,219 @@ testRunner.Given("I load test customer data for this feature:", ((string)(null))
                         "DateActionPlanAcknowledged",
                         "PriorityCustomer",
                         "CurrentSituation"});
-            table4.AddRow(new string[] {
-                        "OUTCOMES1",
+            table6.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
                         "1",
-                        "Today -400D",
+                        "2019-04-05T00:00:00Z",
                         "true",
-                        "Today -400D",
-                        "Today -400D",
+                        "2019-04-05T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
                         "1",
-                        "Today -400D",
+                        "2019-04-05T00:00:00Z",
                         "1",
-                        "looking for work17"});
-#line 21
-testRunner.And("I load action plan data for the feature", ((string)(null)), table4, "And ");
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "true",
+                        "2019-04-05T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "1",
+                        "2019-02-05T00:00:00Z",
+                        "true",
+                        "2019-02-05T00:00:00Z",
+                        "2019-02-05T00:00:00Z",
+                        "1",
+                        "2019-02-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "true",
+                        "2019-04-05T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "true",
+                        "2019-04-05T00:00:00Z",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "2019-04-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "true",
+                        "2019-10-04T00:00:00Z",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "true",
+                        "2019-10-04T00:00:00Z",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "2",
+                        "2019-10-04T00:00:00Z",
+                        "true",
+                        "2019-10-04T00:00:00Z",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "2019-10-04T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "2",
+                        "2019-10-05T00:00:00Z",
+                        "true",
+                        "2019-10-05T00:00:00Z",
+                        "2019-10-05T00:00:00Z",
+                        "1",
+                        "2019-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "true",
+                        "2019-10-06T00:00:00Z",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "true",
+                        "2019-10-06T00:00:00Z",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "true",
+                        "2018-10-05T00:00:00Z",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "2018-10-05T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "2",
+                        "2019-10-06T00:00:00Z",
+                        "true",
+                        "2019-10-06T00:00:00Z",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "2019-10-06T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+#line 106
+testRunner.And("I load action plan data for the feature", ((string)(null)), table6, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "ParentRef",
                         "OutcomeType",
@@ -194,57 +1331,687 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "ClaimedPriorityGroup",
                         "OutcomeClaimedDate",
                         "OutcomeEffectiveDate"});
-            table5.AddRow(new string[] {
-                        "OUTCOMES1",
+            table7.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
                         "1",
                         "1",
                         "9000000090",
                         "99",
-                        "Today -300D",
-                        "Today -300D"});
-            table5.AddRow(new string[] {
-                        "OUTCOMES1",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
                         "1",
                         "2",
                         "9000000090",
+                        "1",
+                        "2019-08-09T00:00:00Z",
+                        "2019-08-09T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_001_SIMPLECASE1",
+                        "1",
+                        "3",
+                        "9000000090",
+                        "2",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "1",
+                        "4",
+                        "9000000090",
+                        "5",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "1",
+                        "1",
+                        "9000000090",
                         "99",
-                        "Today -200D",
-                        "Today -200D"});
-            table5.AddRow(new string[] {
-                        "OUTCOMES1",
+                        "2019-08-09T00:00:00Z",
+                        "2019-08-09T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_002_SIMPLECASE2",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "1",
+                        "5",
+                        "9000000090",
+                        "99",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "3",
+                        "2019-08-09T00:00:00Z",
+                        "2019-08-09T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_003_SIMPLECASE3",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "6",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "4",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "99",
+                        "2019-08-09T00:00:00Z",
+                        "2019-08-09T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_004_TOOMANY1",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "6",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "3",
+                        "9000000090",
+                        "4",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "4",
+                        "9000000090",
+                        "99",
+                        "2019-08-09T00:00:00Z",
+                        "2019-08-09T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "5",
+                        "9000000090",
+                        "6",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_005_TOOMANY2",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "6",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "2",
+                        "1",
+                        "9000000090",
+                        "6",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "6",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_006_PREVSESSLT12MNTHS1",
+                        "2",
+                        "3",
+                        "9000000090",
+                        "6",
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
                         "1",
                         "3",
                         "9000000090",
                         "99",
-                        "Today -100D",
-                        "Today -100D"});
-#line 25
-testRunner.And("I load outcome data for the feature", ((string)(null)), table5, "And ");
-#line 36
- testRunner.And("I have completed loading data and don\'t want to repeat for each test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 37
- testRunner.And("I have confirmed all test data is now in the backup data store", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "2019-03-03T00:00:00Z",
+                        "2019-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "2",
+                        "1",
+                        "9000000090",
+                        "99",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_007_PREVSESSLT12MNTHS2",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2019-06-03T00:00:00Z",
+                        "2019-06-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "99",
+                        "2019-05-03T00:00:00Z",
+                        "2019-05-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2019-06-03T00:00:00Z",
+                        "2019-06-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_008_PREVSESSLT12MNTHS3",
+                        "2",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2019-07-03T00:00:00Z",
+                        "2019-07-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-12-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2020-01-03T00:00:00Z",
+                        "2020-01-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_009_PREVSESSGT12MNTHS1",
+                        "2",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2019-03-03T00:00:00Z",
+                        "2019-03-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "2",
+                        "1",
+                        "9000000090",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-12-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2020-01-03T00:00:00Z",
+                        "2020-01-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_010_PREVSESSGT12MNTHS2",
+                        "2",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "1",
+                        "2019-07-03T00:00:00Z",
+                        "2019-07-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2020-01-03T00:00:00Z",
+                        "2020-01-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_011_PREVSESSGT12MNTHS3",
+                        "2",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "1",
+                        "2019-07-03T00:00:00Z",
+                        "2019-07-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2019-08-03T00:00:00Z",
+                        "2019-08-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "1",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2019-09-03T00:00:00Z",
+                        "2019-09-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "2",
+                        "1",
+                        "9000000090",
+                        "1",
+                        "2019-11-03T00:00:00Z",
+                        "2019-11-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "2",
+                        "2",
+                        "9000000090",
+                        "2",
+                        "2020-01-03T00:00:00Z",
+                        "2020-01-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_012_PREVSESSGT12MNTHS4",
+                        "2",
+                        "4",
+                        "9000000090",
+                        "99",
+                        "2020-02-03T00:00:00Z",
+                        "2020-02-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_013_B4CONTRACTSTART",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2018-09-03T00:00:00Z",
+                        "2018-09-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_014_AFTERREPORTEND",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2020-04-03T00:00:00Z",
+                        "2020-04-03T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_015_OUTCOMEGT12MNTHS1",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2020-03-01T00:00:00Z",
+                        "2020-03-01T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_015_OUTCOMEGT12MNTHS1",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "99",
+                        "2020-03-02T00:00:00Z",
+                        "2020-03-02T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_016_OUTCOMEGT12MNTHS2",
+                        "1",
+                        "1",
+                        "9000000090",
+                        "99",
+                        "2020-03-01T00:00:00Z",
+                        "2020-03-01T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_016_OUTCOMEGT12MNTHS2",
+                        "1",
+                        "2",
+                        "9000000090",
+                        "99",
+                        "2020-03-02T00:00:00Z",
+                        "2020-03-02T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_017_OUTCOMEGT12MNTHS3",
+                        "1",
+                        "5",
+                        "9000000090",
+                        "99",
+                        "2020-03-01T00:00:00Z",
+                        "2020-03-01T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_018_OUTCOMEGT12MNTHS4",
+                        "1",
+                        "5",
+                        "9000000090",
+                        "99",
+                        "2020-03-01T00:00:00Z",
+                        "2020-03-01T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_018_OUTCOMEGT12MNTHS4",
+                        "1",
+                        "4",
+                        "9000000090",
+                        "99",
+                        "2020-02-28T00:00:00Z",
+                        "2020-02-28T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_019_OUTCOMEGT13MNTHS1",
+                        "1",
+                        "5",
+                        "9000000090",
+                        "99",
+                        "2020-03-01T00:00:00Z",
+                        "2020-03-01T00:00:00Z"});
+            table7.AddRow(new string[] {
+                        "TS_019_OUTCOMEGT13MNTHS1",
+                        "1",
+                        "3",
+                        "9000000090",
+                        "99",
+                        "2020-04-02T00:00:00Z",
+                        "2020-04-02T00:00:00Z"});
+#line 128
+testRunner.And("I load outcome data for the feature", ((string)(null)), table7, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "SessionRef",
+                        "DateandTimeOfSession"});
+#line 183
+testRunner.And("I update the following sessions", ((string)(null)), table8, "And ");
+#line 188
+testRunner.And("I have made any data fudging updates required", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 189
+testRunner.And("I have confirmed all test data is now in the backup data store", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 190
+testRunner.And("the report period start date is \"2019-04-01\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 191
+testRunner.And("the report period end date is \"2020-03-31\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 192
+testRunner.And("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 193
+testRunner.And("I have completed loading data and don\'t want to repeat for each test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Multiple Outcomes")]
-        public virtual void MultipleOutcomes()
+        [NUnit.Framework.DescriptionAttribute("An earlier session was held less that 12 months earlier")]
+        public virtual void AnEarlierSessionWasHeldLessThat12MonthsEarlier()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple Outcomes", null, ((string[])(null)));
-#line 38
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An earlier session was held less that 12 months earlier", null, ((string[])(null)));
+#line 195
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 39
-  testRunner.Given("the report period start date is \"Today -365D\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 40
-  testRunner.And("the report period end date is \"Today\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
-  testRunner.And("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 42
-  testRunner.Then("Outcome 1 for test customer \"OUTCOMES1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 196
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 197
+  testRunner.Then("Outcome 1 for test customer \"TS_006_PREVSESSLT12MNTHS1\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 198
+  testRunner.Then("Outcome 2 for test customer \"TS_006_PREVSESSLT12MNTHS1\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 199
+  testRunner.Then("Outcome 3 for test customer \"TS_006_PREVSESSLT12MNTHS1\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 200
+  testRunner.Then("Outcome 1 for test customer \"TS_007_PREVSESSLT12MNTHS2\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 201
+  testRunner.Then("Outcome 2 for test customer \"TS_007_PREVSESSLT12MNTHS2\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 202
+  testRunner.Then("Outcome 3 for test customer \"TS_007_PREVSESSLT12MNTHS2\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 203
+  testRunner.Then("Outcome 1 for test customer \"TS_008_PREVSESSLT12MNTHS3\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 204
+  testRunner.Then("Outcome 2 for test customer \"TS_008_PREVSESSLT12MNTHS3\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 205
+  testRunner.Then("Outcome 3 for test customer \"TS_008_PREVSESSLT12MNTHS3\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 206
+  testRunner.Then("Outcome 1 for test customer \"TS_009_PREVSESSGT12MNTHS1\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 207
+  testRunner.Then("Outcome 2 for test customer \"TS_009_PREVSESSGT12MNTHS1\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 208
+  testRunner.Then("Outcome 3 for test customer \"TS_009_PREVSESSGT12MNTHS1\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 209
+  testRunner.Then("Outcome 1 for test customer \"TS_010_PREVSESSGT12MNTHS2\" is not included in the re" +
+                    "port", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 210
+  testRunner.Then("Outcome 2 for test customer \"TS_010_PREVSESSGT12MNTHS2\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 211
+  testRunner.Then("Outcome 3 for test customer \"TS_010_PREVSESSGT12MNTHS2\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 212
+  testRunner.Then("Outcome 4 for test customer \"TS_010_PREVSESSGT12MNTHS2\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 213
+  testRunner.Then("Outcome 1 for test customer \"TS_011_PREVSESSGT12MNTHS3\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 214
+  testRunner.Then("Outcome 2 for test customer \"TS_011_PREVSESSGT12MNTHS3\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 215
+  testRunner.Then("Outcome 3 for test customer \"TS_011_PREVSESSGT12MNTHS3\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 216
+  testRunner.Then("Outcome 1 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 217
+  testRunner.Then("Outcome 2 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 218
+  testRunner.Then("Outcome 3 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 219
+  testRunner.Then("Outcome 4 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 220
+  testRunner.Then("Outcome 5 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 221
+  testRunner.Then("Outcome 6 for test customer \"TS_012_PREVSESSGT12MNTHS4\" is included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Simple cases")]
+        public virtual void SimpleCases()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Simple cases", null, ((string[])(null)));
+#line 223
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 224
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 225
+  testRunner.Then("Outcome 1 for test customer \"TS_001_SIMPLECASE1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 226
+  testRunner.Then("Outcome 2 for test customer \"TS_001_SIMPLECASE1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 227
+  testRunner.Then("Outcome 1 for test customer \"TS_002_SIMPLECASE2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 228
+  testRunner.Then("Outcome 2 for test customer \"TS_002_SIMPLECASE2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 229
+  testRunner.Then("Outcome 3 for test customer \"TS_002_SIMPLECASE2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 230
+  testRunner.Then("Outcome 1 for test customer \"TS_003_SIMPLECASE3\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 231
+  testRunner.Then("Outcome 2 for test customer \"TS_003_SIMPLECASE3\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 232
+  testRunner.Then("Outcome 3 for test customer \"TS_003_SIMPLECASE3\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Too many outcomes are submitted")]
+        public virtual void TooManyOutcomesAreSubmitted()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Too many outcomes are submitted", null, ((string[])(null)));
+#line 234
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 235
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 236
+  testRunner.Then("Outcome 1 for test customer \"TS_004_TOOMANY1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 237
+  testRunner.Then("Outcome 2 for test customer \"TS_004_TOOMANY1\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 238
+  testRunner.Then("Outcome 3 for test customer \"TS_004_TOOMANY1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 239
+  testRunner.Then("Outcome 1 for test customer \"TS_005_TOOMANY2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 240
+  testRunner.Then("Outcome 2 for test customer \"TS_005_TOOMANY2\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 241
+  testRunner.Then("Outcome 3 for test customer \"TS_005_TOOMANY2\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 242
+  testRunner.Then("Outcome 4 for test customer \"TS_005_TOOMANY2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Outcome is submitted before the contract start date")]
+        public virtual void OutcomeIsSubmittedBeforeTheContractStartDate()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Outcome is submitted before the contract start date", null, ((string[])(null)));
+#line 244
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 245
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 246
+  testRunner.Then("Outcome 1 for test customer \"TS_013_B4CONTRACTSTART\" is not included in the repor" +
+                    "t", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Outcome effective date is later than the report period end")]
+        public virtual void OutcomeEffectiveDateIsLaterThanTheReportPeriodEnd()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Outcome effective date is later than the report period end", null, ((string[])(null)));
+#line 248
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 249
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 250
+  testRunner.Then("Outcome 1 for test customer \"TS_014_AFTERREPORTEND\" is not included in the report" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("An outcome is submitted more that 12 months after the session date")]
+        public virtual void AnOutcomeIsSubmittedMoreThat12MonthsAfterTheSessionDate()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An outcome is submitted more that 12 months after the session date", null, ((string[])(null)));
+#line 252
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 253
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 254
+  testRunner.Then("Outcome 1 for test customer \"TS_015_OUTCOMEGT12MNTHS1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 255
+  testRunner.Then("Outcome 2 for test customer \"TS_015_OUTCOMEGT12MNTHS1\" is not included in the rep" +
+                    "ort", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 256
+  testRunner.Then("Outcome 1 for test customer \"TS_016_OUTCOMEGT12MNTHS2\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 257
+  testRunner.Then("Outcome 2 for test customer \"TS_016_OUTCOMEGT12MNTHS2\" is not included in the rep" +
+                    "ort", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 258
+  testRunner.Then("Outcome 1 for test customer \"TS_017_OUTCOMEGT12MNTHS3\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 259
+  testRunner.Then("Outcome 1 for test customer \"TS_018_OUTCOMEGT12MNTHS4\" is not included in the rep" +
+                    "ort", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 260
+  testRunner.Then("Outcome 2 for test customer \"TS_018_OUTCOMEGT12MNTHS4\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("An outcome is submitted more that 13 months after the session date")]
+        public virtual void AnOutcomeIsSubmittedMoreThat13MonthsAfterTheSessionDate()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An outcome is submitted more that 13 months after the session date", null, ((string[])(null)));
+#line 262
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line 263
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 264
+  testRunner.Then("Outcome 1 for test customer \"TS_019_OUTCOMEGT13MNTHS1\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 265
+  testRunner.Then("Outcome 2 for test customer \"TS_019_OUTCOMEGT13MNTHS1\" is not included in the rep" +
+                    "ort", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -254,18 +2021,18 @@ this.FeatureBackground();
         public virtual void CustomerIsMoreThan100YearsOld()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer is more than 100 years old", null, ((string[])(null)));
-#line 45
+#line 268
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 46
+#line 269
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 47
+#line 270
   testRunner.Then("test customer \"100TMRW\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 48
+#line 271
   testRunner.And("test customer \"100TODAY\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 49
+#line 272
   testRunner.And("test customer \"100YESTERDAY\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -276,14 +2043,14 @@ this.FeatureBackground();
         public virtual void CustomerDOBIsNotKnown()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer DOB is not known", null, ((string[])(null)));
-#line 54
+#line 277
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 55
+#line 278
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 56
+#line 279
   testRunner.Then("test customer \"DOB_UNKNOWN\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -294,16 +2061,16 @@ this.FeatureBackground();
         public virtual void ASessionExistsWhichIsDatedBeforeTheContractStartDate()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A session exists which is dated before the contract start date", null, ((string[])(null)));
-#line 58
+#line 281
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 59
+#line 282
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 60
+#line 283
   testRunner.Then("test customer \"SESSION_ON_CONTRACT_START\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 61
+#line 284
   testRunner.And("test customer \"SESSION_B4_CONTRACT_START\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -314,18 +2081,18 @@ this.FeatureBackground();
         public virtual void ASessionExistsWhichIsDatedInTheFuture()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A session exists which is dated in the future", null, ((string[])(null)));
-#line 63
+#line 286
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 64
+#line 287
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 65
+#line 288
   testRunner.Then("test customer \"SESSION_HAS_CURRENT_DATE\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 66
+#line 289
         testRunner.And("test customer \"SESSION_NOW\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 67
+#line 290
   testRunner.And("test customer \"SESSION_HAS_FUTURE_DATE\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -336,20 +2103,20 @@ this.FeatureBackground();
         public virtual void MoreThanOneSessionsExistWhichRelateToTheCurrentFinancialYear()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("More than one sessions exist which relate to the current financial year", null, ((string[])(null)));
-#line 69
+#line 292
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line 70
+#line 293
   testRunner.Given("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 72
+#line 295
   testRunner.Then("test customer \"MULTIPLE_SESSIONS_THIS_YR\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 73
+#line 296
   testRunner.And("outcome 1 is included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 74
+#line 297
   testRunner.And("outcome 2 is included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 75
+#line 298
   testRunner.And("outcome 3 is NOT included for customer \"MULTIPLE_SESSIONS_THIS_YR\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

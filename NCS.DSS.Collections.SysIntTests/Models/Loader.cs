@@ -29,7 +29,10 @@ namespace NCS.DSS.Collections.SysIntTests.Models
         public bool LoadedToSqlServer { get; set; }
 
         public List<FamilyTreeItem> AllParents = new List<FamilyTreeItem>();
-      //  public int order { get; set; }
+        //  public int order { get; set; }
+
+        public Dictionary<string, string> DateOverrides;
+        public bool requiresPostProcessing { get; set; }
 
 
     }
