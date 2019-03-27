@@ -74,11 +74,11 @@
 							"value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName'))).InstrumentationKey]"
 						},
 						{
-							"name": "CollectionId",
+							"name": "CollectionDatabaseId",
 							"value": "[parameters('cosmosDbCollectionId')]"
 						},
 						{
-							"name": "DatabaseId",
+							"name": "CollectionCollectionId",
 							"value": "[parameters('cosmosDbDatabaseId')]"
 						},
 						{
@@ -96,6 +96,26 @@
 						{
 							"name": "QueueName",
 							"value": "[parameters('serviceBusQueueName')]"
+						},
+						{
+							"name": "DCQueueName_Out",
+							"value": "ncsout"
+						},
+						{
+							"name": "DCQueueName_In",
+							"value": "ncsin"
+						},
+						{
+							"name": "CEQueueName",
+							"value": "dss.contentqueue"
+						},
+						{
+							"name": "StorageConnectionString",
+							"value": "[variables('storageAccountConnectionString')]"
+						},
+						{
+							"name": "DCContainerName",
+							"value": "collections"
 						}
 					]
 				}
