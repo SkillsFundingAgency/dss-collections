@@ -21,7 +21,6 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
         /// <summary>
         /// The timestamp of the report request
         /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy-MM-dd HH:mm:ss.fff")]
         public string Timestamp { get; set; }
 
         /// <summary>
