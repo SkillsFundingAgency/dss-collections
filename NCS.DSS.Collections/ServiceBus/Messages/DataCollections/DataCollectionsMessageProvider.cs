@@ -3,6 +3,7 @@ using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
@@ -21,7 +22,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
                 ContainerName = collection.ContainerName,
                 JobId = collection.CollectionId,
                 ReportFilename = collection.ReportFileName,
-                Timestamp = DateTime.Now,
+                Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture),
                 TouchpointId = collection.TouchPointId,
                 Ukprn = int.Parse(collection.Ukprn)
             })))
