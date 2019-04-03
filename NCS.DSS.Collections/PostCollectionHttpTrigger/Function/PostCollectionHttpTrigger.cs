@@ -60,6 +60,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
                 collection.TouchPointId = touchpointId;
 
+                if (!collection.LastModifiedDate.HasValue)
+                    collection.LastModifiedDate = DateTime.UtcNow;
+
                 var result = await service.ProcessRequestAsync(collection, ApimUrl);
 
                 if (result == null)
