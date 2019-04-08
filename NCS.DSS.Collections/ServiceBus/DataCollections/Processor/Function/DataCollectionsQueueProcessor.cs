@@ -39,6 +39,7 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
             catch (Exception ex)
             {
                 loggerHelper.LogException(log, correlationId, ex);
+                throw;
             }
             finally
             {
