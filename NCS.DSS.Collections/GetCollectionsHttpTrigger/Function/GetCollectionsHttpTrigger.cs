@@ -49,12 +49,15 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             if (string.IsNullOrEmpty(touchpointId))
             {                
                 return responseMessageHelper.BadRequest();
-            }           
+            }
+
+            loggerHelper.LogInformationMessage(log, correlationId, "Attempt to process request");
 
             var results = await service.ProcessRequestAsync(touchpointId);
 
             if (results.Count == 0)
             {
+                loggerHelper.LogInformationMessage(log, correlationId, "unable to retrieve collection");
                 return responseMessageHelper.NoContent();
             }
 

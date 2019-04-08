@@ -13,6 +13,7 @@ using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -41,41 +42,40 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             [Inject]IDssCorrelationValidator dssCorrelationValidator,
             [Inject]IDssTouchpointValidator dssTouchpointValidator)
         {            
-            log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);            
+            log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
 
+            var correlationId = dssCorrelationValidator.Extract(req, log);
+
+            var touchpointId = dssTouchpointValidator.Extract(req, log);
+
+            if (string.IsNullOrEmpty(touchpointId))
+            {
+                return responseMessageHelper.BadRequest();
+            }
+
+            if (!Guid.TryParse(collectionId, out var collectionGuid))
+                return responseMessageHelper.BadRequest(collectionGuid);
+
+            MemoryStream collectionStream;
             try
             {
-                var correlationId = dssCorrelationValidator.Extract(req, log);
-
-                var touchpointId = dssTouchpointValidator.Extract(req, log);
-
-                if (string.IsNullOrEmpty(touchpointId))
-                {                    
-                    return responseMessageHelper.BadRequest();
-                }
-
-                if (!Guid.TryParse(collectionId, out var collectionGuid))
-                    return responseMessageHelper.BadRequest(collectionGuid);
-
-                var result = await service.ProcessRequestAsync(touchpointId, collectionGuid, log);
-                
-                if (result == null)
-                {
-                    return responseMessageHelper.NoContent();
-                }
-
-                result.Position = 0;
-                
-                var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content = new StreamContent(result);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                return response;                
+                loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
+                collectionStream = await service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
             }
             catch (Exception ex)
             {
-                log.LogError(ex, "Get Collection C# HTTP trigger function");
+                loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
                 return responseMessageHelper.UnprocessableEntity();
-            }            
+            }
+
+            if (collectionStream == null)
+                return responseMessageHelper.NoContent();
+
+            collectionStream.Position = 0;
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(collectionStream) };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            return response;
         }
     }
 }
