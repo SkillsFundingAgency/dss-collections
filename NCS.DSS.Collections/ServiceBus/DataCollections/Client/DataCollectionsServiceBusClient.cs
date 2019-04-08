@@ -1,10 +1,10 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
-using System.Threading.Tasks;
 
-namespace NCS.DSS.Collections.ServiceBus
+namespace NCS.DSS.Collections.ServiceBus.DataCollections.Client
 {
     public class DataCollectionsServiceBusClient : IDataCollectionsServiceBusClient
     {

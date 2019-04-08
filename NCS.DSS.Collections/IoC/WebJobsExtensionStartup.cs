@@ -18,6 +18,7 @@ using NCS.DSS.Collections.ServiceBus;
 using NCS.DSS.Collections.ServiceBus.Configs;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
+using NCS.DSS.Collections.ServiceBus.DataCollections.Client;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
 using NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
