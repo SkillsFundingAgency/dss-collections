@@ -15,7 +15,7 @@ namespace NCS.DSS.Collections.APIDefinition
         public const string APITitle = "Collections";
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
-        public const string APIDescription = "Basic details of a National Careers Service " + APITitle + " Resource";
+        public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
 
         [FunctionName(APIDefinitionName)]
         public static HttpResponseMessage Run(

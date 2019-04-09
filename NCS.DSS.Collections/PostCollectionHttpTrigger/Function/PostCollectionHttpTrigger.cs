@@ -41,41 +41,46 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             [Inject]IDssTouchpointValidator dssTouchpointValidator,
             [Inject]IApimUrlValidator apimUrlValidator)
         {
-            loggerHelper.LogMethodEnter(log);
 
             var correlationId = dssCorrelationValidator.Extract(req, log);
 
             var touchpointId = dssTouchpointValidator.Extract(req, log);                                  
 
-            var ApimUrl = apimUrlValidator.Extract(req, log);
+            var apimUrl = apimUrlValidator.Extract(req, log);
 
-            if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(ApimUrl))
+            if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
                 return httpResponseMessageHelper.BadRequest();
 
             Collection collection;
 
             try
             {
-                collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);
-
-                collection.TouchPointId = touchpointId;
-
-                if (!collection.LastModifiedDate.HasValue)
-                    collection.LastModifiedDate = DateTime.UtcNow;
-
-                var result = await service.ProcessRequestAsync(collection, ApimUrl);
-
-                if (result == null)
-                {
-                    return httpResponseMessageHelper.BadRequest();
-                }
-
-                return httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(result, "id", "CollectionId"));
+                loggerHelper.LogInformationMessage(log, correlationId, "Attempt to get resource from body of the request");
+                collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);               
             }
             catch (JsonException ex)
             {
+                loggerHelper.LogError(log, correlationId, "Unable to retrieve body from req", ex);
                 return httpResponseMessageHelper.UnprocessableEntity(ex);
-            }            
+            }
+
+            collection.TouchPointId = touchpointId;
+
+            if (!collection.LastModifiedDate.HasValue)
+                collection.LastModifiedDate = DateTime.UtcNow;
+
+            loggerHelper.LogInformationMessage(log, correlationId, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            var createdCollection = await service.ProcessRequestAsync(collection, apimUrl);
+
+            if (createdCollection != null)
+            {
+                loggerHelper.LogInformationMessage(log, correlationId, string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
+                await service.SendToServiceBusQueueAsync(createdCollection);
+            }
+
+            return createdCollection == null ? 
+                httpResponseMessageHelper.BadRequest() :
+                httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId"));
         }
     }
 }

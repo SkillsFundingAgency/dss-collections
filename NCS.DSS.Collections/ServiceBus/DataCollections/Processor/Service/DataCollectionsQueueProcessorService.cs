@@ -32,23 +32,24 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 
             var message = _messageProvider.DeserializeMessage(queueItem);
 
-            if (!message.Status.Contains("SUCCESS"))
-            {
-                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections returned failure for CollectionId - {message.JobId}-{message.Status}"));
-            }
-            else
-            {
-                var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
+            if(message == null)
+                throw new Exception("Unable to Deserialize Message");
 
-                if (collection == null)
-                {
-                    _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId -{message.JobId}"));
-                }
-                else
-                {
-                    await _contentEnhancerServiceBusClient.SendAsync(collection);
-                }
+            if (string.Compare(message.Status, "success", StringComparison.InvariantCultureIgnoreCase) != 0)
+            {
+                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections returned failure for CollectionId - {message.JobId} - {message.Status}"));
+                throw new Exception($"Data Collections returned failure for CollectionId - {message.JobId} - {message.Status}");
             }
+
+            var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
+
+            if (collection == null)
+            {
+                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId - {message.JobId}"));
+                throw new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId - {message.JobId}");
+            }
+
+            await _contentEnhancerServiceBusClient.SendAsync(collection);
         }
     }
 }
