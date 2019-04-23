@@ -28,7 +28,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.TouchPointId = touchpointId;
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(false, result.Any());
@@ -55,7 +55,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.TouchPointId = touchpointId;
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(0, result.Count());
@@ -82,7 +82,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.LastModifiedDate = lastUpdated;            
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(1, result.Count());
@@ -109,7 +109,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.TouchPointId = touchpointId;            
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(1, result.Count());
@@ -138,7 +138,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.LastModifiedDate = lastUpdated;
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(1, result.Count());
@@ -167,7 +167,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             collection.LastModifiedDate = lastUpdated;
             collection.Ukprn = ukprn;
 
-            var result = collectionValidator.Validate(collection).Result;
+            var result = collectionValidator.Validate(collection);
 
             //Assert
             Assert.AreEqual(1, result.Count());
