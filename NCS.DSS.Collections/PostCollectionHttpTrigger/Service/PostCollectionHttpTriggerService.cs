@@ -4,6 +4,8 @@ using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus;
 using NCS.DSS.Collections.Validators;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -28,15 +30,19 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
             _collectionMapper = collectionMapper;
         }
 
-        public async Task<Collection> ProcessRequestAsync(Collection collection, string apimUrl)
+        public List<ValidationResult> ValidateCollectionAsync(Collection collection)
         {
-
             if (collection == null)
                 return null;
 
-            var validationErrors = await _collectionValidator.Validate(collection);
+            var validationErrors = _collectionValidator.Validate(collection);
 
-            if (validationErrors.Any())
+            return validationErrors.Any() ? validationErrors : null;
+        }
+
+        public async Task<Collection> ProcessRequestAsync(Collection collection, string apimUrl)
+        {
+            if (collection == null)
                 return null;
 
             collection.CollectionReports = new Uri($"{apimUrl}/{collection.CollectionId}");

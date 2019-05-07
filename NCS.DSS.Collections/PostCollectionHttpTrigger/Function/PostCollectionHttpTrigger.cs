@@ -13,6 +13,7 @@ using NCS.DSS.Collections.Validators;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -68,6 +69,14 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             if (!collection.LastModifiedDate.HasValue)
                 collection.LastModifiedDate = DateTime.UtcNow;
+
+            var validationResults = service.ValidateCollectionAsync(collection);
+
+            if (validationResults != null && validationResults.Any())
+            {
+                loggerHelper.LogInformationMessage(log, correlationId, "validation errors with resource");
+                return httpResponseMessageHelper.UnprocessableEntity(validationResults);
+            }
 
             loggerHelper.LogInformationMessage(log, correlationId, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
             var createdCollection = await service.ProcessRequestAsync(collection, apimUrl);

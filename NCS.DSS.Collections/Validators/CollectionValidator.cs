@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Validators
 {
     public class CollectionValidator : ICollectionValidator
     {
-        public async Task<List<ValidationError>> Validate(Collection entity)
+        public List<ValidationResult> Validate(Collection entity)
         {
-            List<ValidationError> result = new List<ValidationError>();
+            List<ValidationResult> result = new List<ValidationResult>();
 
             if (entity.CollectionId == Guid.Empty)
             {
@@ -18,25 +18,25 @@ namespace NCS.DSS.Collections.Validators
 
             if (string.IsNullOrEmpty(entity.TouchPointId))
             {
-                result.Add(new ValidationError("Null TouchPointId"));
+                result.Add(new ValidationResult("Null TouchPointId", new[] { "TouchPointId" }));
             }
 
             if (string.IsNullOrWhiteSpace(entity.Ukprn))
             {
-                result.Add(new ValidationError("Null UKPRN"));
+                result.Add(new ValidationResult("Null UKPRN", new[] { "Ukprn" }));
             }
 
-            if (entity.Ukprn.Length != 8)
+            if (!string.IsNullOrWhiteSpace(entity.Ukprn) && entity.Ukprn.Length != 8)
             {
-                result.Add(new ValidationError("Invalid Length UKPRN"));
+                result.Add(new ValidationResult("Invalid Length UKPRN", new[] { "Ukprn" }));
             }
 
             if (entity.LastModifiedDate == null)
             {
-                result.Add(new ValidationError("Null Last Modified Date"));
+                result.Add(new ValidationResult("Null Last Modified Date", new[] {"LastModifiedDate"}));
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
     }
 }
