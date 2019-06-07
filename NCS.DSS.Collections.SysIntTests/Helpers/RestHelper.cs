@@ -58,7 +58,10 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 request.AddHeader("cache-control", "no-cache");
                 request.AddHeader("TouchpointId", touchPointId);
                 request.AddHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-                request.AddHeader("Version", "V" + version.ToString());
+                if (version > 0)
+                {
+                    request.AddHeader("Version", "V" + version.ToString());
+                }
                 request.AddParameter("undefined", json, ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
                 return response;
@@ -96,6 +99,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 request.AddHeader("cache-control", "no-cache");
                 request.AddHeader("TouchpointId", touchPointId);
                 request.AddHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                request.AddHeader("Version", "V2");
                 IRestResponse response = client.Execute(request);
                 return response;
             }

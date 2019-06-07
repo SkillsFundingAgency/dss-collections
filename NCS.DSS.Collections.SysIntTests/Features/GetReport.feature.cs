@@ -18,20 +18,20 @@ namespace NCS.DSS.Collections.SysIntTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("PatchV1Resources")]
-    public partial class PatchV1ResourcesFeature
+    [NUnit.Framework.DescriptionAttribute("GetReport")]
+    public partial class GetReportFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "PatchV1Resources.feature"
+#line 1 "GetReport.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-GB"), "PatchV1Resources", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-GB"), "GetReport", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -70,39 +70,57 @@ namespace NCS.DSS.Collections.SysIntTests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("An Action plan created with the V1 api is patched to included SessionId")]
-        public virtual void AnActionPlanCreatedWithTheV1ApiIsPatchedToIncludedSessionId()
+        [NUnit.Framework.DescriptionAttribute("Get a report for invalid collection")]
+        public virtual void GetAReportForInvalidCollection()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An Action plan created with the V1 api is patched to included SessionId", null, ((string[])(null)));
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a report for invalid collection", null, ((string[])(null)));
+#line 4
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("An Action plan created with the V1 api is patched to included SubcontractorId")]
-        public virtual void AnActionPlanCreatedWithTheV1ApiIsPatchedToIncludedSubcontractorId()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An Action plan created with the V1 api is patched to included SubcontractorId", null, ((string[])(null)));
 #line 5
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
+  testRunner.Given("I have an invalid collection id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 6
+  testRunner.When("I get the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 7
+  testRunner.Then("there should be a 204 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("An Action plan created with the V1 api is patched to included SessionId and Subco" +
-            "ntractorId")]
-        public virtual void AnActionPlanCreatedWithTheV1ApiIsPatchedToIncludedSessionIdAndSubcontractorId()
+        [NUnit.Framework.DescriptionAttribute("Get a report which isnt ready")]
+        public virtual void GetAReportWhichIsntReady()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An Action plan created with the V1 api is patched to included SessionId and Subco" +
-                    "ntractorId", null, ((string[])(null)));
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a report which isnt ready", null, ((string[])(null)));
+#line 9
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
+#line 10
+  testRunner.Given("I post a report request for ukprn 12345678", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 11
+  testRunner.When("I get the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+  testRunner.Then("there should be a 204 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get a report which is ready")]
+        public virtual void GetAReportWhichIsReady()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a report which is ready", null, ((string[])(null)));
+#line 14
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 15
+  testRunner.Given("I post a report request for ukprn 12345678", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 16
+  testRunner.And("a report is loaded into storage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+  testRunner.When("I get the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+  testRunner.Then("there should be a 200 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -110,3 +128,4 @@ this.ScenarioInitialize(scenarioInfo);
 }
 #pragma warning restore
 #endregion
+

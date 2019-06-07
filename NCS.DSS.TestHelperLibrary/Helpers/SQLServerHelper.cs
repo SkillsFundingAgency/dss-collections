@@ -94,6 +94,7 @@ namespace NCS.DSS.TestHelperLibrary.Helpers
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
+                    return false;
                 }
             }
             return true;

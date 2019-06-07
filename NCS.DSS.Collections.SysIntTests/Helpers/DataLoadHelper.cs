@@ -47,10 +47,20 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
             sqlHelper.SetConnection(envSettings.SqlConnectionString);
             sqlHelper.AddReplacementRule(tokenToStore, "id");
 
-            foreach (T item in collection)
+            // check if table has TouchPoint stored in it.
+            bool touchpointInTable = updatedData.Header.Contains("TouchPoint");
+
+            foreach ((T item , int i) in collection.Select((item, i) => (item, i)))
             {
                 Console.WriteLine("Process entity " + item.LoaderRef + "of type: " + tokenToStore);
-                Loader newLoad = new Loader();// ("", "");
+                Loader newLoad = new Loader();// ("", 
+                string suppliedTouchpoint = "";
+                if (touchpointInTable)
+                {
+                    updatedData.Rows[i].TryGetValue("TouchPoint", out suppliedTouchpoint);
+                }
+                bool touchpointSupplied = (suppliedTouchpoint.Length > 0);
+
                 var pathToUse = path;
                 //if a parent name is supplied want to look up the parent ID in the list of loader items (list) 
                 if (ParentType != String.Empty)
@@ -114,8 +124,10 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                     newLoad.requiresPostProcessing = true;
                     newLoad.DateOverrides = new Dictionary<string, string>(dic);
                 }
+
+             
                 //submit the request
-                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, envSettings.TouchPointId, envSettings.SubscriptionKey, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 1: 2) );
+                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, ( touchpointSupplied ? suppliedTouchpoint : envSettings.TouchPointId ), envSettings.SubscriptionKey, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 0: 2) );
                 response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created, "Because  " + item.LoaderRef + ": " + response.Content); 
 
                 // do we want to push this to the data store?
@@ -124,8 +136,8 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                 {
                     //case "CustomerId":
                  //   case "OutcomeId":
-                    case "ActionPlanId":
-                        break;
+           //         case "ActionPlanId":
+             //           break;
                     default:
                         if (LoadToBackupStore)
                         {
@@ -224,6 +236,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                     if (value.Key.ToLower().Contains("date"))
                     {
                         extractedDateTime = TranslateDateToken(value.Value);
+                        string dateFormat = (value.Value.Length == 10 ? "yyyy-MM-dd" : "yyyy-MM-ddTHH:mm:ssZ");
                         /*if (value.Value.Contains(" "))
                         {
                             // extract to componets
@@ -267,7 +280,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
                             extractedDateTime = DateTime.Now;
                             newValue = extractedDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
                         }*/
-                        newValue = (extractedDateTime == DateTime.MinValue  ? "" : extractedDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ") );
+                        newValue = (extractedDateTime == DateTime.MinValue  ? "" : extractedDateTime.ToString(dateFormat) );
                     }
                     else if (value.Value.Contains("[FEATURE_TS]"))
                     {

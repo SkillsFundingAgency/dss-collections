@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -41,10 +42,12 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         private readonly FeatureContext featureContext;
         private DateTime ReportPeriodStartDate = DateTime.Today;
         private DateTime ReportPeriodEndDate = DateTime.Today;
+        private bool storeTearDownAtScenarioLevel = false;
 
         private DateTime ReportDate = DateTime.Today;
 
         private DateTime FeedStartDate = new DateTime(2019, 4, 1);
+        private string collectionId;
         
 
         public StepDefinitions(ScenarioContext context, FeatureContext fcontext)
@@ -53,6 +56,31 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             featureContext = fcontext;
         }
 
+        string AssertAndExtract(string key, IRestResponse response)
+        {
+            string extractedValue = "";
+            if (response.IsSuccessful)
+            {
+                Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
+                extractedValue = values[key];
+                Console.WriteLine("Storing context information:" + key + " - " + extractedValue);
+                if (extractedValue.Trim().Length == 0)
+                {
+                    Console.WriteLine("extraction failed, response.content:\n" + response.Content);
+                    Console.WriteLine("");
+                }
+                extractedValue.Should().NotBeNullOrEmpty();
+            }
+            else
+            {
+                Console.WriteLine("Request was unsuccessful");
+                Console.WriteLine("response status: " + response.StatusCode);
+                Console.WriteLine("response status description: " + response.StatusDescription);
+                Console.WriteLine("response message: " + response.ErrorMessage);
+                Console.WriteLine("response expection: " + response.ErrorException);
+            }
+            return extractedValue;
+        }
         public void SubmitTheSearch()
         {
             string url = envSettings.TempSearchUrl + SearchClause + FilterClause + SelectClause + PagingClause + CountClause;
@@ -154,17 +182,17 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
 
         private int AssertValueInCustomerList ( IEnumerable<Customer> list, string key, string value)
         {
-            IEnumerable<Customer> tempList = list.Where<Customer>(item => item.GivenName.ToLower() == "");
+            IEnumerable<Customer> tempList;//= null;// list.Where<Customer>(item => item.GivenName.ToLower() == "");
             switch (key)
             {
                 case "GivenName":
-                    tempList = SearchResults.Results.Where<Customer>(item => item.GivenName.ToLower() == key.ToLower());
+                    tempList = SearchResults.Results.Where<Customer>(item => item.GivenName.ToLower() == value.ToLower());
                     break;
                 case "FamilyName":
-                    tempList = SearchResults.Results.Where<Customer>(item => item.FamilyName.ToLower() == key.ToLower());
+                    tempList = SearchResults.Results.Where<Customer>(item => item.FamilyName.ToLower() == value.ToLower());
                     break;
                 case "DateofBirth":
-                    tempList = SearchResults.Results.Where<Customer>(item => item.DateofBirth.ToLower() == key.ToLower());
+                    tempList = SearchResults.Results.Where<Customer>(item => item.DateofBirth.ToLower() == value.ToLower());
                     break;
                 default:
                     throw new Exception("The field: " + key + " is not supported");
@@ -617,9 +645,20 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             CustomerDataLoad.DataSetupExecuted = true;
         }
 
+        [Given(@"I am creating data in scenario context")]
+        public void GivenIAmCreatingDataInScenarioContext()
+        {
+            storeTearDownAtScenarioLevel = true;
+        }
+
+
         [Given(@"I have confirmed all test data is now in the backup data store")]
         public void GivenIHaveConfirmedAllTestDataIsNowInTheBackupDataStore()
         {
+            if (CustomerDataLoad.DataSetupExecuted)
+            {
+                return;
+            }
             SQLServerHelper sqlHelper = new SQLServerHelper();
             sqlHelper.SetConnection(envSettings.SqlConnectionString);
             // loop through the data load list and check each is now in the SQL server data store
@@ -632,14 +671,30 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
                 }
             }
             sqlHelper.CloseConnection();
-            featureContext["TestData"] = LoaderData;
+
+            if (storeTearDownAtScenarioLevel)
+            {
+                scenarioContext["TestData"] = LoaderData;
+            }
+            else
+            {
+                featureContext["TestData"] = LoaderData;
+            }
+            
 
         }
 
         [When(@"I check the report data")]
         public void WhenICheckTheReportData()
         {
-            // dummy step - no action required
+            if (storeTearDownAtScenarioLevel)
+            {
+                ReportRows = (List<Models.ReportRow>)scenarioContext["ReportRows"];
+            }
+            else
+            {
+                ReportRows = (List<Models.ReportRow>)featureContext["ReportRows"];
+            }
         }
 
 
@@ -653,6 +708,14 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"a request has been made and the report data is available")]
         public void GivenARequestHasBeenMadeAndTheReportDataIsAvailable()
         {
+            if (CustomerDataLoad.DataSetupExecuted)
+            {
+
+                ReportRows = (List<Models.ReportRow>)featureContext["ReportRows"];
+
+                return;
+            }
+
             SQLServerHelper sqlInstance = new SQLServerHelper();
             sqlInstance.SetConnection(envSettings.SqlConnectionString);
 
@@ -663,36 +726,48 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             //int feedinDate = (ReportDate - DateTime.Today).Days;
             //     sqlInstance.UpsertParameterValue("dss-data-collections-params", "FeedStartDate", FeedStartDate.ToShortDateString());
 
-            ////      var ds = sqlInstance.ExecuteTableFunction("dcc-collections", new string[] { "9000000095", ReportPeriodStartDate.ToString("yyyy-MM-dd"), ReportPeriodEndDate.ToString("yyyy-MM-dd") });
+            var ds = sqlInstance.ExecuteTableFunction("dcc-collections", new string[] { envSettings.TouchPointId, ReportPeriodStartDate.ToString("yyyy-MM-dd"), ReportPeriodEndDate.ToString("yyyy-MM-dd") });
 
             //revert time travel setting
             //      sqlInstance.UpsertParameterValue("dss-data-collections-params", "TimeTravel", "0");
 
-            List<SqlParameter> parameters = new List<SqlParameter>()
-            {
-                new SqlParameter() {ParameterName = "@TouchPointId", SqlDbType = SqlDbType.VarChar, Value = envSettings.TouchPointId },
-                new SqlParameter() {ParameterName = "@StartDate", SqlDbType = SqlDbType.DateTime, Value = ReportPeriodStartDate},
-                new SqlParameter() {ParameterName = "@EndDate", SqlDbType = SqlDbType.DateTime, Value = ReportPeriodEndDate},
-            };
+            /*****SP METHOD   List<SqlParameter> parameters = new List<SqlParameter>()
+               {
+                   new SqlParameter() {ParameterName = "@TouchPointId", SqlDbType = SqlDbType.VarChar, Value = envSettings.TouchPointId },
+                   new SqlParameter() {ParameterName = "@StartDate", SqlDbType = SqlDbType.DateTime, Value = ReportPeriodStartDate},
+                   new SqlParameter() {ParameterName = "@EndDate", SqlDbType = SqlDbType.DateTime, Value = ReportPeriodEndDate},
+               };
 
-            var ds = sqlInstance.ExecuteStoredProcedure("sp-dcc-collections", parameters);
+
+               var ds = sqlInstance.ExecuteStoredProcedure("sp-dcc-collections", parameters);
+
+            *****************SP METHOD */
             ds.Tables[0].Rows.Count.Should().BeGreaterThan(0, "Because we want data to be present in the report");
 
             ReportRows = ds.Tables[0].AsEnumerable().Select(
                             dataRow => new ReportRow
                             {
                                 CustomerId = dataRow.Field<Guid>("CustomerId").ToString(),
-                           //     DateofBirth = ( dataRow.IsNull("DateofBirth") ? "": dataRow.Field<String>("DateofBirth").ToString()),
-                                HomePostCode = dataRow.Field<string>("HomePostCode"),
+                                DateofBirth = ( dataRow.IsNull("DateofBirth") ? "": dataRow.Field<DateTime>("DateofBirth").ToString("yyyy-MM-dd")),
+                                HomePostCode = ( dataRow.IsNull("HomePostCode") ? "" : dataRow.Field<string>("HomePostCode")),
                                 ActionPlanID = dataRow.Field <Guid> ("ActionPlanID").ToString(),
-                          //     SessionDate  = dataRow.Field<DateTime>("SessionDate").ToString(),
+                               SessionDate  = dataRow.Field<DateTime>("SessionDate").ToString("yyyy-MM-dd"),
                                 SubContractorId = (dataRow.IsNull("SubContractorId") ? "" : dataRow.Field<string>("SubContractorId").ToString()),
-                                AdviserName = dataRow.Field<string>("AdviserName").ToString()??"",
+                                AdviserName = dataRow.Field<string>("AdviserName").ToString(),
                                 OutcomeID = dataRow.Field<Guid>("OutcomeID").ToString(),
-                                OutcomeType = dataRow.Field<int>("OutcomeType").ToString()/*,
-                                OutcomeEffectiveDate = dataRow.Field<DateTime>("OutcomeEffectiveDate").ToString()//,
-                             //   OutcomePriorityCustomer = dataRow.Field<int>("OutcomePriorityCustomer").ToString()*/
+                                OutcomeType = dataRow.Field<int>("OutcomeType").ToString(),
+                                OutcomeEffectiveDate = dataRow.Field<DateTime>("OutcomeEffectiveDate").ToString("yyyy-MM-dd"),
+                                OutcomePriorityCustomer = dataRow.Field<int>("OutcomePriorityCustomer").ToString()
                             }).ToList();
+            if (storeTearDownAtScenarioLevel)
+            {
+                scenarioContext["ReportRows"] = ReportRows;
+            }
+            else
+            {
+                featureContext["ReportRows"] = ReportRows;
+            }
+  
         }
 
 
@@ -700,8 +775,9 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenTestCustomerIsIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)featureContext["TestData"];
- 
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                   : (List<Loader>)featureContext["TestData"]);
+
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
             string customerId = list.First().ParentId;
@@ -713,11 +789,14 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
 
 
 
+
+
         [Then(@"test customer ""(.*)"" is not included in the report")]
         public void ThenTestCustomerIsNotIncludedInTheReport(string p0)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)featureContext["TestData"];
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
 
             var list = testData.Where(i => i.LoaderReference == p0 && i.ParentType == constants.CustomerId);
             list.Count().Should().Be(1, "Because the should be 1 match for customer id and test data reference in the test data collection");
@@ -732,7 +811,8 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         public void ThenOutcomeForTestCustomerIsNotIncludedInTheReport(int p0, string p1)
         {
             // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)featureContext["TestData"];
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
 
             // get records matching this customer
             var list = testData.Where(i => i.LoaderReference == p1 && i.ParentType == constants.OutcomeId);
@@ -748,8 +828,9 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Then(@"Outcome (.*) for test customer ""(.*)"" is included in the report")]
         public void ThenOutcomeForTestCustomerIsIncludedInTheReport(int p0, string p1)
         {
-            // find the passing in string in the DataLoad collection and get the customer id
-            List<Loader> testData = (List<Loader>)featureContext["TestData"];
+            // find the passing in string in the DataLoad collection and get the customer i
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
 
             // get records matching this customer
             var list = testData.Where(i => i.LoaderReference == p1 && i.ParentType == constants.OutcomeId);
@@ -758,9 +839,135 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
 
             // check that this outcome is included in the report
             var checkList = ReportRows.Where(j => j.OutcomeID.ToLower() == item.ParentId.ToLower());
-            checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
+            checkList.Count().Should().BeGreaterThan(0, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
+            checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been duplicated in the report");
         }
 
+
+
+        [Then(@"Outcome (.*) for test customer ""(.*)"" is included in the report with outcome type of (.*)")]
+        public void ThenOutcomeForTestCusdtomerIsIncludedInTheReportWithOutcomeTypeOf(int p0, string p1, int p2)
+        {
+            // find the passing in string in the DataLoad collection and get the customer i
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
+
+            // get records matching this customer
+            var list = testData.Where(i => i.LoaderReference == p1 && i.ParentType == constants.OutcomeId);
+            list.Count().Should().BeGreaterOrEqualTo(p0, "Because otherwise not enough outcomes have been loaded for this customer");
+            var item = list.ElementAt(p0 - 1);
+
+            // check that this outcome is included in the report
+            var checkList = ReportRows.Where(j => j.OutcomeID.ToLower() == item.ParentId.ToLower());
+            checkList.Count().Should().BeGreaterThan(0, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
+            checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been duplicated in the report");
+
+            checkList.First<ReportRow>().OutcomeType.Should().Be(p2.ToString(), "Because the expected outcome type is " + p2 + " But got " + checkList.First<ReportRow>().OutcomeType);
+
+        }
+
+        [Then(@"Outcome (.*) for test customer ""(.*)"" is included in the report with the following values")]
+        public void ThenOutcomeForTestCustomerIsIncludedInTheReportWithTheFollowingValues(int p0, string p1, Table table)
+        {
+            // find the passing in string in the DataLoad collection and get the customer i
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
+
+            // get records matching this customer
+            var list = testData.Where(i => i.LoaderReference == p1 && i.ParentType == constants.OutcomeId);
+            list.Count().Should().BeGreaterOrEqualTo(p0, "Because otherwise not enough outcomes have been loaded for this customer");
+            var item = list.ElementAt(p0 - 1);
+
+            // check that this outcome is included in the report
+            var checkList = ReportRows.Where(j => j.OutcomeID.ToLower() == item.ParentId.ToLower());
+            checkList.Count().Should().BeGreaterThan(0, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
+            checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been duplicated in the report");
+            var results = checkList.ElementAt<ReportRow>(0);
+            // now check table data, first process an tokens
+            Table updatedData = DataLoadHelper<LoadCustomer>.ReplaceTokensInTable(table);
+            ReportRow checkData = updatedData.CreateInstance<ReportRow>();
+
+            //populate with outcome id
+            checkData.OutcomeID = item.ParentId;
+
+            //populate with parent IDs
+            foreach ( var parents in item.AllParents)
+            {
+                switch (parents.Key)
+                {
+                    case constants.CustomerId:
+                        checkData.CustomerId = parents.Value;
+                        break;
+                    case constants.ActionPlanId:
+                        checkData.ActionPlanID = parents.Value;
+                        break;
+                }
+            }
+
+
+            Console.WriteLine("CustomerId Match: " + (checkData.CustomerId == results.CustomerId ? "Yes" : "No" ) );
+            Console.WriteLine("DateofBirth Match: " + (checkData.DateofBirth == results.DateofBirth ? "Yes" : "No"));
+            Console.WriteLine("HomePostCode Match: " + (checkData.HomePostCode == results.HomePostCode ? "Yes" : "No"));
+            Console.WriteLine("ActionPlanID Match: " + (checkData.ActionPlanID == results.ActionPlanID ? "Yes" : "No"));
+            Console.WriteLine("SessionDate Match: " + (checkData.SessionDate == results.SessionDate ? "Yes" : "No"));
+            Console.WriteLine("SubContractorId Match: " + (checkData.SubContractorId == results.SubContractorId ? "Yes" : "No"));
+            Console.WriteLine("AdviserName Match: " + (checkData.AdviserName == results.AdviserName ? "Yes" : "No"));
+            Console.WriteLine("OutcomeID Match: " + (checkData.OutcomeID == results.OutcomeID ? "Yes" : "No"));
+            Console.WriteLine("OutcomeType Match: " + (checkData.OutcomeType == results.OutcomeType ? "Yes" : "No"));
+            Console.WriteLine("OutcomeEffectiveDate Match: " + (checkData.OutcomeEffectiveDate == results.OutcomeEffectiveDate ? "Yes" : "No"));
+            Console.WriteLine("OutcomePriorityCustomer Match: " + (checkData.OutcomePriorityCustomer == results.OutcomePriorityCustomer ? "Yes" : "No"));
+
+            string becauseText = "Because that is defined result for " + p1 + ", outcome " + p0;
+            results.CustomerId.Should().Be(checkData.CustomerId, becauseText);
+            results.DateofBirth.Should().Be(checkData.DateofBirth, becauseText);
+            results.HomePostCode.Should().Be(checkData.HomePostCode, becauseText);
+            results.ActionPlanID.Should().Be(checkData.ActionPlanID, becauseText);
+            results.SessionDate.Should().Be(checkData.SessionDate, becauseText);
+            results.SubContractorId.Should().Be(checkData.SubContractorId, becauseText);
+            results.AdviserName.Should().Be(checkData.AdviserName, becauseText);
+            results.OutcomeID.Should().Be(checkData.OutcomeID, becauseText);
+            results.OutcomeType.Should().Be(checkData.OutcomeType, becauseText);
+            results.OutcomeEffectiveDate.Should().Be(checkData.OutcomeEffectiveDate, becauseText);
+            results.OutcomePriorityCustomer.Should().Be(checkData.OutcomePriorityCustomer, becauseText);
+        }
+
+
+        [Given(@"I post a report request for ukprn (.*)")]
+        public void GivenIPostAReportRequestForUkprn(int p0)
+        {
+            string url = envSettings.BaseUrl + "/collections/api/collections";
+            string json = "{ UKPRN : \"" + p0.ToString() + "\" }";
+            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey);
+            collectionId = AssertAndExtract("CollectionId", response);
+        }
+
+        [Given(@"I post a report request with missing ukprn")]
+        public void GivenIPostAReportRequestWithMissingUkprn()
+        {
+            string url = envSettings.BaseUrl + "/collections/api/collections";
+            string json = "{ UKPRNOT : \"12345678\" }";
+            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey);
+        }
+
+
+        [When(@"I get the report")]
+        public void WhenIGetTheReport()
+        {
+            string url = envSettings.BaseUrl + "/collections/api/collections/"+ collectionId;
+            response = Get(url, envSettings.TouchPointId, envSettings.SubscriptionKey);
+        }
+
+
+        [Given(@"a report is loaded into storage")]
+        public void GivenAReportIsLoadedIntoStorage()
+        {
+            string filePath;
+            AzureStorageHelper blobStore = new AzureStorageHelper();
+            blobStore.Initialise(envSettings.StorageConnectionString, envSettings.StorageContainerName);
+            filePath = envSettings.TouchPointId + "/" + collectionId + "/NCS-Reports.zip";
+            blobStore.WriteBlobAsFile(filePath, AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "TestResource\\NCS-Reports.zip");
+            
+        }
 
         [Given(@"The current date is ""(.*)""")]
         public void GivenTheCurrentDateIs(string p0)
@@ -786,6 +993,13 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         {
             ReportPeriodEndDate = DataLoadHelper<ILoader>.TranslateDateToken(p0);
         }
+
+        [Given(@"I have an invalid collection id")]
+        public void GivenIHaveAnInvalidCollectionId()
+        {
+            collectionId = new Guid().ToString();
+        }
+
 
     }
 }
