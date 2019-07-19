@@ -543,7 +543,7 @@ this.FeatureBackground();
                         "TS_040_OUTCOMELT13MONTHEARLIER2",
                         "",
                         "bb940afb-1423-4999-a234-5a64a5c00831",
-                        "2019-03-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
                         "2",
                         "3",
                         "2019-01-23T00:00:00Z",
@@ -581,7 +581,7 @@ this.FeatureBackground();
             table12.AddRow(new string[] {
                         "TS_040_OUTCOMELT13MONTHEARLIER2",
                         "1",
-                        "2019-03-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
                         "NE9 7RG",
                         "true",
                         "",
@@ -626,12 +626,12 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "TS_040_OUTCOMELT13MONTHEARLIER2",
                         "1",
-                        "2019-03-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
                         "true",
-                        "2019-03-01T00:00:00Z",
-                        "2019-03-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
                         "1",
-                        "2019-03-01T00:00:00Z",
+                        "2019-02-01T00:00:00Z",
                         "1",
                         "looking for work26"});
 #line 96
@@ -699,16 +699,16 @@ this.FeatureBackground();
                         "3",
                         "",
                         "2",
-                        "2019-03-03T00:00:00Z",
-                        "2019-03-03T00:00:00Z"});
+                        "2019-02-03T00:00:00Z",
+                        "2019-02-03T00:00:00Z"});
             table14.AddRow(new string[] {
                         "TS_040_OUTCOMELT13MONTHEARLIER2",
                         "1",
                         "3",
                         "",
                         "2",
-                        "2020-04-03T00:00:00Z",
-                        "2020-04-02T00:00:00Z"});
+                        "2020-03-03T00:00:00Z",
+                        "2020-03-02T00:00:00Z"});
 #line 102
   testRunner.And("I load outcome data for the feature", ((string)(null)), table14, "And ");
 #line 113
@@ -3812,6 +3812,343 @@ this.FeatureBackground();
   testRunner.Then("Outcome 1 for test customer \"TS_027_ADDRESS_ENDED\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 624
   testRunner.Then("Outcome 1 for test customer \"TS_028_ADDRESS_HISTORY\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Earlier outcomes that do not cause exclusion")]
+        public virtual void EarlierOutcomesThatDoNotCauseExclusion()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Earlier outcomes that do not cause exclusion", null, ((string[])(null)));
+#line 627
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 5
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table88 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "TouchPoint",
+                        "Title",
+                        "GivenName",
+                        "FamilyName",
+                        "DateofBirth",
+                        "DateOfRegistration",
+                        "UniqueLearnerNumber",
+                        "OptInUserResearch",
+                        "OptInMarketResearch",
+                        "DateOfTermination",
+                        "ReasonForTermination",
+                        "IntroducedBy",
+                        "IntroducedByAdditionalInfo",
+                        "LastModifiedDate"});
+            table88.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "",
+                        "4",
+                        "Dan",
+                        "tsfortyfive",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900053",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""});
+            table88.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "",
+                        "4",
+                        "Dan",
+                        "tsfortysix",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900053",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""});
+#line 629
+  testRunner.Given("I load test customer data for this feature:", ((string)(null)), table88, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table89 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "Address1",
+                        "Address2",
+                        "Address3",
+                        "Address4",
+                        "Address5",
+                        "PostCode",
+                        "AlternativePostCode",
+                        "Longitude",
+                        "Latitude",
+                        "EffectiveFrom",
+                        "EffectiveTo",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+#line 635
+  testRunner.And("I load test address data for this feature:", ((string)(null)), table89, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table90 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "PreferredContactMethod",
+                        "MobileNumber",
+                        "HomeNumber",
+                        "AlternativeNumber",
+                        "EmailAddress",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+#line 638
+  testRunner.And("I load test contact data for this feature:", ((string)(null)), table90, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table91 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "TouchPoint",
+                        "AdviserDetailsId",
+                        "DateandTimeOfInteraction",
+                        "Channel",
+                        "InteractionType",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+            table91.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table91.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+#line 641
+   testRunner.And("I load test interaction data for this feature", ((string)(null)), table91, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table92 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "ParentRef",
+                        "DateandTimeOfSession",
+                        "VenuePostCode",
+                        "SessionAttended",
+                        "ReasonForNonAttendance",
+                        "LastModifiedDate",
+                        "LastModifiedTouchpointId"});
+            table92.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+            table92.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "2019-03-01T00:00:00Z",
+                        "90000001"});
+#line 647
+   testRunner.And("I load test session data for the feature", ((string)(null)), table92, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table93 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "ParentRef",
+                        "DateActionPlanCreated",
+                        "CustomerCharterShownToCustomer",
+                        "DateAndTimeCharterShown",
+                        "DateActionPlanSentToCustomer",
+                        "ActionPlanDeliveryMethod",
+                        "DateActionPlanAcknowledged",
+                        "PriorityCustomer",
+                        "CurrentSituation"});
+            table93.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "true",
+                        "2019-03-01T00:00:00Z",
+                        "2019-03-01T00:00:00Z",
+                        "1",
+                        "2019-03-01T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table93.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "2019-03-02T00:00:00Z",
+                        "true",
+                        "2019-03-02T00:00:00Z",
+                        "2019-03-02T00:00:00Z",
+                        "1",
+                        "2019-03-02T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+#line 652
+  testRunner.And("I load action plan data for the feature", ((string)(null)), table93, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table94 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LoaderRef",
+                        "ParentRef",
+                        "OutcomeType",
+                        "TouchPoint",
+                        "ClaimedPriorityGroup",
+                        "OutcomeClaimedDate",
+                        "OutcomeEffectiveDate"});
+            table94.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "1",
+                        "1",
+                        "0000000999",
+                        "4",
+                        "2019-04-10T00:00:00Z",
+                        "2019-04-10T00:00:00Z"});
+            table94.AddRow(new string[] {
+                        "TS_045_EARLIEROUTCOMEHELPLINE",
+                        "1",
+                        "1",
+                        "",
+                        "4",
+                        "2019-05-12T00:00:00Z",
+                        "2019-05-12T00:00:00Z"});
+            table94.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "2",
+                        "",
+                        "1",
+                        "",
+                        "2019-04-16T00:00:00Z"});
+            table94.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "2",
+                        "",
+                        "2",
+                        "2019-04-17T00:00:00Z",
+                        "2019-04-17T00:00:00Z"});
+            table94.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "3",
+                        "",
+                        "3",
+                        "",
+                        ""});
+            table94.AddRow(new string[] {
+                        "TS_046_EARLIEROUTCOMENOTCLAIMED",
+                        "1",
+                        "3",
+                        "",
+                        "4",
+                        "2019-04-19T00:00:00Z",
+                        "2019-04-19T00:00:00Z"});
+#line 657
+  testRunner.And("I load outcome data for the feature", ((string)(null)), table94, "And ");
+#line 668
+  testRunner.And("I have made any data fudging updates required", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 669
+  testRunner.And("I have confirmed all test data is now in the backup data store", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 670
+  testRunner.And("the report period start date is \"2019-04-01\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 671
+  testRunner.And("the report period end date is \"2020-03-31\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 672
+  testRunner.And("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 674
+  testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 675
+  testRunner.Then("Outcome 1 for test customer \"TS_045_EARLIEROUTCOMEHELPLINE\" is not included in th" +
+                    "e report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table95 = new TechTalk.SpecFlow.Table(new string[] {
+                        "DateOfBirth",
+                        "HomePostCode",
+                        "SessionDate",
+                        "SubContractorId",
+                        "AdviserName",
+                        "OutcomeType",
+                        "OutcomeEffectiveDate",
+                        "OutcomePriorityCustomer"});
+            table95.AddRow(new string[] {
+                        "Today -21Y",
+                        "",
+                        "2019-03-01",
+                        "",
+                        "Billy Adviser",
+                        "1",
+                        "2019-05-12",
+                        "1"});
+#line 676
+  testRunner.Then("Outcome 2 for test customer \"TS_045_EARLIEROUTCOMEHELPLINE\" is included in the re" +
+                    "port with the following values", ((string)(null)), table95, "Then ");
+#line 679
+  testRunner.Then("Outcome 1 for test customer \"TS_046_EARLIEROUTCOMENOTCLAIMED\" is not included in " +
+                    "the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table96 = new TechTalk.SpecFlow.Table(new string[] {
+                        "DateOfBirth",
+                        "HomePostCode",
+                        "SessionDate",
+                        "SubContractorId",
+                        "AdviserName",
+                        "OutcomeType",
+                        "OutcomeEffectiveDate",
+                        "OutcomePriorityCustomer"});
+            table96.AddRow(new string[] {
+                        "Today -21Y",
+                        "",
+                        "2019-03-01",
+                        "",
+                        "Billy Adviser",
+                        "2",
+                        "2019-04-17",
+                        "1"});
+#line 680
+  testRunner.Then("Outcome 2 for test customer \"TS_046_EARLIEROUTCOMENOTCLAIMED\" is included in the " +
+                    "report with the following values", ((string)(null)), table96, "Then ");
+#line 683
+  testRunner.Then("Outcome 3 for test customer \"TS_046_EARLIEROUTCOMENOTCLAIMED\" is not included in " +
+                    "the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table97 = new TechTalk.SpecFlow.Table(new string[] {
+                        "DateOfBirth",
+                        "HomePostCode",
+                        "SessionDate",
+                        "SubContractorId",
+                        "AdviserName",
+                        "OutcomeType",
+                        "OutcomeEffectiveDate",
+                        "OutcomePriorityCustomer"});
+            table97.AddRow(new string[] {
+                        "Today -21Y",
+                        "",
+                        "2019-03-01",
+                        "",
+                        "Billy Adviser",
+                        "3",
+                        "2019-04-19",
+                        "1"});
+#line 684
+  testRunner.Then("Outcome 4 for test customer \"TS_046_EARLIEROUTCOMENOTCLAIMED\" is included in the " +
+                    "report with the following values", ((string)(null)), table97, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

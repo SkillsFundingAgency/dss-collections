@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -216,7 +217,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
             }
             else
             {
-                DateTime.TryParse(inString, out extractedDateTime);
+                DateTime.TryParse(inString, null, DateTimeStyles.AdjustToUniversal, out extractedDateTime);
             }
             return extractedDateTime;
         }

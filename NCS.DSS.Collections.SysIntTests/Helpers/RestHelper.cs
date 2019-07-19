@@ -36,6 +36,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
         {
             return (int)(DateTime.Now - DateTime.Today).TotalSeconds;
         }
+
         public RestClient endpoint = null;
 
         public RestClient SetEndpoint(string endpointUrl)

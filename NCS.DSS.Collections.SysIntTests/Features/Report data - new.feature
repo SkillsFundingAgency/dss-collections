@@ -85,19 +85,19 @@ Scenario:  Outcomes less than 12 or 13 months earlier
 		| LoaderRef                       | TouchPoint |  AdviserDetailsId                      |  DateandTimeOfInteraction  |  Channel  |  InteractionType  |  LastModifiedDate      |  LastModifiedTouchpointId  | 
 		| TS_038_OUTCOMELT12MONTHEARLIER1 |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-03-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
 		| TS_039_OUTCOMELT12MONTHEARLIER2 |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-03-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
-		| TS_040_OUTCOMELT13MONTHEARLIER2 |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-03-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
+		| TS_040_OUTCOMELT13MONTHEARLIER2 |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-02-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
 
 			And I load test session data for the feature
 		| LoaderRef                       | ParentRef | DateandTimeOfSession   | VenuePostCode          | SessionAttended    | ReasonForNonAttendance   | LastModifiedDate       | LastModifiedTouchpointId | 
 		| TS_038_OUTCOMELT12MONTHEARLIER1 | 1         |  2019-03-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
 		| TS_039_OUTCOMELT12MONTHEARLIER2 | 1         |  2019-03-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
-		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         |  2019-03-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
+		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         |  2019-02-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
 
 		And I load action plan data for the feature
 		| LoaderRef                       | ParentRef | DateActionPlanCreated  | CustomerCharterShownToCustomer   | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation    | 
 		| TS_038_OUTCOMELT12MONTHEARLIER1 | 1         |  2019-03-01T00:00:00Z  |  true                            |  2019-03-01T00:00:00Z   |  2019-03-01T00:00:00Z        | 1                        |  2019-03-01T00:00:00Z      | 1                |  looking for work26 | 
 		| TS_039_OUTCOMELT12MONTHEARLIER2 | 1         |  2019-03-01T00:00:00Z  |  true                            |  2019-03-01T00:00:00Z   |  2019-03-01T00:00:00Z        | 1                        |  2019-03-01T00:00:00Z      | 1                |  looking for work26 | 
-		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         |  2019-03-01T00:00:00Z  |  true                            |  2019-03-01T00:00:00Z   |  2019-03-01T00:00:00Z        | 1                        |  2019-03-01T00:00:00Z      | 1                |  looking for work26 | 
+		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         |  2019-02-01T00:00:00Z  |  true                            |  2019-02-01T00:00:00Z   |  2019-02-01T00:00:00Z        | 1                        |  2019-02-01T00:00:00Z      | 1                |  looking for work26 | 
 
 		And I load outcome data for the feature
 		| LoaderRef                       | ParentRef | OutcomeType | TouchPoint | ClaimedPriorityGroup | OutcomeClaimedDate     | OutcomeEffectiveDate   | 
@@ -107,8 +107,8 @@ Scenario:  Outcomes less than 12 or 13 months earlier
 		| TS_039_OUTCOMELT12MONTHEARLIER2 | 1         | 2           |            | 1                    |  2020-03-03T00:00:00Z  |  2020-03-02T00:00:00Z  | 
 		| TS_039_OUTCOMELT12MONTHEARLIER2 | 1         | 1           |            | 1                    |                        |                        | 
 		| TS_039_OUTCOMELT12MONTHEARLIER2 | 1         | 1           |            | 1                    |  2020-03-02T00:00:00Z  |  2020-03-02T00:00:00Z  | 
-		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         | 3           |            | 2                    |  2019-03-03T00:00:00Z  |  2019-03-03T00:00:00Z  | 
-		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         | 3           |            | 2                    |  2020-04-03T00:00:00Z  |  2020-04-02T00:00:00Z  | 
+		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         | 3           |            | 2                    |  2019-02-03T00:00:00Z  |  2019-02-03T00:00:00Z  | 
+		| TS_040_OUTCOMELT13MONTHEARLIER2 | 1         | 3           |            | 2                    |  2020-03-03T00:00:00Z  |  2020-03-02T00:00:00Z  | 
 
 		And I have made any data fudging updates required
 		And I have confirmed all test data is now in the backup data store
@@ -623,4 +623,64 @@ Scenario: Multiple Addresses
 		Then Outcome 1 for test customer "TS_027_ADDRESS_ENDED" is included in the report
 		Then Outcome 1 for test customer "TS_028_ADDRESS_HISTORY" is included in the report
 
-	
+
+Scenario: Earlier outcomes that do not cause exclusion
+
+		Given I load test customer data for this feature:
+			#Parent for ADDRESS in CUSTOMER
+		| LoaderRef                       | TouchPoint | Title | GivenName | FamilyName    | DateofBirth       | DateOfRegistration   | UniqueLearnerNumber | OptInUserResearch   | OptInMarketResearch   | DateOfTermination   | ReasonForTermination   | IntroducedBy | IntroducedByAdditionalInfo   | LastModifiedDate       | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   |            | 4     | Dan       | tsfortyfive   |  Today -21Y       |  Now -3D             | 9999900053          |  true               |  false                |                     |                        |              |                              |                        | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED |            | 4     | Dan       | tsfortysix    |  Today -21Y       |  Now -3D             | 9999900053          |  true               |  false                |                     |                        |              |                              |                        | 
+
+		And I load test address data for this feature:
+		| LoaderRef                  | Address1         | Address2        | Address3 | Address4 | Address5 | PostCode   | AlternativePostCode | Longitude | Latitude | EffectiveFrom        | EffectiveTo          | LastModifiedDate     | LastModifiedTouchpointId | 
+
+		And I load test contact data for this feature:
+		| LoaderRef | PreferredContactMethod | MobileNumber | HomeNumber | AlternativeNumber | EmailAddress | LastModifiedDate | LastModifiedTouchpointId | 
+
+		 And I load test interaction data for this feature
+		#	#Parent for INTERACTION is CUSTOMER
+		| LoaderRef                       | TouchPoint |  AdviserDetailsId                      |  DateandTimeOfInteraction  |  Channel  |  InteractionType  |  LastModifiedDate      |  LastModifiedTouchpointId  | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-03-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED |            |  bb940afb-1423-4999-a234-5a64a5c00831  |  2019-03-01T00:00:00Z      | 2         | 3                 |  2019-01-23T00:00:00Z  | 90000001                   | 
+
+			And I load test session data for the feature
+		| LoaderRef                       | ParentRef | DateandTimeOfSession   | VenuePostCode          | SessionAttended    | ReasonForNonAttendance   | LastModifiedDate       | LastModifiedTouchpointId | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   | 1         |  2019-03-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         |  2019-03-01T00:00:00Z  |  NE9 7RG               |  true              |                          |  2019-03-01T00:00:00Z  | 90000001                 | 
+
+		And I load action plan data for the feature
+		| LoaderRef                       | ParentRef | DateActionPlanCreated  | CustomerCharterShownToCustomer   | DateAndTimeCharterShown | DateActionPlanSentToCustomer | ActionPlanDeliveryMethod | DateActionPlanAcknowledged | PriorityCustomer | CurrentSituation    | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   | 1         |  2019-03-01T00:00:00Z  |  true                            |  2019-03-01T00:00:00Z   |  2019-03-01T00:00:00Z        | 1                        |  2019-03-01T00:00:00Z      | 1                |  looking for work26 | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         |  2019-03-02T00:00:00Z  |  true                            |  2019-03-02T00:00:00Z   |  2019-03-02T00:00:00Z        | 1                        |  2019-03-02T00:00:00Z      | 1                |  looking for work26 | 
+
+		And I load outcome data for the feature
+		| LoaderRef                       | ParentRef | OutcomeType | TouchPoint | ClaimedPriorityGroup | OutcomeClaimedDate     | OutcomeEffectiveDate   | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   | 1         | 1           | 0000000999 | 4                    |  2019-04-10T00:00:00Z  |  2019-04-10T00:00:00Z  | 
+		| TS_045_EARLIEROUTCOMEHELPLINE   | 1         | 1           |            | 4                    |  2019-05-12T00:00:00Z  |  2019-05-12T00:00:00Z  | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         | 2           |            | 1                    |                        |  2019-04-16T00:00:00Z  | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         | 2           |            | 2                    |  2019-04-17T00:00:00Z  |  2019-04-17T00:00:00Z  | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         | 3           |            | 3                    |                        |                        | 
+		| TS_046_EARLIEROUTCOMENOTCLAIMED | 1         | 3           |            | 4                    |  2019-04-19T00:00:00Z  |  2019-04-19T00:00:00Z  | 
+
+
+
+		And I have made any data fudging updates required
+		And I have confirmed all test data is now in the backup data store
+		And the report period start date is "2019-04-01"
+		And the report period end date is "2020-03-31"
+		And a request has been made and the report data is available
+
+		When I check the report data
+		Then Outcome 1 for test customer "TS_045_EARLIEROUTCOMEHELPLINE" is not included in the report
+		Then Outcome 2 for test customer "TS_045_EARLIEROUTCOMEHELPLINE" is included in the report with the following values
+			| DateOfBirth | HomePostCode | SessionDate | SubContractorId | AdviserName   | OutcomeType | OutcomeEffectiveDate | OutcomePriorityCustomer |
+			| Today -21Y  |              | 2019-03-01  |                 | Billy Adviser | 1           | 2019-05-12           | 1                       |
+		Then Outcome 1 for test customer "TS_046_EARLIEROUTCOMENOTCLAIMED" is not included in the report
+		Then Outcome 2 for test customer "TS_046_EARLIEROUTCOMENOTCLAIMED" is included in the report with the following values
+			| DateOfBirth | HomePostCode | SessionDate | SubContractorId | AdviserName   | OutcomeType | OutcomeEffectiveDate | OutcomePriorityCustomer |
+			| Today -21Y  |              | 2019-03-01  |                 | Billy Adviser | 2           | 2019-04-17           | 1                       |
+		Then Outcome 3 for test customer "TS_046_EARLIEROUTCOMENOTCLAIMED" is not included in the report
+		Then Outcome 4 for test customer "TS_046_EARLIEROUTCOMENOTCLAIMED" is included in the report with the following values
+			| DateOfBirth | HomePostCode | SessionDate | SubContractorId | AdviserName   | OutcomeType | OutcomeEffectiveDate | OutcomePriorityCustomer |
+			| Today -21Y  |              | 2019-03-01  |                 | Billy Adviser | 3           | 2019-04-19           | 1                       |

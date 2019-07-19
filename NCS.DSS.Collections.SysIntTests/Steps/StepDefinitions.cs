@@ -336,11 +336,31 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             SearchResults.Results.Count().Should().Be(SearchResults.RecordCount - ( PageSize * ( NumberOfPages - 1 ) ),"because pagination should return all remaining documents on the last page");
         }
 
+        public bool DataSetupIsComplete()
+        {
+            bool dataSetupComplete = false;
+            if ( featureContext.ContainsKey("DataSetupExecuted") )
+            {
+                dataSetupComplete = (bool)featureContext["DataSetupExecuted"];
+            }
+            else
+            {
+                featureContext["DataSetupExecuted"] = dataSetupComplete;
+            }
+            return dataSetupComplete;
+        }
+
+        public void SetDataSetupAsComplete()
+        {
+            featureContext["DataSetupExecuted"] = true;
+        }
+
+
         [Given(@"I load test customer data for this feature:")]
         public void GivenILoadTestCustomerDataForThisFeature(Table table)
         {
             //CustomerDataLoad.DataSetupExecuted = true;
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -354,7 +374,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load test address data for this feature:")]
         public void GivenILoadTestAddressDataForThisFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -367,7 +387,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load test contact data for this feature:")]
         public void GivenILoadTestContactDataForThisFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -381,7 +401,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load test interaction data for this feature")]
         public void GivenILoadTestInteractionDataForThisFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -394,7 +414,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load test session data for the feature")]
         public void GivenILoadTestSessionDataForTheFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -406,7 +426,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load action plan data for the feature")]
         public void GivenILoadActionPlanDataForTheFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -420,7 +440,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load action data for the feature")]
         public void GivenILoadActionDataForTheFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -433,7 +453,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I load outcome data for the feature")]
         public void GivenILoadOutcomeDataForTheFeature(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -447,7 +467,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I have made any data fudging updates required")]
         public void GivenIHaveMadeAnyDataFudgingUpdatesRequired()
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -474,7 +494,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I update the following sessions")]
         public void GivenIUpdateTheFollowingSessions(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -521,7 +541,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I update the following sessions directly")]
         public void GivenIUpdateTheFollowingSessionsDirectly(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -588,7 +608,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I update the following outcomes directly")]
         public void GivenIUpdateTheFollowingOutcomesDirectly(Table table)
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -642,7 +662,8 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             {
                 Console.WriteLine("Test Customer: " + item.LoaderReference + ", " +item.ParentType + ": " + item.ParentId);
             }
-            CustomerDataLoad.DataSetupExecuted = true;
+            SetDataSetupAsComplete();
+            //CustomerDataLoad.DataSetupExecuted = true;
         }
 
         [Given(@"I am creating data in scenario context")]
@@ -655,7 +676,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"I have confirmed all test data is now in the backup data store")]
         public void GivenIHaveConfirmedAllTestDataIsNowInTheBackupDataStore()
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
                 return;
             }
@@ -708,7 +729,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         [Given(@"a request has been made and the report data is available")]
         public void GivenARequestHasBeenMadeAndTheReportDataIsAvailable()
         {
-            if (CustomerDataLoad.DataSetupExecuted)
+            if (DataSetupIsComplete())
             {
 
                 ReportRows = (List<Models.ReportRow>)featureContext["ReportRows"];
@@ -842,6 +863,35 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
             checkList.Count().Should().BeGreaterThan(0, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been unexpectedly ommited from the report");
             checkList.Count().Should().Be(1, "Because otherwise Outcome " + p0 + " for the test customer " + p1 + "has been duplicated in the report");
         }
+
+        [Then(@"Either Outcome (.*) or (.*) for test customer ""(.*)"" is included in the report")]
+        public void ThenEitherOutcomeOrForTestCustomerIsIncludedInTheReport(int p0, int p1, string p2)
+        {
+            int matchedOutcomes = 0;
+            // find the passing in string in the DataLoad collection and get the customer i
+            List<Loader> testData = (storeTearDownAtScenarioLevel ? (List<Loader>)scenarioContext["TestData"]
+                                                                    : (List<Loader>)featureContext["TestData"]);
+
+            // get records matching this customer
+            var list = testData.Where(i => i.LoaderReference == p2 && i.ParentType == constants.OutcomeId);
+            list.Count().Should().BeGreaterOrEqualTo(p0, "Because otherwise not enough outcomes have been loaded for this customer");
+
+            var item = list.ElementAt(p0 - 1);
+            // check that the first outcome is included in the report
+            var checkList = ReportRows.Where(j => j.OutcomeID.ToLower() == item.ParentId.ToLower());
+            matchedOutcomes += checkList.Count();
+
+            item = list.ElementAt(p1 - 1);
+            // check that the first outcome is included in the report
+            checkList = ReportRows.Where(j => j.OutcomeID.ToLower() == item.ParentId.ToLower());
+            matchedOutcomes += checkList.Count();
+
+            matchedOutcomes.Should().BeGreaterThan(0, "Because otherwise neither of the indicated outcome have been included in the report");
+            matchedOutcomes.Should().Be(1, "Because otherwise both of the indicated outcome have been included in the report");
+
+        }
+
+
 
 
 
