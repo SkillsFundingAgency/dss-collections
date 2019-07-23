@@ -11,7 +11,8 @@ namespace NCS.DSS.Collections.SysIntTests.Models
         string LoaderRef { get; set; }
         //string CustomerId { get; set; }
         string ParentRef { get; set; }
-       // string InteractionRef { get; set; }
+        string SubcontractorId { get; set; }
+        // string InteractionRef { get; set; }
         //Dictionary<string, string> ParentIds { get; set; }
     }
 }

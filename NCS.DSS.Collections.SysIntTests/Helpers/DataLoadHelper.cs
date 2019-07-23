@@ -128,7 +128,7 @@ namespace NCS.DSS.Collections.SysIntTests.Helpers
 
              
                 //submit the request
-                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, ( touchpointSupplied ? suppliedTouchpoint : envSettings.TouchPointId ), envSettings.SubscriptionKey, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 0: 2) );
+                var response = RestHelper.Post(envSettings.BaseUrl + pathToUse, json, ( touchpointSupplied ? suppliedTouchpoint : envSettings.TouchPointId ), envSettings.SubscriptionKey, item.SubcontractorId, (tokenToStore == "InteractionId" || tokenToStore == "ContactId"? 0: 2) );
                 response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created, "Because  " + item.LoaderRef + ": " + response.Content); 
 
                 // do we want to push this to the data store?

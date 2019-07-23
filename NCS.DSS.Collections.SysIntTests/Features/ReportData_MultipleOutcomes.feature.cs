@@ -250,6 +250,38 @@ namespace NCS.DSS.Collections.SysIntTests.Features
                         "",
                         ""});
             table1.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "",
+                        "4",
+                        "Dan",
+                        "tsthirtyninea",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900053",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""});
+            table1.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "",
+                        "4",
+                        "Dan",
+                        "tsthirtynineb",
+                        "Today -21Y",
+                        "Now -3D",
+                        "9999900053",
+                        "true",
+                        "false",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""});
+            table1.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
                         "",
                         "4",
@@ -299,7 +331,7 @@ testRunner.Given("I load test customer data for this feature:", ((string)(null))
                         "EffectiveTo",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-#line 21
+#line 23
 testRunner.And("I load test address data for this feature:", ((string)(null)), table2, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -311,7 +343,7 @@ testRunner.And("I load test address data for this feature:", ((string)(null)), t
                         "EmailAddress",
                         "LastModifiedDate",
                         "LastModifiedTouchpointId"});
-#line 24
+#line 26
 testRunner.And("I load test contact data for this feature:", ((string)(null)), table3, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -412,6 +444,42 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "2",
                         "3",
                         "",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
+                        "90000001"});
+            table4.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "",
+                        "bb940afb-1423-4999-a234-5a64a5c00831",
+                        "2019-03-01T00:00:00Z",
+                        "2",
+                        "3",
+                        "2019-01-23T00:00:00Z",
                         "90000001"});
             table4.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
@@ -530,7 +598,7 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "3",
                         "2019-01-23T00:00:00Z",
                         "90000001"});
-#line 27
+#line 29
  testRunner.And("I load test interaction data for this feature", ((string)(null)), table4, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -541,7 +609,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "SessionAttended",
                         "ReasonForNonAttendance",
                         "LastModifiedDate",
-                        "LastModifiedTouchpointId"});
+                        "LastModifiedTouchpointId",
+                        "SubcontractorId"});
             table5.AddRow(new string[] {
                         "COL1030_OUTCOMES1",
                         "1",
@@ -550,7 +619,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        "123ABC"});
             table5.AddRow(new string[] {
                         "COL1031_OUTCOMES2",
                         "1",
@@ -559,7 +629,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1032_OUTCOMES3",
                         "1",
@@ -568,7 +639,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1033_OUTCOMES4",
                         "1",
@@ -577,7 +649,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1034_OUTCOMES5",
                         "1",
@@ -586,7 +659,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
                         "1",
@@ -595,7 +669,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
                         "1",
@@ -604,7 +679,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "false",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
                         "1",
@@ -613,7 +689,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1038_OUTCOMES9",
                         "1",
@@ -622,7 +699,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1039_OUTCOMES10",
                         "1",
@@ -631,7 +709,48 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
+            table5.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "",
+                        "90000001",
+                        ""});
+            table5.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "2",
+                        "2019-04-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "",
+                        "90000001",
+                        ""});
+            table5.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "",
+                        "90000001",
+                        ""});
+            table5.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "2",
+                        "2019-04-01T00:00:00Z",
+                        "NE9 7RG",
+                        "true",
+                        "",
+                        "",
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
                         "1",
@@ -640,7 +759,8 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
+                        "90000001",
+                        ""});
             table5.AddRow(new string[] {
                         "COL1042a_OUTCOMES14",
                         "1",
@@ -649,8 +769,9 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "true",
                         "",
                         "",
-                        "90000001"});
-#line 54
+                        "90000001",
+                        ""});
+#line 60
  testRunner.And("I load test session data for the feature", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -775,6 +896,50 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "1",
                         "looking for work26"});
             table6.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "true",
+                        "2019-04-01T00:00:00Z",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "2",
+                        "2019-04-01T00:00:00Z",
+                        "true",
+                        "2019-04-01T00:00:00Z",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "true",
+                        "2019-04-01T00:00:00Z",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "2",
+                        "2019-04-01T00:00:00Z",
+                        "true",
+                        "2019-04-01T00:00:00Z",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "2019-04-01T00:00:00Z",
+                        "1",
+                        "looking for work26"});
+            table6.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
                         "1",
                         "2019-04-01T00:00:00Z",
@@ -796,7 +961,7 @@ testRunner.And("I load test contact data for this feature:", ((string)(null)), t
                         "2019-04-01T00:00:00Z",
                         "1",
                         "looking for work26"});
-#line 69
+#line 79
 testRunner.And("I load action plan data for the feature", ((string)(null)), table6, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -807,7 +972,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "ClaimedPriorityGroup",
                         "OutcomeClaimedDate",
                         "OutcomeEffectiveDate",
-                        "LastModifiedDate"});
+                        "LastModifiedDate",
+                        "SUbcontractorId"});
             table7.AddRow(new string[] {
                         "COL1030_OUTCOMES1",
                         "1",
@@ -816,7 +982,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
-                        ""});
+                        "",
+                        "123ABC"});
             table7.AddRow(new string[] {
                         "COL1030_OUTCOMES1",
                         "1",
@@ -825,7 +992,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
-                        ""});
+                        "",
+                        "123ABC"});
             table7.AddRow(new string[] {
                         "COL1030_OUTCOMES1",
                         "1",
@@ -834,7 +1002,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
-                        ""});
+                        "",
+                        "123ABC"});
             table7.AddRow(new string[] {
                         "COL1031_OUTCOMES2",
                         "1",
@@ -843,7 +1012,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
-                        ""});
+                        "",
+                        "123ABC"});
             table7.AddRow(new string[] {
                         "COL1031_OUTCOMES2",
                         "1",
@@ -852,6 +1022,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1031_OUTCOMES2",
@@ -861,6 +1032,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1032_OUTCOMES3",
@@ -870,6 +1042,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1032_OUTCOMES3",
@@ -879,6 +1052,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1032_OUTCOMES3",
@@ -888,6 +1062,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1034_OUTCOMES5",
@@ -897,6 +1072,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1034_OUTCOMES5",
@@ -906,6 +1082,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1034_OUTCOMES5",
@@ -915,6 +1092,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1034_OUTCOMES5",
@@ -924,6 +1102,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-07-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
@@ -933,6 +1112,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
@@ -942,6 +1122,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
@@ -951,6 +1132,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
@@ -960,6 +1142,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-08-03T00:00:00Z",
                         "2019-08-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1035_OUTCOMES6",
@@ -969,6 +1152,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-08-03T00:00:00Z",
                         "2019-08-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
@@ -978,6 +1162,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
@@ -987,6 +1172,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
@@ -996,6 +1182,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
@@ -1005,6 +1192,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-07-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1036_OUTCOMES7",
@@ -1014,6 +1202,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-08-03T00:00:00Z",
                         "2019-08-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
@@ -1023,6 +1212,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
@@ -1032,6 +1222,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
@@ -1041,6 +1232,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
@@ -1050,6 +1242,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-12-03T00:00:00Z",
                         "2019-07-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1037_OUTCOMES8",
@@ -1059,6 +1252,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "2",
                         "2019-08-03T00:00:00Z",
                         "2019-08-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1038_OUTCOMES9",
@@ -1068,6 +1262,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-04-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1038_OUTCOMES9",
@@ -1077,6 +1272,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-12-03T00:00:00Z",
                         "2019-05-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1039_OUTCOMES10",
@@ -1086,6 +1282,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1039_OUTCOMES10",
@@ -1095,6 +1292,47 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-07-03T00:00:00Z",
+                        "",
+                        ""});
+            table7.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "1",
+                        "1",
+                        "9999999999",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-06-03T09:00:00Z",
+                        "",
+                        ""});
+            table7.AddRow(new string[] {
+                        "COL1039_OUTCOMES10A",
+                        "2",
+                        "1",
+                        "",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-06-03T09:00:01Z",
+                        "",
+                        ""});
+            table7.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "1",
+                        "1",
+                        "",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-06-03T09:00:00Z",
+                        "",
+                        ""});
+            table7.AddRow(new string[] {
+                        "COL1039_OUTCOMES10B",
+                        "2",
+                        "1",
+                        "9999999999",
+                        "1",
+                        "2019-12-03T00:00:00Z",
+                        "2019-06-03T09:00:01Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
@@ -1104,6 +1342,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-06-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1040_OUTCOMES11",
@@ -1113,6 +1352,7 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "1",
                         "2019-12-03T00:00:00Z",
                         "2019-07-03T00:00:00Z",
+                        "",
                         ""});
             table7.AddRow(new string[] {
                         "COL1042a_OUTCOMES14",
@@ -1122,7 +1362,8 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-05-04T00:00:00Z",
                         "2019-05-04T00:00:00Z",
-                        "2019-05-04T00:00:00Z"});
+                        "2019-05-04T00:00:00Z",
+                        ""});
             table7.AddRow(new string[] {
                         "COL1042a_OUTCOMES14",
                         "1",
@@ -1131,27 +1372,28 @@ testRunner.And("I load action plan data for the feature", ((string)(null)), tabl
                         "99",
                         "2019-05-04T00:00:00Z",
                         "2019-05-04T00:00:00Z",
-                        "2019-05-04T00:00:00Z"});
-#line 84
+                        "2019-05-04T00:00:00Z",
+                        ""});
+#line 98
 testRunner.And("I load outcome data for the feature", ((string)(null)), table7, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "LoaderRef",
                         "SessionRef",
                         "DateandTimeOfSession"});
-#line 123
+#line 141
 testRunner.And("I update the following sessions", ((string)(null)), table8, "And ");
-#line 128
+#line 146
 testRunner.And("I have made any data fudging updates required", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 129
+#line 147
 testRunner.And("I have confirmed all test data is now in the backup data store", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 130
+#line 148
 testRunner.And("the report period start date is \"2019-04-01\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 131
+#line 149
 testRunner.And("the report period end date is \"2020-03-31\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 132
+#line 150
 testRunner.And("a request has been made and the report data is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 133
+#line 151
 testRunner.And("I have completed loading data and don\'t want to repeat for each test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -1161,12 +1403,12 @@ testRunner.And("I have completed loading data and don\'t want to repeat for each
         public virtual void AllSubmittedOutcomesAreValid()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("All submitted outcomes are valid", null, ((string[])(null)));
-#line 135
+#line 153
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 3
 this.FeatureBackground();
-#line 136
+#line 154
   testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1182,12 +1424,12 @@ this.FeatureBackground();
                         "Today -21Y",
                         "",
                         "2019-04-01",
-                        "",
+                        "123ABC",
                         "Billy Adviser",
                         "1",
                         "2019-04-03",
                         "1"});
-#line 137
+#line 155
   testRunner.Then("Outcome 1 for test customer \"COL1030_OUTCOMES1\" is included in the report with th" +
                     "e following values", ((string)(null)), table9, "Then ");
 #line hidden
@@ -1204,12 +1446,12 @@ this.FeatureBackground();
                         "Today -21Y",
                         "",
                         "2019-04-01",
-                        "",
+                        "123ABC",
                         "Billy Adviser",
                         "2",
                         "2019-05-03",
                         "1"});
-#line 140
+#line 158
   testRunner.Then("Outcome 2 for test customer \"COL1030_OUTCOMES1\" is included in the report with th" +
                     "e following values", ((string)(null)), table10, "Then ");
 #line hidden
@@ -1226,12 +1468,12 @@ this.FeatureBackground();
                         "Today -21Y",
                         "",
                         "2019-04-01",
-                        "",
+                        "123ABC",
                         "Billy Adviser",
                         "3",
                         "2019-06-03",
                         "1"});
-#line 143
+#line 161
   testRunner.Then("Outcome 3 for test customer \"COL1030_OUTCOMES1\" is included in the report with th" +
                     "e following values", ((string)(null)), table11, "Then ");
 #line hidden
@@ -1248,12 +1490,12 @@ this.FeatureBackground();
                         "Today -21Y",
                         "",
                         "2019-04-01",
-                        "",
+                        "123ABC",
                         "Billy Adviser",
                         "1",
                         "2019-04-03",
                         "1"});
-#line 146
+#line 164
   testRunner.Then("Outcome 1 for test customer \"COL1031_OUTCOMES2\" is included in the report with th" +
                     "e following values", ((string)(null)), table12, "Then ");
 #line hidden
@@ -1275,7 +1517,7 @@ this.FeatureBackground();
                         "2",
                         "2019-05-03",
                         "1"});
-#line 149
+#line 167
   testRunner.Then("Outcome 2 for test customer \"COL1031_OUTCOMES2\" is included in the report with th" +
                     "e following values", ((string)(null)), table13, "Then ");
 #line hidden
@@ -1297,7 +1539,7 @@ this.FeatureBackground();
                         "4",
                         "2019-06-03",
                         "0"});
-#line 152
+#line 170
   testRunner.Then("Outcome 3 for test customer \"COL1031_OUTCOMES2\" is included in the report with th" +
                     "e following values", ((string)(null)), table14, "Then ");
 #line hidden
@@ -1319,7 +1561,7 @@ this.FeatureBackground();
                         "1",
                         "2019-04-03",
                         "1"});
-#line 155
+#line 173
   testRunner.Then("Outcome 1 for test customer \"COL1032_OUTCOMES3\" is included in the report with th" +
                     "e following values", ((string)(null)), table15, "Then ");
 #line hidden
@@ -1341,7 +1583,7 @@ this.FeatureBackground();
                         "2",
                         "2019-05-03",
                         "0"});
-#line 158
+#line 176
   testRunner.Then("Outcome 2 for test customer \"COL1032_OUTCOMES3\" is included in the report with th" +
                     "e following values", ((string)(null)), table16, "Then ");
 #line hidden
@@ -1363,7 +1605,7 @@ this.FeatureBackground();
                         "5",
                         "2019-06-03",
                         "0"});
-#line 161
+#line 179
   testRunner.Then("Outcome 3 for test customer \"COL1032_OUTCOMES3\" is included in the report with th" +
                     "e following values", ((string)(null)), table17, "Then ");
 #line hidden
@@ -1375,12 +1617,12 @@ this.FeatureBackground();
         public virtual void InvalidOutcomeAreSubmittedWhereAnotherOfTheSameTypeIsAlreadyPresent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid Outcome are submitted where another of the same type is already present", null, ((string[])(null)));
-#line 166
+#line 184
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 3
 this.FeatureBackground();
-#line 167
+#line 185
   testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1401,7 +1643,7 @@ this.FeatureBackground();
                         "2",
                         "2019-04-03",
                         "1"});
-#line 169
+#line 187
   testRunner.Then("Outcome 1 for test customer \"COL1034_OUTCOMES5\" is included in the report with th" +
                     "e following values", ((string)(null)), table18, "Then ");
 #line hidden
@@ -1423,10 +1665,10 @@ this.FeatureBackground();
                         "1",
                         "2019-05-03",
                         "1"});
-#line 172
+#line 190
   testRunner.Then("Outcome 2 for test customer \"COL1034_OUTCOMES5\" is included in the report with th" +
                     "e following values", ((string)(null)), table19, "Then ");
-#line 175
+#line 193
   testRunner.Then("Outcome 3 for test customer \"COL1034_OUTCOMES5\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1447,7 +1689,7 @@ this.FeatureBackground();
                         "3",
                         "2019-07-03",
                         "1"});
-#line 176
+#line 194
   testRunner.Then("Outcome 4 for test customer \"COL1034_OUTCOMES5\" is included in the report with th" +
                     "e following values", ((string)(null)), table20, "Then ");
 #line hidden
@@ -1469,7 +1711,7 @@ this.FeatureBackground();
                         "1",
                         "2019-04-03",
                         "0"});
-#line 180
+#line 198
   testRunner.Then("Outcome 1 for test customer \"COL1035_OUTCOMES6\" is included in the report with th" +
                     "e following values", ((string)(null)), table21, "Then ");
 #line hidden
@@ -1491,7 +1733,7 @@ this.FeatureBackground();
                         "2",
                         "2019-05-03",
                         "0"});
-#line 183
+#line 201
   testRunner.Then("Outcome 2 for test customer \"COL1035_OUTCOMES6\" is included in the report with th" +
                     "e following values", ((string)(null)), table22, "Then ");
 #line hidden
@@ -1513,12 +1755,12 @@ this.FeatureBackground();
                         "3",
                         "2019-06-03",
                         "0"});
-#line 186
+#line 204
   testRunner.Then("Outcome 3 for test customer \"COL1035_OUTCOMES6\" is included in the report with th" +
                     "e following values", ((string)(null)), table23, "Then ");
-#line 189
+#line 207
   testRunner.Then("Outcome 4 for test customer \"COL1035_OUTCOMES6\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 190
+#line 208
   testRunner.Then("Outcome 5 for test customer \"COL1035_OUTCOMES6\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1539,7 +1781,7 @@ this.FeatureBackground();
                         "1",
                         "2019-04-03",
                         "1"});
-#line 192
+#line 210
   testRunner.Then("Outcome 1 for test customer \"COL1036_OUTCOMES7\" is included in the report with th" +
                     "e following values", ((string)(null)), table24, "Then ");
 #line hidden
@@ -1561,7 +1803,7 @@ this.FeatureBackground();
                         "2",
                         "2019-05-03",
                         "1"});
-#line 195
+#line 213
   testRunner.Then("Outcome 2 for test customer \"COL1036_OUTCOMES7\" is included in the report with th" +
                     "e following values", ((string)(null)), table25, "Then ");
 #line hidden
@@ -1583,12 +1825,12 @@ this.FeatureBackground();
                         "4",
                         "2019-06-03",
                         "1"});
-#line 198
+#line 216
   testRunner.Then("Outcome 3 for test customer \"COL1036_OUTCOMES7\" is included in the report with th" +
                     "e following values", ((string)(null)), table26, "Then ");
-#line 201
+#line 219
   testRunner.Then("Outcome 4 for test customer \"COL1036_OUTCOMES7\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 202
+#line 220
   testRunner.Then("Outcome 5 for test customer \"COL1036_OUTCOMES7\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1609,12 +1851,12 @@ this.FeatureBackground();
                         "5",
                         "2019-04-03",
                         "1"});
-#line 204
+#line 222
   testRunner.Then("Outcome 1 for test customer \"COL1037_OUTCOMES8\" is included in the report with th" +
                     "e following values", ((string)(null)), table27, "Then ");
-#line 207
+#line 225
   testRunner.Then("Outcome 2 for test customer \"COL1037_OUTCOMES8\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 208
+#line 226
   testRunner.Then("Outcome 3 for test customer \"COL1037_OUTCOMES8\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1635,7 +1877,7 @@ this.FeatureBackground();
                         "2",
                         "2019-07-03",
                         "1"});
-#line 209
+#line 227
   testRunner.Then("Outcome 4 for test customer \"COL1037_OUTCOMES8\" is included in the report with th" +
                     "e following values", ((string)(null)), table28, "Then ");
 #line hidden
@@ -1657,7 +1899,7 @@ this.FeatureBackground();
                         "1",
                         "2019-08-03",
                         "1"});
-#line 212
+#line 230
   testRunner.Then("Outcome 5 for test customer \"COL1037_OUTCOMES8\" is included in the report with th" +
                     "e following values", ((string)(null)), table29, "Then ");
 #line hidden
@@ -1669,14 +1911,14 @@ this.FeatureBackground();
         public virtual void OutcomesSubmittedByAnotherParty()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Outcomes submitted by another party", null, ((string[])(null)));
-#line 217
+#line 235
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 3
 this.FeatureBackground();
-#line 218
+#line 236
   testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 220
+#line 238
   testRunner.Then("Outcome 1 for test customer \"COL1038_OUTCOMES9\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1697,13 +1939,21 @@ this.FeatureBackground();
                         "1",
                         "2019-05-03",
                         "0"});
-#line 221
+#line 239
   testRunner.Then("Outcome 2 for test customer \"COL1038_OUTCOMES9\" is included in the report with th" +
                     "e following values", ((string)(null)), table30, "Then ");
-#line 225
+#line 243
   testRunner.Then("Outcome 1 for test customer \"COL1039_OUTCOMES10\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 226
+#line 244
   testRunner.Then("Outcome 2 for test customer \"COL1039_OUTCOMES10\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 246
+  testRunner.Then("Outcome 1 for test customer \"COL1039_OUTCOMES10A\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 247
+  testRunner.Then("Outcome 2 for test customer \"COL1039_OUTCOMES10A\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 249
+  testRunner.Then("Outcome 1 for test customer \"COL1039_OUTCOMES10B\" is included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 250
+  testRunner.Then("Outcome 2 for test customer \"COL1039_OUTCOMES10B\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
                         "DateOfBirth",
@@ -1723,10 +1973,10 @@ this.FeatureBackground();
                         "1",
                         "2019-06-03",
                         "1"});
-#line 228
+#line 252
   testRunner.Then("Outcome 1 for test customer \"COL1040_OUTCOMES11\" is included in the report with t" +
                     "he following values", ((string)(null)), table31, "Then ");
-#line 231
+#line 255
   testRunner.Then("Outcome 2 for test customer \"COL1040_OUTCOMES11\" is not included in the report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1737,14 +1987,14 @@ this.FeatureBackground();
         public virtual void DuplicateOutcomes()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Duplicate outcomes", null, ((string[])(null)));
-#line 234
+#line 258
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 3
 this.FeatureBackground();
-#line 235
+#line 259
   testRunner.When("I check the report data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 237
+#line 261
   testRunner.Then("Either Outcome 1 or 2 for test customer \"COL1042a_OUTCOMES14\" is included in the " +
                     "report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

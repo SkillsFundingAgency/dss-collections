@@ -3883,11 +3883,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Previous Session is less that 12 months earlier that the current session and the " +
+        [NUnit.Framework.DescriptionAttribute("Previous Session is less than 12 months earlier that the current session and the " +
             "associated outcomes were submitted within 12/13 months of that session")]
-        public virtual void PreviousSessionIsLessThat12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedWithin1213MonthsOfThatSession()
+        public virtual void PreviousSessionIsLessThan12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedWithin1213MonthsOfThatSession()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less that 12 months earlier that the current session and the " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less than 12 months earlier that the current session and the " +
                     "associated outcomes were submitted within 12/13 months of that session", null, ((string[])(null)));
 #line 445
 this.ScenarioInitialize(scenarioInfo);
@@ -3926,11 +3926,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Previous Session is less that 12 months earlier that the current session and the " +
+        [NUnit.Framework.DescriptionAttribute("Previous Session is less than 12 months earlier that the current session and the " +
             "associated outcomes were submitted 12/13 months later than that session")]
-        public virtual void PreviousSessionIsLessThat12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmitted1213MonthsLaterThanThatSession()
+        public virtual void PreviousSessionIsLessThan12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmitted1213MonthsLaterThanThatSession()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less that 12 months earlier that the current session and the " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less than 12 months earlier that the current session and the " +
                     "associated outcomes were submitted 12/13 months later than that session", null, ((string[])(null)));
 #line 458
 this.ScenarioInitialize(scenarioInfo);
@@ -3972,12 +3972,12 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Previous Session is less that 12 months earlier that the current session and the " +
+        [NUnit.Framework.DescriptionAttribute("Previous Session is less than 12 months earlier that the current session and the " +
             "associated outcomes were submitted more than 12/13 months later than that sessio" +
             "n")]
-        public virtual void PreviousSessionIsLessThat12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedMoreThan1213MonthsLaterThanThatSession()
+        public virtual void PreviousSessionIsLessThan12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedMoreThan1213MonthsLaterThanThatSession()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less that 12 months earlier that the current session and the " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less than 12 months earlier that the current session and the " +
                     "associated outcomes were submitted more than 12/13 months later than that sessio" +
                     "n", null, ((string[])(null)));
 #line 470
@@ -4017,11 +4017,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Previous Session is less that 12 months earlier that the current session and the " +
+        [NUnit.Framework.DescriptionAttribute("Previous Session is less than 12 months earlier that the current session and the " +
             "associated outcomes were submitted by the helpline")]
-        public virtual void PreviousSessionIsLessThat12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedByTheHelpline()
+        public virtual void PreviousSessionIsLessThan12MonthsEarlierThatTheCurrentSessionAndTheAssociatedOutcomesWereSubmittedByTheHelpline()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less that 12 months earlier that the current session and the " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Previous Session is less than 12 months earlier that the current session and the " +
                     "associated outcomes were submitted by the helpline", null, ((string[])(null)));
 #line 483
 this.ScenarioInitialize(scenarioInfo);

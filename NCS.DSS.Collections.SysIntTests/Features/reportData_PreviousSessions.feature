@@ -442,7 +442,7 @@ Scenario: Previous Session exactly 12 months earlier than the current session
 	Then Outcome 1 for test customer "COL1058_PREVSESSION16" is not included in the report
 	Then Outcome 2 for test customer "COL1058_PREVSESSION16" is not included in the report
 
-Scenario: Previous Session is less that 12 months earlier that the current session and the associated outcomes were submitted within 12/13 months of that session
+Scenario: Previous Session is less than 12 months earlier that the current session and the associated outcomes were submitted within 12/13 months of that session
 	When I check the report data
 	Then Outcome 1 for test customer "COL1059_PREVSESSION17" is not included in the report
 	Then Outcome 2 for test customer "COL1059_PREVSESSION17" is included in the report
@@ -455,7 +455,7 @@ Scenario: Previous Session is less that 12 months earlier that the current sessi
 	Then Outcome 1 for test customer "COL1063_PREVSESSION21" is not included in the report
 	Then Outcome 2 for test customer "COL1063_PREVSESSION21" is included in the report
 
-Scenario: Previous Session is less that 12 months earlier that the current session and the associated outcomes were submitted 12/13 months later than that session
+Scenario: Previous Session is less than 12 months earlier that the current session and the associated outcomes were submitted 12/13 months later than that session
 	Then Outcome 1 for test customer "COL1064_PREVSESSION22" is not included in the report
 	Then Outcome 2 for test customer "COL1064_PREVSESSION22" is not included in the report
 	Then Outcome 1 for test customer "COL1065_PREVSESSION23" is not included in the report
@@ -467,7 +467,7 @@ Scenario: Previous Session is less that 12 months earlier that the current sessi
 	Then Outcome 1 for test customer "COL1068_PREVSESSION26" is not included in the report
 	Then Outcome 2 for test customer "COL1068_PREVSESSION26" is not included in the report
 
-Scenario: Previous Session is less that 12 months earlier that the current session and the associated outcomes were submitted more than 12/13 months later than that session
+Scenario: Previous Session is less than 12 months earlier that the current session and the associated outcomes were submitted more than 12/13 months later than that session
 	When I check the report data
 	Then Outcome 1 for test customer "COL1069_PREVSESSION27" is not included in the report
 	Then Outcome 2 for test customer "COL1069_PREVSESSION27" is included in the report
@@ -480,7 +480,7 @@ Scenario: Previous Session is less that 12 months earlier that the current sessi
 	Then Outcome 1 for test customer "COL1073_PREVSESSION31" is not included in the report
 	Then Outcome 2 for test customer "COL1073_PREVSESSION31" is included in the report
 
-Scenario: Previous Session is less that 12 months earlier that the current session and the associated outcomes were submitted by the helpline
+Scenario: Previous Session is less than 12 months earlier that the current session and the associated outcomes were submitted by the helpline
 	When I check the report data
 	Then Outcome 1 for test customer "COL1074_PREVSESSION32" is not included in the report
 	Then Outcome 2 for test customer "COL1074_PREVSESSION32" is included in the report

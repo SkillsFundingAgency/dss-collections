@@ -987,7 +987,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         {
             string url = envSettings.BaseUrl + "/collections/api/collections";
             string json = "{ UKPRN : \"" + p0.ToString() + "\" }";
-            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey);
+            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey, string.Empty);
             collectionId = AssertAndExtract("CollectionId", response);
         }
 
@@ -996,7 +996,7 @@ namespace NCS.DSS.Collections.SysIntTests.Steps
         {
             string url = envSettings.BaseUrl + "/collections/api/collections";
             string json = "{ UKPRNOT : \"12345678\" }";
-            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey);
+            response = Post(url, json, envSettings.TouchPointId, envSettings.SubscriptionKey, string.Empty);
         }
 
 
