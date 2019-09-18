@@ -47,6 +47,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             var touchpointId = dssTouchpointValidator.Extract(req, log);                                  
 
+            if (touchpointId == "0000000999")
+            {
+                loggerHelper.LogInformationMessage(log, correlationId, "Insufficient access to this resource.");
+                return httpResponseMessageHelper.BadRequest();
+            }
+
             var apimUrl = apimUrlValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))

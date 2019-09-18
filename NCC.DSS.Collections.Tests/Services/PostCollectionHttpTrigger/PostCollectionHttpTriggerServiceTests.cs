@@ -134,6 +134,24 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
         }
 
+
+        [Test]
+        public async Task PostCollectionHttpTrigger_WhenNotPrimeContractor_ReturnBadRequest()
+        {
+            //Assign
+            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);
+            _httpRequestHelper.GetDssTouchpointId(_request).Returns("0000000999");
+
+            _httpResponseMessageHelper.BadRequest().Returns(x => new HttpResponseMessage(HttpStatusCode.BadRequest));
+
+            // Act
+            var result = await RunFunction();
+
+            // Assert
+            Assert.IsInstanceOf<HttpResponseMessage>(result);
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+        }
+
         private async Task<HttpResponseMessage> RunFunction()
         {
             return await NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger.RunAsync(
