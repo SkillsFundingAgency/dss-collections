@@ -57,7 +57,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)/DeploymentPackages'
     inputs:
-      sourceFolder: '$(build.artifactstagingdirectory)/Artifact/$(SolutionBaseName)/'
+      sourceFolder: '$(build.artifactstagingdirectory)/Artifact/$(SolutionBaseName)'
       contents: '*.zip'
       targetFolder: '$(build.artifactstagingdirectory)/DeploymentPackages'
   - task: CopyFiles@2
