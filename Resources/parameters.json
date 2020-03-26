@@ -20,7 +20,7 @@
           "functionAppNames": {
             "value": ""
           },
-          "serviceBusConnection": {
+          "serviceBusConnectionString": {
             "value": ""
           },
           "serviceBusQueueName": {
