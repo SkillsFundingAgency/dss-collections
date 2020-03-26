@@ -59,7 +59,7 @@ jobs:
     inputs:
       sourceFolder: '$(build.artifactstagingdirectory)/Artifact/$(SolutionBaseName)'
       contents: '**'
-      targetFolder: '$(build.artifactstagingdirectory)/DeploymentPackages'
+      targetFolder: '$(build.artifactstagingdirectory)'
   - task: CopyFiles@2
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
     inputs:
