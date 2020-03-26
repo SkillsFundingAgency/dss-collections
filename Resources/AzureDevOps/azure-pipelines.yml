@@ -9,7 +9,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.1.1
+    ref: refs/tags/v1.11.1
     endpoint: 'GitHub (CDH)'
 
 jobs:
@@ -37,24 +37,6 @@ jobs:
      filePath: $(TestBranchNameScriptFilePath)
      arguments: '-BranchName $(Build.SourceBranchName) -PullRequestBranchName $(if ("$(Build.SourceBranchName)" -eq "merge") { "$(System.PullRequest.SourceBranch)" } else { "NotAPullRequest" } ) -PipelineType Build -Verbose'
 
-# Build the app with the dfc-dotnetframework-build template.  Runs if the output of TestBranchName is Version1
-- job: BuildDotNetFramework
-  displayName: Build-DotNetFramework
-  dependsOn: TestBranchName
-  condition: and(succeeded(), eq(dependencies.TestBranchName.outputs['ExecuteTestBranchNameScript.FunctionAppVersion'], 'Version1'))
-  pool:
-    name: Continuous Integration 02 - SSD - 160ACU
-    demands:
-    - msbuild
-    - visualstudio
-
-  steps:
-  - template: AzureDevOpsTemplates/Build/dfc-dotnetframework-build.yml@dfc-devops
-    parameters:
-      SolutionBaseName: $(SolutionBaseName)
-      BuildPlatform: $(BuildPlatform)
-      BuildConfiguration: $(BuildConfiguration)
-
 # Build the app with the dfc-dotnetcore-build template.  Runs if the output of TestBranchName is Version2+
 - job: BuildDotNetStandard
   displayName: Build-DotNetStandard
@@ -67,11 +49,29 @@ jobs:
     - visualstudio
 
   steps:
-  - template: AzureDevOpsTemplates/Build/dfc-dotnetcorefunctionapp-build-notests.yml@dfc-devops
+  - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-dotnetcore-build-notests.yml@dfc-devops
     parameters:
       SolutionBaseName: $(SolutionBaseName)
       BuildPlatform: $(BuildPlatform)
       BuildConfiguration: $(BuildConfiguration)
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/DeploymentPackages'
+    inputs:
+      sourceFolder: '$(build.artifactstagingdirectory)/Artifact/$(SolutionBaseName)'
+      contents: '**'
+      targetFolder: '$(build.artifactstagingdirectory)'
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
+    inputs:
+      sourceFolder: 'Resources'
+      contents: '**'
+      targetFolder: '$(build.artifactstagingdirectory)/Azure'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: $(SolutionBaseName)'
+    inputs:
+      pathtoPublish: $(build.artifactstagingdirectory)
+      artifactName: $(SolutionBaseName)
+      publishLocation: container
 
 
 
