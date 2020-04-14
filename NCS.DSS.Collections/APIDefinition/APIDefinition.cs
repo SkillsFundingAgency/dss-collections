@@ -19,7 +19,7 @@ namespace NCS.DSS.Collections.APIDefinition
 
         [FunctionName(APIDefinitionName)]
         public static HttpResponseMessage Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, new string[] { "get", "post" }, Route = APIDefRoute)] HttpRequest req,
             ILogger log,
             [Inject]ISwaggerDocumentGenerator swaggerDocumentGenerator)
         {          
@@ -34,6 +34,7 @@ namespace NCS.DSS.Collections.APIDefinition
             {
                 return new HttpResponseMessage(HttpStatusCode.NoContent);                
             }
-        }        
+        }
+
     }
 }
