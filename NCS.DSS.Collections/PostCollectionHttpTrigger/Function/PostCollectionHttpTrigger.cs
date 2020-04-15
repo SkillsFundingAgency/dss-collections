@@ -4,6 +4,7 @@ using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
@@ -30,6 +31,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
+        [ProducesResponseType(typeof(Models.Collection), 200)]
         public static async Task<HttpResponseMessage> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req,
             ILogger log,

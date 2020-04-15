@@ -13,21 +13,23 @@ namespace NCS.DSS.Collections.APIDefinition
     public static class ApiDefinition
     {
         public const string APITitle = "Collections";
+        public const string ApiVersion = "3.0.0";
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
         public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
 
         [FunctionName(APIDefinitionName)]
         public static HttpResponseMessage Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, new string[] { "get", "post" }, Route = APIDefRoute)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req,
             ILogger log,
             [Inject]ISwaggerDocumentGenerator swaggerDocumentGenerator)
         {          
             try
             {
+                var document = swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, ApiVersion, Assembly.GetExecutingAssembly());
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, Assembly.GetExecutingAssembly()))
+                    Content = new StringContent(document)
                 };
             }
             catch
@@ -35,6 +37,5 @@ namespace NCS.DSS.Collections.APIDefinition
                 return new HttpResponseMessage(HttpStatusCode.NoContent);                
             }
         }
-
     }
 }
