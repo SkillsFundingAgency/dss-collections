@@ -13,7 +13,7 @@ namespace NCS.DSS.Collections.APIDefinition
     public static class ApiDefinition
     {
         public const string APITitle = "Collections";
-        public const string ApiVersion = "3.0.0";
+        public const string ApiVersion = "2.0.0";
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
         public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
