@@ -31,7 +31,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
-        [ProducesResponseType(typeof(Models.Collection), 200)]
+        [ProducesResponseType(typeof(Models.Collection), (int)HttpStatusCode.OK)]
         public static async Task<HttpResponseMessage> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req,
             ILogger log,
