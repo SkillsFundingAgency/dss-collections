@@ -13,6 +13,7 @@ namespace NCS.DSS.Collections.APIDefinition
     public static class ApiDefinition
     {
         public const string APITitle = "Collections";
+        public const string ApiVersion = "2.0.0";
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
         public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
@@ -25,15 +26,16 @@ namespace NCS.DSS.Collections.APIDefinition
         {          
             try
             {
+                var document = swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, ApiVersion, Assembly.GetExecutingAssembly());
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, Assembly.GetExecutingAssembly()))
+                    Content = new StringContent(document)
                 };
             }
             catch
             {
                 return new HttpResponseMessage(HttpStatusCode.NoContent);                
             }
-        }        
+        }
     }
 }
