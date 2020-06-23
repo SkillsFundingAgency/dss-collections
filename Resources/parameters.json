@@ -3,43 +3,43 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "cosmosDbCollectionId": {
-            "value": ""
+            "value": "__cosmosDbCollectionId__"
           },
           "cosmosDbDatabaseId": {
-            "value": ""
+            "value": "__cosmosDbDatabaseId__"
           },
           "cosmosDbEndpoint": {
-            "value": ""
+            "value": "__cosmosDbEndpoint__"
           },
           "cosmosDbKey": {
-            "value": ""
+            "value": "__cosmosDbKey__"
           },
           "environmentName": {
-            "value": ""
+            "value": "__environmentName__"
           },
           "functionAppNames": {
             "value": ""
           },
           "serviceBusConnectionString": {
-            "value": ""
+            "value": "__serviceBusConnectionString__"
           },
           "serviceBusQueueName": {
-            "value": ""
+            "value": "__serviceBusQueueName__"
           },
           "sharedAppServicePlanName": {
-            "value": ""
+            "value": "__sharedAppServicePlanName__"
           },
           "sharedAppServicePlanResourceGroup": {
-            "value": ""
+            "value": "__sharedAppServicePlanResourceGroup__"
           },
           "storageAccountName": {
-            "value": ""
+            "value": "__storageAccountName__"
           },
           "storageAccountKey": {
-            "value": ""
+            "value": "__storageAccountKey__"
           },
           "templateBaseUrl": {
-            "value": ""
+            "value": "__templateBaseUrl__"
           }     
     }
 }
