@@ -32,6 +32,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
         [ProducesResponseType(typeof(Models.Collection), (int)HttpStatusCode.OK)]
+        [PostRequestBody(typeof(Collection), "Request Body")]
         public static async Task<HttpResponseMessage> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req,
             ILogger log,
@@ -47,7 +48,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             var correlationId = dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);                                  
+            var touchpointId = dssTouchpointValidator.Extract(req, log);
 
             var apimUrl = apimUrlValidator.Extract(req, log);
 
@@ -59,7 +60,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             try
             {
                 loggerHelper.LogInformationMessage(log, correlationId, "Attempt to get resource from body of the request");
-                collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);               
+                collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);
             }
             catch (JsonException ex)
             {
@@ -89,7 +90,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 await service.SendToServiceBusQueueAsync(createdCollection);
             }
 
-            return createdCollection == null ? 
+            return createdCollection == null ?
                 httpResponseMessageHelper.BadRequest() :
                 httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId"));
         }
