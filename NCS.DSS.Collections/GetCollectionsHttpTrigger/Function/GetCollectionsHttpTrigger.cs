@@ -40,14 +40,14 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             [Inject]IDssCorrelationValidator dssCorrelationValidator,
             [Inject]IDssTouchpointValidator dssTouchpointValidator)
         {
-            loggerHelper.LogMethodEnter(log);            
+            loggerHelper.LogMethodEnter(log);
 
             var correlationId = dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);            
+            var touchpointId = dssTouchpointValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId))
-            {                
+            {
                 return responseMessageHelper.BadRequest();
             }
 
@@ -63,7 +63,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 
             loggerHelper.LogMethodExit(log);
 
-            return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
+            return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));
         }
     }
 }
