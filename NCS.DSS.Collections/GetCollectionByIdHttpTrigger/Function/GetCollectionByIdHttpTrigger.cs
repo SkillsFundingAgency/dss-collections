@@ -21,8 +21,30 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
-    public static class GetCollectionByIdHttpTrigger
+    public class GetCollectionByIdHttpTrigger
     {
+        private readonly IHttpResponseMessageHelper _responseMessageHelper;
+        private IGetCollectionByIdHtppTriggerService _service;
+        private IJsonHelper _jsonHelper;
+        private IHttpRequestHelper _requestHelper;
+        private IDssCorrelationValidator _dssCorrelationValidator;
+        private IDssTouchpointValidator _dssTouchpointValidator;
+        private ILoggerHelper _loggerHelper;
+        private IDssCorrelationValidator dssCorrelationValidator;
+        private IDssTouchpointValidator dssTouchpointValidator;
+
+        public GetCollectionByIdHttpTrigger(IHttpRequestHelper requestHelper, IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, IJsonHelper jsonHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+          IDssTouchpointValidator dssTouchpointValidator)
+        {
+            _requestHelper = requestHelper;
+            _service = service;
+            _responseMessageHelper = responseMessageHelper;
+            _jsonHelper = jsonHelper;
+            _loggerHelper = loggerHelper;
+            _dssCorrelationValidator = dssCorrelationValidator;
+            _dssTouchpointValidator = dssTouchpointValidator;
+        }
+
         [FunctionName("GetById")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collection Plan found", ShowSchema = true)]
@@ -31,16 +53,8 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
-        public static async Task<HttpResponseMessage> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId,
-            ILogger log,
-            [Inject]IGetCollectionByIdHtppTriggerService service,
-            [Inject]IJsonHelper jsonHelper,
-            [Inject]IHttpRequestHelper requestHelper,
-            [Inject]IHttpResponseMessageHelper responseMessageHelper,
-            [Inject]ILoggerHelper loggerHelper,
-            [Inject]IDssCorrelationValidator dssCorrelationValidator,
-            [Inject]IDssTouchpointValidator dssTouchpointValidator)
+        public async Task<HttpResponseMessage> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId, ILogger log)
         {            
             log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
 
