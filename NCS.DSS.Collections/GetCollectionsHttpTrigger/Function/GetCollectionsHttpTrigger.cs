@@ -19,8 +19,26 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
-    public static class GetCollectionsHttpTrigger
+    public class GetCollectionsHttpTrigger
     {
+        private readonly IHttpResponseMessageHelper _responseMessageHelper;
+        private IGetCollectionsHttpTriggerService _service;
+        private IDssCorrelationValidator _dssCorrelationValidator;
+        private IDssTouchpointValidator _dssTouchpointValidator;
+        private ILoggerHelper _loggerHelper;
+        private IJsonHelper _jsonHelper;
+
+        public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper)
+        {
+            _service = service;
+            _responseMessageHelper = responseMessageHelper;
+            _jsonHelper = jsonHelper;
+            _loggerHelper = loggerHelper;
+            _dssCorrelationValidator = dssCorrelationValidator;
+            _dssTouchpointValidator = dssTouchpointValidator;
+        }
+
         [FunctionName("Get")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collections found", ShowSchema = true)]
@@ -29,41 +47,34 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to return all collections for the touchpoint.")]
-        public static async Task<HttpResponseMessage> RunAsync(
+        public async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req,
-            ILogger log,
-            [Inject]IGetCollectionsHttpTriggerService service,
-            [Inject]IJsonHelper jsonHelper,
-            [Inject]IHttpRequestHelper requestHelper,
-            [Inject]IHttpResponseMessageHelper responseMessageHelper,
-            [Inject]ILoggerHelper loggerHelper,
-            [Inject]IDssCorrelationValidator dssCorrelationValidator,
-            [Inject]IDssTouchpointValidator dssTouchpointValidator)
+            ILogger log)
         {
-            loggerHelper.LogMethodEnter(log);            
+            _loggerHelper.LogMethodEnter(log);            
 
-            var correlationId = dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);            
+            var touchpointId = _dssTouchpointValidator.Extract(req, log);            
 
             if (string.IsNullOrEmpty(touchpointId))
             {                
-                return responseMessageHelper.BadRequest();
+                return _responseMessageHelper.BadRequest();
             }
 
-            loggerHelper.LogInformationMessage(log, correlationId, "Attempt to process request");
+            _loggerHelper.LogInformationMessage(log, correlationId, "Attempt to process request");
 
-            var results = await service.ProcessRequestAsync(touchpointId);
+            var results = await _service.ProcessRequestAsync(touchpointId);
 
             if (results.Count == 0)
             {
-                loggerHelper.LogInformationMessage(log, correlationId, "unable to retrieve collection");
-                return responseMessageHelper.NoContent();
+                _loggerHelper.LogInformationMessage(log, correlationId, "unable to retrieve collection");
+                return _responseMessageHelper.NoContent();
             }
 
-            loggerHelper.LogMethodExit(log);
+            _loggerHelper.LogMethodExit(log);
 
-            return responseMessageHelper.Ok(jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
+            return _responseMessageHelper.Ok(_jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
         }
     }
 }

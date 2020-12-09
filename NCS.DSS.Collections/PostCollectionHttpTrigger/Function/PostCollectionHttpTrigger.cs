@@ -20,8 +20,30 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 {
-    public static class PostCollectionHttpTrigger
+    public class PostCollectionHttpTrigger
     {
+        private IHttpRequestHelper _httpRequestHelper;
+        private readonly IHttpResponseMessageHelper _httpResponseMessageHelper;
+        private IPostCollectionHttpTriggerService _service;
+        private IDssCorrelationValidator _dssCorrelationValidator;
+        private IDssTouchpointValidator _dssTouchpointValidator;
+        private ILoggerHelper _loggerHelper;
+        private IJsonHelper _jsonHelper;
+        private IApimUrlValidator _apimUrlValidator;
+
+        public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, IHttpResponseMessageHelper httpResponseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper, IApimUrlValidator apimUrlValidator, IHttpRequestHelper httpRequestHelper)
+        {
+            _service = service;
+            _httpResponseMessageHelper = httpResponseMessageHelper;
+            _jsonHelper = jsonHelper;
+            _loggerHelper = loggerHelper;
+            _dssCorrelationValidator = dssCorrelationValidator;
+            _dssTouchpointValidator = dssTouchpointValidator;
+            _apimUrlValidator = apimUrlValidator;
+            _httpRequestHelper = httpRequestHelper;
+        }
+
         [FunctionName("Post")]
         [Response(HttpStatusCode = (int)HttpStatusCode.Created, Description = "Collection Created", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collection does not exist", ShowSchema = false)]
@@ -30,39 +52,31 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
-        public static async Task<HttpResponseMessage> RunAsync(
+        public async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req,
-            ILogger log,
-            [Inject]IPostCollectionHttpTriggerService service,
-            [Inject]IHttpRequestHelper httpRequestHelper,
-            [Inject]IHttpResponseMessageHelper httpResponseMessageHelper,
-            [Inject]IJsonHelper jsonHelper,
-            [Inject]ILoggerHelper loggerHelper,
-            [Inject]IDssCorrelationValidator dssCorrelationValidator,
-            [Inject]IDssTouchpointValidator dssTouchpointValidator,
-            [Inject]IApimUrlValidator apimUrlValidator)
+            ILogger log)
         {
 
-            var correlationId = dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);                                  
+            var touchpointId = _dssTouchpointValidator.Extract(req, log);                                  
 
-            var apimUrl = apimUrlValidator.Extract(req, log);
+            var apimUrl = _apimUrlValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
-                return httpResponseMessageHelper.BadRequest();
+                return _httpResponseMessageHelper.BadRequest();
 
             Collection collection;
 
             try
             {
-                loggerHelper.LogInformationMessage(log, correlationId, "Attempt to get resource from body of the request");
-                collection = await httpRequestHelper.GetResourceFromRequest<Collection>(req);               
+                _loggerHelper.LogInformationMessage(log, correlationId, "Attempt to get resource from body of the request");
+                collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);               
             }
             catch (JsonException ex)
             {
-                loggerHelper.LogError(log, correlationId, "Unable to retrieve body from req", ex);
-                return httpResponseMessageHelper.UnprocessableEntity(ex);
+                _loggerHelper.LogError(log, correlationId, "Unable to retrieve body from req", ex);
+                return _httpResponseMessageHelper.UnprocessableEntity(ex);
             }
 
             collection.TouchPointId = touchpointId;
@@ -70,26 +84,26 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             if (!collection.LastModifiedDate.HasValue)
                 collection.LastModifiedDate = DateTime.UtcNow;
 
-            var validationResults = service.ValidateCollectionAsync(collection);
+            var validationResults = _service.ValidateCollectionAsync(collection);
 
             if (validationResults != null && validationResults.Any())
             {
-                loggerHelper.LogInformationMessage(log, correlationId, "validation errors with resource");
-                return httpResponseMessageHelper.UnprocessableEntity(validationResults);
+                _loggerHelper.LogInformationMessage(log, correlationId, "validation errors with resource");
+                return _httpResponseMessageHelper.UnprocessableEntity(validationResults);
             }
 
-            loggerHelper.LogInformationMessage(log, correlationId, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
-            var createdCollection = await service.ProcessRequestAsync(collection, apimUrl);
+            _loggerHelper.LogInformationMessage(log, correlationId, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection != null)
             {
-                loggerHelper.LogInformationMessage(log, correlationId, string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
-                await service.SendToServiceBusQueueAsync(createdCollection);
+                _loggerHelper.LogInformationMessage(log, correlationId, string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
+                await _service.SendToServiceBusQueueAsync(createdCollection);
             }
 
-            return createdCollection == null ? 
-                httpResponseMessageHelper.BadRequest() :
-                httpResponseMessageHelper.Created(jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId"));
+            return createdCollection == null ?
+                _httpResponseMessageHelper.BadRequest() :
+                _httpResponseMessageHelper.Created(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId"));
         }
     }
 }

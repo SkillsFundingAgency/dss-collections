@@ -25,21 +25,17 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
     {
         private readonly IHttpResponseMessageHelper _responseMessageHelper;
         private IGetCollectionByIdHtppTriggerService _service;
-        private IJsonHelper _jsonHelper;
-        private IHttpRequestHelper _requestHelper;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
         private ILoggerHelper _loggerHelper;
-        private IDssCorrelationValidator dssCorrelationValidator;
-        private IDssTouchpointValidator dssTouchpointValidator;
 
-        public GetCollectionByIdHttpTrigger(IHttpRequestHelper requestHelper, IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, IJsonHelper jsonHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
-            _requestHelper = requestHelper;
+            //_requestHelper = requestHelper;
             _service = service;
             _responseMessageHelper = responseMessageHelper;
-            _jsonHelper = jsonHelper;
+            //_jsonHelper = jsonHelper;
             _loggerHelper = loggerHelper;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
@@ -58,9 +54,9 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         {            
             log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
 
-            var correlationId = dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);
+            var touchpointId = _dssTouchpointValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId))
             {

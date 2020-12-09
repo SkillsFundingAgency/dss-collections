@@ -8,6 +8,7 @@ using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
+using NCS.DSS.Collections.ServiceBus.Processor.Service;
 using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
 using NCS.DSS.Collections.Validators;
@@ -33,6 +34,7 @@ namespace NCS.DSS.Collections
             builder.Services.AddTransient<IJsonHelper, JsonHelper>();
             builder.Services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
             builder.Services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
+            builder.Services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
         }
     }
 }
