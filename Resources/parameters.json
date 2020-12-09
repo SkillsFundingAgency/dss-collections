@@ -1,0 +1,45 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "cosmosDbCollectionId": {
+      "value": "__ApiResourceName__"
+    },
+    "cosmosDbDatabaseId": {
+      "value": "__ApiResourceName__"
+    },
+    "cosmosDbEndpoint": {
+      "value": "__cosmosDbEndpoint__"
+    },
+    "cosmosDbKey": {
+      "value": "__cosmosDbKey__"
+    },
+    "environmentName": {
+      "value": "__environmentName__"
+    },
+    "functionAppNames": {
+      "value": ""
+    },
+    "serviceBusConnectionString": {
+      "value": "__serviceBusConnectionString__"
+    },
+    "serviceBusQueueName": {
+      "value": "__serviceBusQueueName__"
+    },
+    "sharedAppServicePlanName": {
+      "value": "__sharedAppServicePlanName__"
+    },
+    "sharedAppServicePlanResourceGroup": {
+      "value": "__sharedAppServicePlanResourceGroup__"
+    },
+    "storageAccountName": {
+      "value": "__storageAccountName__"
+    },
+    "storageAccountKey": {
+      "value": "__storageAccountKey__"
+    },
+    "templateBaseUrl": {
+      "value": "__NestedArmTemplateBaseUrl__"
+    }
+  }
+}
