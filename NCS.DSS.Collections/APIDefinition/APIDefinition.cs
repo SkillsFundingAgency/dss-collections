@@ -10,30 +10,33 @@ using System.Reflection;
 
 namespace NCS.DSS.Collections.APIDefinition
 {
-    public static class ApiDefinition
+    public class ApiDefinition
     {
         public const string APITitle = "Collections";
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
         public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
+        public const string ApiVersion = "2.0.0";
+
+        private ISwaggerDocumentGenerator swaggerDocumentGenerator;
+        public ApiDefinition(ISwaggerDocumentGenerator swaggerDocumentGenerator)
+        {
+            this.swaggerDocumentGenerator = swaggerDocumentGenerator;
+        }
 
         [FunctionName(APIDefinitionName)]
-        public static HttpResponseMessage Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req,
-            ILogger log,
-            [Inject]ISwaggerDocumentGenerator swaggerDocumentGenerator)
-        {          
-            try
+        public HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req)
+        {
+            var swagger = swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription,
+                APIDefinitionName, ApiVersion, Assembly.GetExecutingAssembly());
+
+            if (string.IsNullOrEmpty(swagger))
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                return new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StringContent(swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription, APIDefinitionName, Assembly.GetExecutingAssembly()))
-                };
-            }
-            catch
-            {
-                return new HttpResponseMessage(HttpStatusCode.NoContent);                
-            }
-        }        
+                Content = new StringContent(swagger)
+            };
+        }
     }
 }

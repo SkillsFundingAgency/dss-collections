@@ -64,26 +64,26 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             if (string.IsNullOrEmpty(touchpointId))
             {
-                return responseMessageHelper.BadRequest();
+                return _responseMessageHelper.BadRequest();
             }
 
             if (!Guid.TryParse(collectionId, out var collectionGuid))
-                return responseMessageHelper.BadRequest(collectionGuid);
+                return _responseMessageHelper.BadRequest(collectionGuid);
 
             MemoryStream collectionStream;
             try
             {
-                loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
-                collectionStream = await service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
+                _loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
             }
             catch (Exception ex)
             {
-                loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
-                return responseMessageHelper.UnprocessableEntity();
+                _loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
+                return _responseMessageHelper.UnprocessableEntity();
             }
 
             if (collectionStream == null)
-                return responseMessageHelper.NoContent();
+                return _responseMessageHelper.NoContent();
 
             collectionStream.Position = 0;
 
