@@ -4,13 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.APIDefinition;
+using NUnit.Framework;
 
 namespace NCC.DSS.Collections.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class APIDefinitionTests
     {
-        [TestMethod]
+        [Test]
         public void API_Definition_RunAsync_Test()
         {
             //Assign
@@ -18,13 +19,13 @@ namespace NCC.DSS.Collections.Tests
             ISwaggerDocumentGenerator swaggerGenerator = new SwaggerDocumentGenerator();
 
             //Act
-            var res = ApiDefinition.Run(req, MockingHelper.GetMockLogger(), swaggerGenerator);
+            var res = ApiDefinition.Run(req);
 
             //Assert
             Assert.IsNotNull(res);
         }
 
-        [TestMethod]
+        [Test]
         public void API_Definition_RunAsync_Cause_Exception()
         {
             //Assign
@@ -32,7 +33,7 @@ namespace NCC.DSS.Collections.Tests
             ISwaggerDocumentGenerator swaggerGenerator = new SwaggerDocumentGenerator();
 
             //Act
-            var res = ApiDefinition.Run(req, MockingHelper.GetMockLogger(), swaggerGenerator);
+            var res = ApiDefinition.Run(req);
 
             //Assert
             Assert.IsNotNull(res);

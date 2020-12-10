@@ -2,25 +2,25 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.Collections.Cosmos.Provider;
-using NSubstitute;
+using NUnit.Framework;
 
 namespace NCC.DSS.Collections.Tests.Helpers
 {
     public static class MockingHelper
     {        
-        public static ILogger GetMockLogger()
-        {
-            return Substitute.For<ILogger>();            
-        }        
+        //public static Mock<ILogger> GetMockLogger()
+        //{
+        //    return new Mock<ILogger>();            
+        //}        
 
-        public static ILoggerHelper GetMockLoggerHelper()
+        public static Mock<ILoggerHelper> GetMockLoggerHelper()
         {
-            return Substitute.For<ILoggerHelper>();            
+            return new Mock<ILoggerHelper>();            
         }
 
-        public static IDocumentDBProvider GetMockDBProvider()
+        public static Mock<IDocumentDBProvider> GetMockDBProvider()
         {
-            return Substitute.For<IDocumentDBProvider>();                        
+            return new Mock<IDocumentDBProvider>();                        
         }
     }
 }
