@@ -19,8 +19,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         private Mock<IDocumentDBProvider> _documentDBProvider;
         private Mock<ICollectionMapper> _collectionMapper;
         private Mock<IHttpRequestHelper> _httpRequestHelper;
-        private PersistedCollection _collection;
-        private List<PersistedCollection> _collections;
+        private Mock<PersistedCollection> _collection;
+        private Mock<List<PersistedCollection>> _collections;
         private string _touchPointId;
         private Guid _collectionId;
         private IGetCollectionsHttpTriggerService _triggerService;
@@ -31,8 +31,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
             _collectionMapper = new Mock<ICollectionMapper>();
             _documentDBProvider = new Mock<IDocumentDBProvider>();
-            _collection = new PersistedCollection();
-            _collections = new List<PersistedCollection>();
+            _collection = new Mock<PersistedCollection>();
+            _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
             _collectionId = Guid.NewGuid();
             _triggerService = new GetCollectionsHttpTriggerService(_documentDBProvider.Object, _collectionMapper.Object);
@@ -42,10 +42,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         public void GetCollectionsHttpTriggerService_Process_Test()
         {
             //Arrange        
-            _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection)).Returns(Task.FromResult(true));
-            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections).Result));
-            //_documentDBProvider.Object.DoesCollectionResourceExist(_collection).Returns<bool>(true);            
-            //_documentDBProvider.Object.GetCollectionsForTouchpointAsync(_touchPointId).Returns(Task.FromResult(Task.FromResult(_collections).Result));
+            _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection.Object)).Returns(Task.FromResult(true));
+            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
             IEnumerable<Collection> result = _triggerService.ProcessRequestAsync(_touchPointId).Result;
