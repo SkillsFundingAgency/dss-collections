@@ -11,14 +11,14 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
     [TestFixture]
     public class CollectionMapperTests
     {
-        private Mock<ICollectionMapper> _mapper;
-        private Mock<IDataCollectionsReportHelper> _reportHelper;
+        private ICollectionMapper _mapper;
+        private IDataCollectionsReportHelper _reportHelper;
         [SetUp]
         public void Setup()
         {
-            _reportHelper = new Mock<IDataCollectionsReportHelper>();
-            _mapper = new Mock<ICollectionMapper>();
-            //_mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper.Object);
+            //_reportHelper = new IDataCollectionsReportHelper();
+            //_mapper = new Mock<ICollectionMapper>();
+            _mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper);
         }
 
         [Test]
@@ -40,9 +40,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                                         LastModifiedDate = lastModifiedDate
                                     };
 
-            _mapper.Setup(x => x.Map(collection)).Returns<string>(null);
             //Act
-
             PersistedCollection mappedCollection = _mapper.Map(collection);
 
             //Assert

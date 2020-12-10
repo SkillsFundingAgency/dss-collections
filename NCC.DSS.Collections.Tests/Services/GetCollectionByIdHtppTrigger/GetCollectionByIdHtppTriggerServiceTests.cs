@@ -1,11 +1,10 @@
 ﻿using DFC.HTTP.Standard;
 using Microsoft.Extensions.Logging;
-using NCC.DSS.Collections.Tests.Helpers;
+using Moq;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Storage;
-using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
