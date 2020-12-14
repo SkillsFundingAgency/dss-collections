@@ -46,9 +46,10 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
             _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
-            IEnumerable<Collection> result = _triggerService.ProcessRequestAsync(_touchPointId).Result;
+            var result = _triggerService.ProcessRequestAsync(_touchPointId);
 
             //Assert
+            Assert.IsNotNull(_triggerService);
             Assert.IsNotNull(result);            
         }
     }

@@ -57,11 +57,23 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             ILogger log)
         {
 
-            var correlationId = _dssCorrelationValidator.Extract(req, log);
+            var correlationId = _httpRequestHelper.GetDssCorrelationId(req);
+            if (string.IsNullOrEmpty(correlationId))
+                log.LogInformation("Unable to locate 'DssCorrelationId; in request header");
 
-            var touchpointId = _dssTouchpointValidator.Extract(req, log);                                  
+            var touchpointId = _httpRequestHelper.GetDssTouchpointId(req);
+            if (string.IsNullOrEmpty(touchpointId))
+            {
+                log.LogInformation("Unable to locate 'APIM-TouchpointId' in request header.");
+                return _httpResponseMessageHelper.BadRequest();
+            }
 
-            var apimUrl = _apimUrlValidator.Extract(req, log);
+            var apimUrl = _httpRequestHelper.GetDssApimUrl(req);
+            if (string.IsNullOrEmpty(apimUrl))
+            {
+                log.LogInformation("Unable to locate 'apimurl' in request header");
+                return _httpResponseMessageHelper.BadRequest();
+            }
 
             if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
                 return _httpResponseMessageHelper.BadRequest();
@@ -70,12 +82,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             try
             {
-                _loggerHelper.LogInformationMessage(log, correlationId, "Attempt to get resource from body of the request");
+                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), "Attempt to get resource from body of the request");
                 collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);               
             }
             catch (JsonException ex)
             {
-                _loggerHelper.LogError(log, correlationId, "Unable to retrieve body from req", ex);
+                _loggerHelper.LogError(log, new Guid(correlationId), "Unable to retrieve body from req", ex);
                 return _httpResponseMessageHelper.UnprocessableEntity(ex);
             }
 
@@ -88,16 +100,16 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             if (validationResults != null && validationResults.Any())
             {
-                _loggerHelper.LogInformationMessage(log, correlationId, "validation errors with resource");
+                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), "validation errors with resource");
                 return _httpResponseMessageHelper.UnprocessableEntity(validationResults);
             }
 
-            _loggerHelper.LogInformationMessage(log, correlationId, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            _loggerHelper.LogInformationMessage(log, new Guid(correlationId), string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
             var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection != null)
             {
-                _loggerHelper.LogInformationMessage(log, correlationId, string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
+                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
             }
 
