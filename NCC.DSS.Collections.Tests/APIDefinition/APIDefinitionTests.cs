@@ -16,6 +16,7 @@ namespace NCC.DSS.Collections.Tests
         [SetUp]
         public void Setup()
         {
+            swaggerGenerator = new Mock<ISwaggerDocumentGenerator>();
             function = new ApiDefinition(swaggerGenerator.Object);
         }
 

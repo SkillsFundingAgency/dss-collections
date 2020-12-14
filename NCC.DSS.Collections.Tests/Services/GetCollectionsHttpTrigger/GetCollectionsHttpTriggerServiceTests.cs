@@ -26,7 +26,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         private IGetCollectionsHttpTriggerService _triggerService;
 
         [SetUp]
-        private void Setup()
+        public void Setup()
         {
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
             _collectionMapper = new Mock<ICollectionMapper>();

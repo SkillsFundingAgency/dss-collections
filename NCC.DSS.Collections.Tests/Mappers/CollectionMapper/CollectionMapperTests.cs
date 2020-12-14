@@ -12,13 +12,13 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
     public class CollectionMapperTests
     {
         private ICollectionMapper _mapper;
-        private IDataCollectionsReportHelper _reportHelper;
+        private Mock<IDataCollectionsReportHelper> _reportHelper;
         [SetUp]
         public void Setup()
         {
-            //_reportHelper = new IDataCollectionsReportHelper();
+            _reportHelper = new Mock<IDataCollectionsReportHelper>();
             //_mapper = new Mock<ICollectionMapper>();
-            _mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper);
+            _mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper.Object);
         }
 
         [Test]
