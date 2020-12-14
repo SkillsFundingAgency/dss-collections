@@ -39,7 +39,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private Mock<IHttpRequestHelper> _httpRequestHelper;
         private IHttpResponseMessageHelper _httpResponseMessageHelper;
         private IJsonHelper _jsonHelper;
-        private Mock<Collection> _collection;
+        private Collection _collection;
         private Mock<IDssCorrelationValidator> _dssCorrelationValidator;
         private Mock<IDssTouchpointValidator> _dssTouchpointValidator;
         private Mock<IApimUrlValidator> _apimValidator;
@@ -52,7 +52,9 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         [SetUp]
         public void Setup()
         {
-            _collection = new Mock<Collection>();
+            _collection = new Collection();
+            //_collection.Ukprn = "10005262";
+            //_collection.CollectionReports = new Uri("http://url/path/");
             _request = null;
             _loggerHelper = new Mock<ILoggerHelper>();
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
@@ -80,7 +82,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenTouchpointIdIsNotProvided()
         {
             //Assign
-            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult(_collection.Object).Result));
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult(_collection).Result));
             _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns((string)null);
 
             //_httpResponseMessageHelper.Setup(x => x.BadRequest()).Returns(new HttpResponseMessage(HttpStatusCode.BadRequest));
@@ -135,14 +137,16 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeCreated_WhenRequestIsValid()
         {
             //Assign
-            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult((_collection.Object)).Result));
+            _httpRequestHelper.Setup(x => x.GetDssCorrelationId(_request)).Returns(ValidDssCorrelationId);
+            _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns("0000000001");
+            _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns("http://localhost:7071");
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult((_collection)).Result));
 
             //_postCollectionHttpTriggerService.ProcessRequestAsync(It.IsAny<Collection>(), It.IsAny<string>()).Returns/(Task.FromResult(_collection).Result);
-            _postCollectionHttpTriggerService.Setup(x => x.ProcessRequestAsync(It.IsAny<Collection>(), "0000000001")).Returns(Task.FromResult<Collection>(_collection.Object));
+            _postCollectionHttpTriggerService.Setup(x => x.ProcessRequestAsync(It.IsAny<Collection>(), "0000000001")).Returns(Task.FromResult<Collection>(_collection));
 
-
-            //_httpResponseMessageHelper.Setup(x => x
-            //    .Created(It.IsAny<string>())).Returns(new HttpResponseMessage(HttpStatusCode.Created));
+            // _httpResponseMessageHelper.Setup(x => x
+            //     .Created(It.IsAny<string>())).Returns(new HttpResponseMessage(HttpStatusCode.Created));
 
             //Act
             var result = await RunFunction();
