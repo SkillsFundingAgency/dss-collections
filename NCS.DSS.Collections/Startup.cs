@@ -5,9 +5,13 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using NCS.DSS.Collections;
 using NCS.DSS.Collections.Cosmos.Helper;
+using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
+using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
+using NCS.DSS.Collections.ServiceBus;
+using NCS.DSS.Collections.ServiceBus.DataCollections.Client;
 using NCS.DSS.Collections.ServiceBus.Processor.Service;
 using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
@@ -35,6 +39,9 @@ namespace NCS.DSS.Collections
             builder.Services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
             builder.Services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
             builder.Services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
+            builder.Services.AddTransient<IDocumentDBProvider, DocumentDBProvider>(); ;
+            builder.Services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
+            builder.Services.AddTransient<ICollectionMapper, CollectionMapper>();
         }
     }
 }

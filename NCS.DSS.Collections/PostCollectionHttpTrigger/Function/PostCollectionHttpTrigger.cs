@@ -4,6 +4,7 @@ using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         }
 
         [FunctionName("Post")]
+        [ProducesResponseType(typeof(Models.Collection), (int)HttpStatusCode.Created)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Created, Description = "Collection Created", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collection does not exist", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = "Request was malformed", ShowSchema = false)]
@@ -60,6 +62,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             var correlationId = _httpRequestHelper.GetDssCorrelationId(req);
             if (string.IsNullOrEmpty(correlationId))
                 log.LogInformation("Unable to locate 'DssCorrelationId; in request header");
+
+            if (!Guid.TryParse(correlationId, out var correlationGuid))
+            {
+                log.LogInformation("Unable to Parse 'DssCorrelationId' to a Guid");
+                correlationGuid = Guid.NewGuid();
+            }
 
             var touchpointId = _httpRequestHelper.GetDssTouchpointId(req);
             if (string.IsNullOrEmpty(touchpointId))
@@ -82,12 +90,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             try
             {
-                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), "Attempt to get resource from body of the request");
+                _loggerHelper.LogInformationMessage(log, correlationGuid, "Attempt to get resource from body of the request");
                 collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);               
             }
             catch (JsonException ex)
             {
-                _loggerHelper.LogError(log, new Guid(correlationId), "Unable to retrieve body from req", ex);
+                _loggerHelper.LogError(log, correlationGuid, "Unable to retrieve body from req", ex);
                 return _httpResponseMessageHelper.UnprocessableEntity(ex);
             }
 
@@ -100,16 +108,16 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             if (validationResults != null && validationResults.Any())
             {
-                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), "validation errors with resource");
+                _loggerHelper.LogInformationMessage(log, correlationGuid, "validation errors with resource");
                 return _httpResponseMessageHelper.UnprocessableEntity(validationResults);
             }
 
-            _loggerHelper.LogInformationMessage(log, new Guid(correlationId), string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            _loggerHelper.LogInformationMessage(log, correlationGuid, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
             var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection != null)
             {
-                _loggerHelper.LogInformationMessage(log, new Guid(correlationId), string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
+                _loggerHelper.LogInformationMessage(log, correlationGuid, string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
             }
 
