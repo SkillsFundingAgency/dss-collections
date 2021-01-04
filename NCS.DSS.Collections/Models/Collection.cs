@@ -16,6 +16,7 @@ namespace NCS.DSS.Collections.Models
         [Example(Description = "http://url/path/")]
         public Uri CollectionReports { get; set; }
 
+        [Required]
         [StringLength(10, MinimumLength = 10)]
         [Display(Description = "Identifier of the touchpoint submitting the collection.  This value will be taken from the HTTP method header and is not needed to be supplied as a parameter.")]
         [Example(Description = "0000000001")]
