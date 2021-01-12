@@ -9,14 +9,20 @@ using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.Validators;
 using Newtonsoft.Json;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Assert = NUnit.Framework.Assert;
+using NCS.DSS.Collections.Cosmos.Provider;
+using NCS.DSS.Collections.Mappers;
+using NCS.DSS.Collections.ServiceBus;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using NCS.DSS.Collections.Helpers;
 
 namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 {
@@ -24,55 +30,51 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
     [TestFixture]    
     public class PostCollectionHttpTriggerServiceTests
     {
-        private const string ValidCustomerId = "7E467BDB-213F-407A-B86A-1954053D3C24";
-        private const string ValidInteractionId = "1e1a555c-9633-4e12-ab28-09ed60d51cb3";
         private const string ValidDssCorrelationId = "452d8e8c-2516-4a6b-9fc1-c85e578ac066";
-        private const string ValidTouchPointId = "9000000093";
-        private const string InValidId = "1111111-2222-3333-4444-555555555555";
-
-        private ILogger _log;
-        private HttpRequest _request;
-        private IResourceHelper _resourceHelper;        
-        private IPostCollectionHttpTriggerService _postCollectionHttpTriggerService;
-        private ILoggerHelper _loggerHelper;
-        private IHttpRequestHelper _httpRequestHelper;
+        private Mock<ILogger> _log;
+        private DefaultHttpRequest _request;      
+        private Mock<IPostCollectionHttpTriggerService> _postCollectionHttpTriggerService;
+        private Mock<ILoggerHelper> _loggerHelper;
+        private Mock<IHttpRequestHelper> _httpRequestHelper;
         private IHttpResponseMessageHelper _httpResponseMessageHelper;
         private IJsonHelper _jsonHelper;
         private Collection _collection;
-        private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;
-        private IApimUrlValidator _apimValidator;
+        private Mock<IDssCorrelationValidator> _dssCorrelationValidator;
+        private Mock<IDssTouchpointValidator> _dssTouchpointValidator;
+        private Mock<IApimUrlValidator> _apimValidator;
+        private NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger function;
+        private Mock<IDataCollectionsReportHelper> _dataCollectionsReportHelper;
 
         [SetUp]
         public void Setup()
         {
-            _collection = Substitute.For<Collection>();
-            _request = new DefaultHttpRequest(new DefaultHttpContext());
-            _resourceHelper = Substitute.For<IResourceHelper>();
-            _loggerHelper = Substitute.For<ILoggerHelper>();
-            _httpRequestHelper = Substitute.For<IHttpRequestHelper>();
-            _httpResponseMessageHelper = Substitute.For<IHttpResponseMessageHelper>();
-            _jsonHelper = Substitute.For<IJsonHelper>();
-            _log = Substitute.For<ILogger>(); _resourceHelper = Substitute.For<IResourceHelper>();
-            _postCollectionHttpTriggerService = Substitute.For<IPostCollectionHttpTriggerService>();
+            _collection = new Collection();
+            _collection.Ukprn = "10005262";
+            _collection.CollectionReports = new Uri("http://url/path/");
+            _collection.TouchPointId = "0000000001";
+            _request = null;
 
-            _dssCorrelationValidator = new DssCorrelationValidator(_httpRequestHelper);
-            _dssTouchpointValidator = new DssTouchpointValidator(_httpRequestHelper, _loggerHelper, _dssCorrelationValidator);
-            _apimValidator = new ApimUrlValidator(_httpRequestHelper, _loggerHelper, _dssCorrelationValidator);
+            _loggerHelper = new Mock<ILoggerHelper>();
+            _httpRequestHelper = new Mock<IHttpRequestHelper>();
+            _httpResponseMessageHelper = new HttpResponseMessageHelper();
+            _jsonHelper = new JsonHelper();
+            _log = new Mock<ILogger>();
 
-            _httpRequestHelper.GetDssCorrelationId(_request).Returns(ValidDssCorrelationId);
-            _httpRequestHelper.GetDssTouchpointId(_request).Returns("0000000001");
-            _httpRequestHelper.GetDssApimUrl(_request).Returns("http://localhost:");            
+            _dssCorrelationValidator = new Mock<IDssCorrelationValidator>();
+            _dssTouchpointValidator = new Mock<IDssTouchpointValidator>();
+            _apimValidator = new Mock<IApimUrlValidator>();
+
+            _postCollectionHttpTriggerService = new Mock<IPostCollectionHttpTriggerService>();
+
+            function = new NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _httpResponseMessageHelper, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _jsonHelper, _apimValidator.Object, _httpRequestHelper.Object);
         }
 
         [Test]
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenTouchpointIdIsNotProvided()
         {
             //Assign
-            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);
-            _httpRequestHelper.GetDssTouchpointId(_request).Returns((string)null);
-
-            _httpResponseMessageHelper.BadRequest().Returns(x => new HttpResponseMessage(HttpStatusCode.BadRequest));
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult(_collection).Result));
+            _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns((string)null);
 
             // Act
             var result = await RunFunction();
@@ -86,9 +88,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenApimUrlIsNotProvided()
         {
             //Assign
-            _httpRequestHelper.GetDssApimUrl(_request).Returns((string)null);
-
-            _httpResponseMessageHelper.BadRequest().Returns(x => new HttpResponseMessage(HttpStatusCode.BadRequest));
+            _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns((string)null);
 
             // Act
             var result = await RunFunction();
@@ -102,10 +102,10 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeUnprocessableEntity_WhenACollectionRequestIsInvalid()
         {
             //Assign
-            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Throws(new JsonException());
-
-            _httpResponseMessageHelper
-                .UnprocessableEntity(Arg.Any<JsonException>()).Returns(x => new HttpResponseMessage((HttpStatusCode)422));
+            _httpRequestHelper.Setup(x => x.GetDssCorrelationId(_request)).Returns(ValidDssCorrelationId);
+            _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns("0000000001");
+            _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns("http://localhost:7071");
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Throws(new JsonException());
 
             //Act
             var result = await RunFunction();
@@ -119,14 +119,14 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeCreated_WhenRequestIsValid()
         {
             //Assign
-            _httpRequestHelper.GetResourceFromRequest<Collection>(_request).Returns(Task.FromResult(_collection).Result);
-            
-            _postCollectionHttpTriggerService.ProcessRequestAsync(Arg.Any<Collection>(), Arg.Any<string>()).Returns(Task.FromResult(_collection).Result);
+            _httpRequestHelper.Setup(x => x.GetDssCorrelationId(_request)).Returns(ValidDssCorrelationId);
+            _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns("0000000001");
+            _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns("http://localhost:7071");
 
-            _httpResponseMessageHelper
-                .Created(Arg.Any<string>()).Returns(x => new HttpResponseMessage(HttpStatusCode.Created));
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(_collection));
 
-            //Act
+            _postCollectionHttpTriggerService.Setup(x => x.ProcessRequestAsync(_collection, It.IsAny<string>())).Returns(Task.FromResult<Collection>(_collection));
+
             var result = await RunFunction();
 
             // Assert
@@ -136,17 +136,9 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
         private async Task<HttpResponseMessage> RunFunction()
         {
-            return await NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger.RunAsync(
+            return await function.Run(
                 _request,
-                _log,
-                _postCollectionHttpTriggerService,
-                _httpRequestHelper,
-                _httpResponseMessageHelper,
-                _jsonHelper,
-                _loggerHelper,
-                _dssCorrelationValidator,
-                _dssTouchpointValidator,
-                _apimValidator
+                _log.Object
                 ).ConfigureAwait(false);
         }
     }

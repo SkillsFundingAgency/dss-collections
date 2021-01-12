@@ -21,8 +21,26 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
-    public static class GetCollectionByIdHttpTrigger
+    public class GetCollectionByIdHttpTrigger
     {
+        private readonly IHttpResponseMessageHelper _responseMessageHelper;
+        private IGetCollectionByIdHtppTriggerService _service;
+        private IDssCorrelationValidator _dssCorrelationValidator;
+        private IDssTouchpointValidator _dssTouchpointValidator;
+        private ILoggerHelper _loggerHelper;
+
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+          IDssTouchpointValidator dssTouchpointValidator)
+        {
+            //_requestHelper = requestHelper;
+            _service = service;
+            _responseMessageHelper = responseMessageHelper;
+            //_jsonHelper = jsonHelper;
+            _loggerHelper = loggerHelper;
+            _dssCorrelationValidator = dssCorrelationValidator;
+            _dssTouchpointValidator = dssTouchpointValidator;
+        }
+
         [FunctionName("GetById")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collection Plan found", ShowSchema = true)]
@@ -31,45 +49,37 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
-        public static async Task<HttpResponseMessage> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId,
-            ILogger log,
-            [Inject]IGetCollectionByIdHtppTriggerService service,
-            [Inject]IJsonHelper jsonHelper,
-            [Inject]IHttpRequestHelper requestHelper,
-            [Inject]IHttpResponseMessageHelper responseMessageHelper,
-            [Inject]ILoggerHelper loggerHelper,
-            [Inject]IDssCorrelationValidator dssCorrelationValidator,
-            [Inject]IDssTouchpointValidator dssTouchpointValidator)
+        public async Task<HttpResponseMessage> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId, ILogger log)
         {            
             log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
 
-            var correlationId = dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = dssTouchpointValidator.Extract(req, log);
+            var touchpointId = _dssTouchpointValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId))
             {
-                return responseMessageHelper.BadRequest();
+                return _responseMessageHelper.BadRequest();
             }
 
             if (!Guid.TryParse(collectionId, out var collectionGuid))
-                return responseMessageHelper.BadRequest(collectionGuid);
+                return _responseMessageHelper.BadRequest(collectionGuid);
 
             MemoryStream collectionStream;
             try
             {
-                loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
-                collectionStream = await service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
+                _loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
             }
             catch (Exception ex)
             {
-                loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
-                return responseMessageHelper.UnprocessableEntity();
+                _loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
+                return _responseMessageHelper.UnprocessableEntity();
             }
 
             if (collectionStream == null)
-                return responseMessageHelper.NoContent();
+                return _responseMessageHelper.NoContent();
 
             collectionStream.Position = 0;
 

@@ -1,11 +1,11 @@
 ﻿using DFC.HTTP.Standard;
-using NCC.DSS.Collections.Tests.Helpers;
+using NCS.DSS.Collections.GetCollectionsHttpTrigger;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
-using NSubstitute;
 using NUnit.Framework;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,50 +16,41 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
     [TestFixture]
     public class GetCollectionsHttpTriggerServiceTests
     {
-        private IDocumentDBProvider _documentDBProvider;
-        private ICollectionMapper _collectionMapper;
-        private IHttpRequestHelper _httpRequestHelper;
-        private PersistedCollection _collection;
-        private List<PersistedCollection> _collections;
+        private Mock<IDocumentDBProvider> _documentDBProvider;
+        private Mock<ICollectionMapper> _collectionMapper;
+        private Mock<IHttpRequestHelper> _httpRequestHelper;
+        private Mock<PersistedCollection> _collection;
+        private Mock<List<PersistedCollection>> _collections;
         private string _touchPointId;
-        private Guid _collectionId;        
+        private Guid _collectionId;
+        private IGetCollectionsHttpTriggerService _triggerService;
 
-        private void Setup()
+        [SetUp]
+        public void Setup()
         {
-            _collectionMapper = Substitute.For<ICollectionMapper>();
-            _documentDBProvider = MockingHelper.GetMockDBProvider();
-            _collection = Substitute.For<PersistedCollection>();
-            _collections = Substitute.For<List<PersistedCollection>>();
+            _httpRequestHelper = new Mock<IHttpRequestHelper>();
+            _collectionMapper = new Mock<ICollectionMapper>();
+            _documentDBProvider = new Mock<IDocumentDBProvider>();
+            _collection = new Mock<PersistedCollection>();
+            _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
             _collectionId = Guid.NewGuid();
-        }
-
-
-        [Test]
-        public void GetCollectionsHttpTriggerService_Create_Test()
-        {     
-            //Act
-            IGetCollectionsHttpTriggerService service = new GetCollectionsHttpTriggerService(_documentDBProvider, _collectionMapper);
-
-            //Assert
-            Assert.IsNotNull(service);
+            _triggerService = new GetCollectionsHttpTriggerService(_documentDBProvider.Object, _collectionMapper.Object);
         }
 
         [Test]
         public void GetCollectionsHttpTriggerService_Process_Test()
         {
-            //Assign                           
-            Setup();
-            _documentDBProvider.DoesCollectionResourceExist(_collection).Returns<bool>(true);            
-            _documentDBProvider.GetCollectionsForTouchpointAsync(_touchPointId).Returns(Task.FromResult(Task.FromResult(_collections).Result));
-
-            IGetCollectionsHttpTriggerService service = new GetCollectionsHttpTriggerService(_documentDBProvider, _collectionMapper);
+            //Arrange        
+            _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection.Object)).Returns(Task.FromResult(true));
+            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
-            IEnumerable<Collection> result = service.ProcessRequestAsync(_touchPointId).Result;
+            var result = _triggerService.ProcessRequestAsync(_touchPointId);
 
             //Assert
-            Assert.IsNotNull(service);            
+            Assert.IsNotNull(_triggerService);
+            Assert.IsNotNull(result);            
         }
     }
 }

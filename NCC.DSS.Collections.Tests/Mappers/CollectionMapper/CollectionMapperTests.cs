@@ -1,7 +1,7 @@
 ﻿using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
-using NSubstitute;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,18 +12,19 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
     public class CollectionMapperTests
     {
         private ICollectionMapper _mapper;
-        private IDataCollectionsReportHelper _reportHelper;
+        private Mock<IDataCollectionsReportHelper> _reportHelper;
         [SetUp]
         public void Setup()
         {
-            _reportHelper = Substitute.For<IDataCollectionsReportHelper>();            
-            _mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper);
+            _reportHelper = new Mock<IDataCollectionsReportHelper>();
+            //_mapper = new Mock<ICollectionMapper>();
+            _mapper = new NCS.DSS.Collections.Mappers.CollectionMapper(_reportHelper.Object);
         }
 
         [Test]
         public void Test_Mapping_From_Collection_To_PersistedCollection()
         {
-            //Assign
+            //Arranga
             var collectionId = Guid.NewGuid();
             var touchpointId = "9000000000";
             var ukprn = "12345";
@@ -40,7 +41,6 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                                     };
 
             //Act
-
             PersistedCollection mappedCollection = _mapper.Map(collection);
 
             //Assert
