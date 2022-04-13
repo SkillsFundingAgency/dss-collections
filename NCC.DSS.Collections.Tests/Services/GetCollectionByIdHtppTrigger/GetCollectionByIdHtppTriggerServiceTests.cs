@@ -23,6 +23,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
         private Mock<PersistedCollection> _collection;
         private Mock<List<PersistedCollection>> _collections;
         private string _touchPointId;
+        private string _subcontractorId;
         private Guid _collectionId;
         private IGetCollectionByIdHtppTriggerService _triggerService;
 
@@ -35,6 +36,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
+            _subcontractorId = "9999999999";
             _collectionId = Guid.NewGuid();
             _storage = new Mock<IDCBlobStorage>();
             _triggerService = new GetCollectionByIdHtppTriggerService(_documentDBProvider.Object, _storage.Object);
@@ -46,9 +48,10 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             //Arrange        
             _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection.Object)).Returns(Task.FromResult(true));
             _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
+            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_subcontractorId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
-            var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId, _logger.Object);
+            var result = _triggerService.ProcessRequestAsync(_touchPointId, _subcontractorId, _collectionId, _logger.Object);
 
             //Assert
             Assert.IsNotNull(_triggerService);

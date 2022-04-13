@@ -27,12 +27,14 @@ namespace NCC.DSS.Collections.Tests.Validators
             //Act            
             Guid collectionId = Guid.NewGuid();
             string touchpointId = "9000000000";
+            string subcontractorId = "9999999999";
             DateTime lastUpdated = DateTime.Now;
             string ukprn = "12345678";
 
             collection.CollectionId = collectionId;
             collection.LastModifiedDate = lastUpdated;
             collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
             collection.Ukprn = ukprn;
 
             var result = _validator.Validate(collection);
@@ -42,6 +44,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             Assert.IsNotNull(collection);
             Assert.AreEqual(collectionId, collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
+            Assert.AreEqual(subcontractorId, collection.SubcontractorId);
             Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.Ukprn);
         }
@@ -54,11 +57,13 @@ namespace NCC.DSS.Collections.Tests.Validators
 
             //Act            
             string touchpointId = "9000000000";
+            string subcontractorId = "9999999999";
             DateTime lastUpdated = DateTime.Now;
             string ukprn = "12345678";
             
             collection.LastModifiedDate = lastUpdated;
             collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
             collection.Ukprn = ukprn;
 
             var result = _validator.Validate(collection);
@@ -68,6 +73,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             Assert.IsNotNull(collection);
             Assert.IsNotNull(collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
+            Assert.AreEqual(subcontractorId, collection.SubcontractorId);
             Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.Ukprn);
         }
@@ -106,11 +112,13 @@ namespace NCC.DSS.Collections.Tests.Validators
 
             //Act            
             Guid collectionId = Guid.NewGuid();
-            string touchpointId = "9000000000";            
+            string touchpointId = "9000000000";
+            string subcontractorId = "9999999999";
             string ukprn = "12345678";
 
             collection.CollectionId = collectionId;
-            collection.TouchPointId = touchpointId;            
+            collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
             collection.Ukprn = ukprn;
 
             var result = _validator.Validate(collection);
@@ -120,6 +128,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             Assert.IsNotNull(collection);
             Assert.AreEqual(collectionId, collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
+            Assert.AreEqual(subcontractorId, collection.SubcontractorId);
             Assert.AreEqual(null, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.Ukprn);
         }
@@ -133,11 +142,13 @@ namespace NCC.DSS.Collections.Tests.Validators
             //Act            
             Guid collectionId = Guid.NewGuid();
             string touchpointId = "9000000000";
+            string subcontractorId = "9999999999";
             DateTime lastUpdated = DateTime.Now;
             string ukprn = "123456789";
 
             collection.CollectionId = collectionId;
             collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
             collection.LastModifiedDate = lastUpdated;
             collection.Ukprn = ukprn;
 
@@ -148,6 +159,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             Assert.IsNotNull(collection);
             Assert.AreEqual(collectionId, collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
+            Assert.AreEqual(subcontractorId, collection.SubcontractorId);
             Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.Ukprn);
         }
@@ -162,11 +174,13 @@ namespace NCC.DSS.Collections.Tests.Validators
             //Act            
             Guid collectionId = Guid.NewGuid();
             string touchpointId = "9000000000";
+            string subcontractorId = "9999999999";
             DateTime lastUpdated = DateTime.Now;
             string ukprn = "1234567";
 
             collection.CollectionId = collectionId;
             collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
             collection.LastModifiedDate = lastUpdated;
             collection.Ukprn = ukprn;
 
@@ -177,6 +191,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             Assert.IsNotNull(collection);
             Assert.AreEqual(collectionId, collection.CollectionId);
             Assert.AreEqual(touchpointId, collection.TouchPointId);
+            Assert.AreEqual(subcontractorId, collection.SubcontractorId);
             Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
             Assert.AreEqual(ukprn, collection.Ukprn);
         }

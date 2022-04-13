@@ -27,6 +27,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             //Arranga
             var collectionId = Guid.NewGuid();
             var touchpointId = "9000000000";
+            var subcontractorId = "9000000000";
             var ukprn = "12345";
             var collectionReports = new Uri("http://localhost");
             var lastModifiedDate = DateTime.Now;
@@ -35,6 +36,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                                     {
                                         CollectionId = collectionId,
                                         TouchPointId = touchpointId,
+                                        SubcontractorId = subcontractorId,
                                         Ukprn = ukprn,
                                         CollectionReports = collectionReports,
                                         LastModifiedDate = lastModifiedDate
@@ -47,6 +49,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             Assert.AreEqual(mappedCollection.CollectionId, collection.CollectionId);
             Assert.AreEqual(mappedCollection.CollectionReports, collection.CollectionReports);
             Assert.AreEqual(mappedCollection.TouchPointId, collection.TouchPointId);
+            Assert.AreEqual(mappedCollection.SubcontractorId, collection.SubcontractorId);
             Assert.AreEqual(mappedCollection.Ukprn, collection.Ukprn);
             Assert.AreEqual(mappedCollection.LastModifiedDate, collection.LastModifiedDate);
         }
@@ -57,6 +60,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             //Assign
             var collectionId = Guid.NewGuid();
             var touchpointId = "9000000000";
+            var subcontractorId = "9999999999";
             var ukprn = "12345";
             var collectionReports = new Uri("http://localhost");
             var lastModifiedDate = DateTime.Now;
@@ -68,8 +72,9 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                                                     CollectionReports = collectionReports,
                                                     ContainerName = "containerName",
                                                     LastModifiedDate = lastModifiedDate,
-                                                    ReportFileName = $"{touchpointId}-{collectionId}-NCS-Reports.zip",
+                                                    ReportFileName = $"{touchpointId}-{subcontractorId}-{collectionId}-NCS-Reports.zip",
                                                     TouchPointId = touchpointId,
+                                                    SubcontractorId = subcontractorId,
                                                     Ukprn = ukprn
                                                  };
 
@@ -80,6 +85,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             Assert.AreEqual(mappedCollection.CollectionId, collection.CollectionId);
             Assert.AreEqual(mappedCollection.CollectionReports, collection.CollectionReports);
             Assert.AreEqual(mappedCollection.TouchPointId, collection.TouchPointId);
+            Assert.AreEqual(mappedCollection.SubcontractorId, collection.SubcontractorId);
             Assert.AreEqual(mappedCollection.Ukprn, collection.Ukprn);
             Assert.AreEqual(mappedCollection.LastModifiedDate, collection.LastModifiedDate);
         }   
@@ -96,6 +102,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 CollectionReports = new Uri("http://localhost"),
                 LastModifiedDate = DateTime.Now,
                 TouchPointId = "9000000000",
+                SubcontractorId = "9999999999",
                 Ukprn = "12345"
             });
 
@@ -105,6 +112,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 CollectionReports = new Uri("http://localhost"),
                 LastModifiedDate = DateTime.Now,
                 TouchPointId = "9000000001",
+                SubcontractorId = "9999999998",
                 Ukprn = "12345"
             });
 
@@ -118,6 +126,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 Assert.AreEqual(collectionList[iCount].CollectionId, persistedCollectionList[iCount].CollectionId);
                 Assert.AreEqual(collectionList[iCount].CollectionReports, persistedCollectionList[iCount].CollectionReports);
                 Assert.AreEqual(collectionList[iCount].TouchPointId, persistedCollectionList[iCount].TouchPointId);
+                Assert.AreEqual(collectionList[iCount].SubcontractorId, persistedCollectionList[iCount].SubcontractorId);
                 Assert.AreEqual(collectionList[iCount].Ukprn, persistedCollectionList[iCount].Ukprn);
                 Assert.AreEqual(collectionList[iCount].LastModifiedDate, persistedCollectionList[iCount].LastModifiedDate);
             }
@@ -135,6 +144,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 CollectionReports = new Uri("http://localhost"),
                 LastModifiedDate = DateTime.Now,
                 TouchPointId = "9000000000",
+                SubcontractorId = "9999999998",
                 Ukprn = "12345"
             });
 
@@ -144,6 +154,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 CollectionReports = new Uri("http://localhost"),
                 LastModifiedDate = DateTime.Now,
                 TouchPointId = "9000000001",
+                SubcontractorId = "9999999998",
                 Ukprn = "12345"
             });
 
@@ -157,6 +168,7 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
                 Assert.AreEqual(collectionList[iCount].CollectionId, persistedCollectionList[iCount].CollectionId);
                 Assert.AreEqual(collectionList[iCount].CollectionReports, persistedCollectionList[iCount].CollectionReports);
                 Assert.AreEqual(collectionList[iCount].TouchPointId, persistedCollectionList[iCount].TouchPointId);
+                Assert.AreEqual(collectionList[iCount].SubcontractorId, persistedCollectionList[iCount].SubcontractorId);
                 Assert.AreEqual(collectionList[iCount].Ukprn, persistedCollectionList[iCount].Ukprn);
                 Assert.AreEqual(collectionList[iCount].LastModifiedDate, persistedCollectionList[iCount].LastModifiedDate);
             }
