@@ -5,7 +5,7 @@ namespace NCS.DSS.Collections.Cosmos.Helper
 {
     public class ResourceHelper : IResourceHelper
     {
-        public bool DoesCollectionBelongToTouchpoint(Guid touchpointId, Guid collectionId)
+        public bool DoesCollectionBelongToTouchpoint(Guid touchpointId, Guid subcontractorId, Guid collectionId)
         {
             throw new NotImplementedException();
         }

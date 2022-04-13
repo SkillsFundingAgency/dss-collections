@@ -18,9 +18,9 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
             _collectionMapper = collectionMapper;
         }
 
-        public async Task<List<Collection>> ProcessRequestAsync(string touchpointId)
+        public async Task<List<Collection>> ProcessRequestAsync(string touchpointId, string subcontractorId)
         {
-            return _collectionMapper.Map(await _documentDBProvider.GetCollectionsForTouchpointAsync(touchpointId));            
+            return _collectionMapper.Map(await _documentDBProvider.GetCollectionsForTouchpointAsync(touchpointId, subcontractorId));            
         }
     }
 }

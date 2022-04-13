@@ -21,6 +21,11 @@ namespace NCS.DSS.Collections.Validators
                 result.Add(new ValidationResult("Null TouchPointId", new[] { "TouchPointId" }));
             }
 
+            if (string.IsNullOrEmpty(entity.SubcontractorId))
+            {
+                result.Add(new ValidationResult("Null SubcontractorId", new[] { "SubcontractorId" }));
+            }
+
             if (string.IsNullOrWhiteSpace(entity.Ukprn))
             {
                 result.Add(new ValidationResult("Null UKPRN", new[] { "Ukprn" }));

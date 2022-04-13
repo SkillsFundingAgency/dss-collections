@@ -65,7 +65,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             return collection?.FirstOrDefault();
         }
 
-        public async Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, Guid collectionId)
+        public async Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, string subcontractorId, Guid collectionId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
@@ -73,7 +73,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
 
             var collectionForTouchpointQuery = client
                 ?.CreateDocumentQuery<PersistedCollection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
-                .Where(x => x.TouchPointId == touchPointId && x.CollectionId == collectionId)
+                .Where(x => x.TouchPointId == touchPointId && x.CollectionId == collectionId && x.SubcontractorId == subcontractorId)
                 .AsDocumentQuery();
 
             if (collectionForTouchpointQuery == null)
@@ -84,14 +84,14 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             return collections?.FirstOrDefault();
         }
 
-        public async Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId)
+        public async Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId, string subcontractorId)
         {
             var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
 
             var client = DocumentDBClient.CreateDocumentClient();
 
             var collectionsQuery = client.CreateDocumentQuery<PersistedCollection>(collectionUri)
-                .Where(so => so.TouchPointId == touchpointId).AsDocumentQuery();
+                .Where(so => so.TouchPointId == touchpointId && so.SubcontractorId == subcontractorId).AsDocumentQuery();
 
             var collections = new List<PersistedCollection>();
 

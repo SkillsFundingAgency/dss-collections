@@ -11,8 +11,8 @@ namespace NCS.DSS.Collections.Cosmos.Provider
     {
         Task<bool> DoesCollectionResourceExist(PersistedCollection collection);
         Task<ResourceResponse<Document>> CreateCollectionAsync(PersistedCollection collection);
-        Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId);
-        Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, Guid collectionId);
+        Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId, string subcontractorId);
+        Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, string subcontractorId, Guid collectionId);
         Task<PersistedCollection> GetCollectionAsync(Guid collectionId);
         Task<ResourceResponse<Document>> UpdateCollectionAsync(PersistedCollection collection);
     }

@@ -92,6 +92,7 @@ namespace NCS.DSS.Collections.IoC
             builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
             builder.Services.AddScoped<IDssCorrelationValidator, DssCorrelationValidator>();
             builder.Services.AddScoped<IDssTouchpointValidator, DssTouchpointValidator>();
+            builder.Services.AddScoped<IDssSubcontractorValidator, DssSubcontractorValidator>();
             //builder.Services.AddSingleton<IValidate, Validate>();
         }
 

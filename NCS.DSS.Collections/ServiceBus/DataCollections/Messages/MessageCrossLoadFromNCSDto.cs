@@ -19,6 +19,11 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
         public string TouchpointId { get; set; }
 
         /// <summary>
+        /// The SubcontractorId of the provider
+        /// </summary>
+        public string SubcontractorId { get; set; }
+
+        /// <summary>
         /// The timestamp of the report request
         /// </summary>
         public string Timestamp { get; set; }

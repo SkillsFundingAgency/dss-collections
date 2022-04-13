@@ -19,6 +19,7 @@ namespace NCS.DSS.Collections.Mappers
                 CollectionReports = entity.CollectionReports,
                 LastModifiedDate = entity.LastModifiedDate,
                 TouchPointId = entity.TouchPointId,
+                SubcontractorId = entity.SubcontractorId,
                 Ukprn = entity.Ukprn
             };
         }
@@ -33,6 +34,7 @@ namespace NCS.DSS.Collections.Mappers
                 LastModifiedDate = entity.LastModifiedDate,
                 ReportFileName = _dataCollectionsReportHelper.FileName(entity),
                 TouchPointId = entity.TouchPointId,
+                SubcontractorId = entity.SubcontractorId,
                 Ukprn = entity.Ukprn
             };
         }

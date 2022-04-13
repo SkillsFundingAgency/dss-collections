@@ -23,6 +23,12 @@ namespace NCS.DSS.Collections.Models
         public string TouchPointId { get; set; }
 
         [Required]
+        [StringLength(10, MinimumLength = 10)]
+        [Display(Description = "Identifier of the subcontractor submitting the collection.  This value will be taken from the HTTP method header and is not needed to be supplied as a parameter.")]
+        [Example(Description = "9999999999")]
+        public string SubcontractorId { get; set; }
+
+        [Required]
         [StringLength(8, MinimumLength = 8)]
         [Display(Description = "UK Provider Reference Number of the touchpoint.  This is needed by DC")]
         [Example(Description = "12345678")]

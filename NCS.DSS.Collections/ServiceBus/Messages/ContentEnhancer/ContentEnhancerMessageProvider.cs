@@ -17,6 +17,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer
                 LastModifiedDate = collection.LastModifiedDate,
                 URL = collection.CollectionReports.AbsoluteUri,
                 TouchpointId = collection.TouchPointId,
+                SubcontractorId = collection.SubcontractorId,
                 IsNewCustomer = false,
                 TitleMessage = $"Data Collections report available - CollectionId - {collection.CollectionId}"
             })))

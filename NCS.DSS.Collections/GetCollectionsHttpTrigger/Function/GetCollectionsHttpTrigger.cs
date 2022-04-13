@@ -25,11 +25,12 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         private IGetCollectionsHttpTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
+        private IDssSubcontractorValidator _dssSubcontractorValidator;
         private ILoggerHelper _loggerHelper;
         private IJsonHelper _jsonHelper;
 
         public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper)
+          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper, IDssSubcontractorValidator dssSubcontractorValidator)
         {
             _service = service;
             _responseMessageHelper = responseMessageHelper;
@@ -37,6 +38,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             _loggerHelper = loggerHelper;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
+            _dssSubcontractorValidator = dssSubcontractorValidator;
         }
 
         [FunctionName("Get")]
@@ -62,9 +64,16 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
                 return _responseMessageHelper.BadRequest();
             }
 
+            var subcontractorId = _dssSubcontractorValidator.Extract(req, log);
+
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                return _responseMessageHelper.BadRequest();
+            }
+
             _loggerHelper.LogInformationMessage(log, correlationId, "Attempt to process request");
 
-            var results = await _service.ProcessRequestAsync(touchpointId);
+            var results = await _service.ProcessRequestAsync(touchpointId, subcontractorId);
 
             if (results.Count == 0)
             {

@@ -10,6 +10,7 @@ namespace NCS.DSS.Collections.Models
         public string URL { get; set; }
         public bool IsNewCustomer { get; set; }
         public string TouchpointId { get; set; }
+        public string SubcontractorId { get; set; }
         public bool? DataCollections { get; set; }
     }
 }

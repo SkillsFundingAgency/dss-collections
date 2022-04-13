@@ -33,6 +33,7 @@ namespace NCS.DSS.Collections
             builder.Services.AddTransient<ICollectionValidator, CollectionValidator>();
             builder.Services.AddTransient<IDssCorrelationValidator, DssCorrelationValidator>();
             builder.Services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
+            builder.Services.AddTransient<IDssSubcontractorValidator, DssSubcontractorValidator>();
             builder.Services.AddTransient<IDCBlobStorage, DCBlobStorage>();
             builder.Services.AddTransient<IStorageConfiguration, StorageConfiguration>();
             builder.Services.AddTransient<IJsonHelper, JsonHelper>();

@@ -12,7 +12,7 @@ namespace NCS.DSS.Collections.Helpers
 
         public string FileName(Collection collection)
         {
-            return $"{collection.TouchPointId}{fileNameSeparator}{collection.CollectionId}{fileNameSeparator}{reportName}";            
+            return $"{collection.TouchPointId}{fileNameSeparator}{collection.SubcontractorId}{fileNameSeparator}{collection.CollectionId}{fileNameSeparator}{reportName}";            
         }
     }
 }

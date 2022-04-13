@@ -76,6 +76,13 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return _httpResponseMessageHelper.BadRequest();
             }
 
+            var subcontractorId = _httpRequestHelper.GetDssSubcontractorId(req);
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                log.LogInformation("Unable to locate 'APIM-SubcontractorId' in request header.");
+                return _httpResponseMessageHelper.BadRequest();
+            }
+
             var apimUrl = _httpRequestHelper.GetDssApimUrl(req);
             if (string.IsNullOrEmpty(apimUrl))
             {
@@ -100,6 +107,8 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             }
 
             collection.TouchPointId = touchpointId;
+            collection.SubcontractorId = subcontractorId;
+
 
             if (!collection.LastModifiedDate.HasValue)
                 collection.LastModifiedDate = DateTime.UtcNow;
@@ -112,7 +121,8 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return _httpResponseMessageHelper.UnprocessableEntity(validationResults);
             }
 
-            _loggerHelper.LogInformationMessage(log, correlationGuid, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            _loggerHelper.LogInformationMessage(log, correlationGuid, string.Format($"Attempting to get Create Collection for Touchpoint {touchpointId} and subcontractorId {subcontractorId}"));
+
             var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection != null)

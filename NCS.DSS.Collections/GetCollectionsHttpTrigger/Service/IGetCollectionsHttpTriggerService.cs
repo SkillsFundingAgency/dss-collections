@@ -7,6 +7,6 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {
     public interface IGetCollectionsHttpTriggerService
     {
-        Task<List<Collection>> ProcessRequestAsync(string touchpointId);
+        Task<List<Collection>> ProcessRequestAsync(string touchpointId, string subcontractorId);
     }
 }

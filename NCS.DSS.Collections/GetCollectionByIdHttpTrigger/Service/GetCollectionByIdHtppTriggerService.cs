@@ -16,9 +16,9 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
             _documentDBProvider = documentDBProvider;
             _storage = storage;
         }
-        public async Task<MemoryStream> ProcessRequestAsync(string touchPointId, Guid collectionId, ILogger log)
+        public async Task<MemoryStream> ProcessRequestAsync(string touchPointId, string subcontractorId, Guid collectionId, ILogger log)
         {
-            var collection = await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, collectionId);
+            var collection = await _documentDBProvider.GetCollectionForTouchpointAsync(touchPointId, subcontractorId, collectionId);
 
             if (collection == null)
                 return null;            

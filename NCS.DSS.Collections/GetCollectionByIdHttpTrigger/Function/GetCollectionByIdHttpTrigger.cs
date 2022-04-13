@@ -27,10 +27,11 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         private IGetCollectionByIdHtppTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
+        private IDssSubcontractorValidator _dssSubcontractorValidator;
         private ILoggerHelper _loggerHelper;
 
         public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator)
+          IDssTouchpointValidator dssTouchpointValidator, IDssSubcontractorValidator dssSubcontractorValidator)
         {
             //_requestHelper = requestHelper;
             _service = service;
@@ -39,6 +40,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             _loggerHelper = loggerHelper;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
+            _dssSubcontractorValidator = dssSubcontractorValidator;
         }
 
         [FunctionName("GetById")]
@@ -63,6 +65,13 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
                 return _responseMessageHelper.BadRequest();
             }
 
+            var subcontractorId = _dssSubcontractorValidator.Extract(req, log);
+
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                return _responseMessageHelper.BadRequest();
+            }
+
             if (!Guid.TryParse(collectionId, out var collectionGuid))
                 return _responseMessageHelper.BadRequest(collectionGuid);
 
@@ -70,7 +79,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             try
             {
                 _loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
-                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, subcontractorId, collectionGuid, log);        
             }
             catch (Exception ex)
             {

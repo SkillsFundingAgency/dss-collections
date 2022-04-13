@@ -24,6 +24,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
                 ReportFilename = collection.ReportFileName,
                 Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture),
                 TouchpointId = collection.TouchPointId,
+                SubcontractorId = collection.SubcontractorId,
                 Ukprn = int.Parse(collection.Ukprn)
             })))
             {
