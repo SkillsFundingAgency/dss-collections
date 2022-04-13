@@ -91,7 +91,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             var client = DocumentDBClient.CreateDocumentClient();
 
             var collectionsQuery = client.CreateDocumentQuery<PersistedCollection>(collectionUri)
-                .Where(so => so.TouchPointId == touchpointId && so.SubcontractorId == subcontractorId).AsDocumentQuery();
+                .Where(so => so.TouchPointId == touchpointId).AsDocumentQuery();
 
             var collections = new List<PersistedCollection>();
 

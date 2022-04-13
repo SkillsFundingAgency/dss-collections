@@ -15,6 +15,5 @@ namespace NCS.DSS.Collections.Cosmos.Provider
         Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, string subcontractorId, Guid collectionId);
         Task<PersistedCollection> GetCollectionAsync(Guid collectionId);
         Task<ResourceResponse<Document>> UpdateCollectionAsync(PersistedCollection collection);
-        void GetCollectionsForTouchpointAsync(string touchPointId);
     }
 }
