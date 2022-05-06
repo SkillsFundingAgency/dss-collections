@@ -76,6 +76,13 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return _httpResponseMessageHelper.BadRequest();
             }
 
+            var subcontractorId = _httpRequestHelper.GetDssSubcontractorId(req);
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                log.LogInformation("Unable to locate 'APIM-SubcontractorId' in request header.");
+                return _httpResponseMessageHelper.BadRequest();
+            }
+
             var apimUrl = _httpRequestHelper.GetDssApimUrl(req);
             if (string.IsNullOrEmpty(apimUrl))
             {

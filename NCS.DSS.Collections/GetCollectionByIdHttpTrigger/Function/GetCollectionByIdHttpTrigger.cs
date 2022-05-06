@@ -23,6 +23,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
     public class GetCollectionByIdHttpTrigger
     {
+        private IHttpRequestHelper _httpRequestHelper;
         private readonly IHttpResponseMessageHelper _responseMessageHelper;
         private IGetCollectionByIdHtppTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
@@ -30,9 +31,9 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         private ILoggerHelper _loggerHelper;
 
         public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator)
+          IDssTouchpointValidator dssTouchpointValidator, IHttpRequestHelper httpRequestHelper)
         {
-            //_requestHelper = requestHelper;
+            _httpRequestHelper = httpRequestHelper;
             _service = service;
             _responseMessageHelper = responseMessageHelper;
             //_jsonHelper = jsonHelper;
@@ -60,6 +61,13 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             if (string.IsNullOrEmpty(touchpointId))
             {
+                return _responseMessageHelper.BadRequest();
+            }
+
+            var subcontractorId = _httpRequestHelper.GetDssSubcontractorId(req);
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                log.LogInformation("Unable to locate 'APIM-SubcontractorId' in request header.");
                 return _responseMessageHelper.BadRequest();
             }
 

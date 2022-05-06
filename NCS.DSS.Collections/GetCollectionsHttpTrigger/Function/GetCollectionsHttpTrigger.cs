@@ -21,6 +21,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
     public class GetCollectionsHttpTrigger
     {
+        private IHttpRequestHelper _httpRequestHelper;
         private readonly IHttpResponseMessageHelper _responseMessageHelper;
         private IGetCollectionsHttpTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
@@ -29,7 +30,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         private IJsonHelper _jsonHelper;
 
         public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper)
+          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper, IHttpRequestHelper httpRequestHelper)
         {
             _service = service;
             _responseMessageHelper = responseMessageHelper;
@@ -37,6 +38,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             _loggerHelper = loggerHelper;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
+            _httpRequestHelper = httpRequestHelper;
         }
 
         [FunctionName("Get")]
@@ -55,10 +57,17 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 
             var correlationId = _dssCorrelationValidator.Extract(req, log);
 
-            var touchpointId = _dssTouchpointValidator.Extract(req, log);            
+            var touchpointId = _dssTouchpointValidator.Extract(req, log);
 
             if (string.IsNullOrEmpty(touchpointId))
             {                
+                return _responseMessageHelper.BadRequest();
+            }
+
+            var subcontractorId = _httpRequestHelper.GetDssSubcontractorId(req);
+            if (string.IsNullOrEmpty(subcontractorId))
+            {
+                log.LogInformation("Unable to locate 'APIM-SubcontractorId' in request header.");
                 return _responseMessageHelper.BadRequest();
             }
 
