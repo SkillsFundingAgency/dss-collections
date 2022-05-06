@@ -82,7 +82,22 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             // Assert
             Assert.IsInstanceOf<HttpResponseMessage>(result);
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
-        }       
+        }
+
+        [Test]
+        public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenSubcontractorIdIsNotProvided()
+        {
+            //Assign
+            _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(Task.FromResult(_collection).Result));
+            _httpRequestHelper.Setup(x => x.GetDssSubcontractorId(_request)).Returns((string)null);
+
+            // Act
+            var result = await RunFunction();
+
+            // Assert
+            Assert.IsInstanceOf<HttpResponseMessage>(result);
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+        }
 
         [Test]
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenApimUrlIsNotProvided()
@@ -104,6 +119,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             //Assign
             _httpRequestHelper.Setup(x => x.GetDssCorrelationId(_request)).Returns(ValidDssCorrelationId);
             _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns("0000000001");
+            _httpRequestHelper.Setup(x => x.GetDssSubcontractorId(_request)).Returns("9999999999");
             _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns("http://localhost:7071");
             _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Throws(new JsonException());
 
@@ -121,6 +137,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             //Assign
             _httpRequestHelper.Setup(x => x.GetDssCorrelationId(_request)).Returns(ValidDssCorrelationId);
             _httpRequestHelper.Setup(x => x.GetDssTouchpointId(_request)).Returns("0000000001");
+            _httpRequestHelper.Setup(x => x.GetDssSubcontractorId(_request)).Returns("9999999999");
             _httpRequestHelper.Setup(x => x.GetDssApimUrl(_request)).Returns("http://localhost:7071");
 
             _httpRequestHelper.Setup(x => x.GetResourceFromRequest<Collection>(_request)).Returns(Task.FromResult(_collection));
