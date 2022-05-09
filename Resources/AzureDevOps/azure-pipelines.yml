@@ -1,3 +1,4 @@
+
 variables:
     SolutionBaseName: 'NCS.DSS.Collections'
     BuildPlatform: 'any cpu'
@@ -12,16 +13,11 @@ resources:
     ref: refs/tags/v1.11.1
     endpoint: 'GitHub (CDH)'
 
-pool:
-  name: NCS - CI and CD
-  demands:
-    - msbuild
-    - visualstudio
-
 jobs:
 # Test the branch name, the output of this job will satisfy the condition of one or neither of the subsequent jobs
 - job: TestBranchName
   displayName: TestBranchName
+  pool: Continuous Integration 02 - SSD - 160ACU
 
   variables:
     TestBranchNameScriptUrl: https://raw.githubusercontent.com/SkillsFundingAgency/dss-devops/master/Scripts/Test-BranchName.ps1
@@ -47,6 +43,11 @@ jobs:
   displayName: Build-DotNetStandard
   dependsOn: TestBranchName
   condition: and(succeeded(), eq(dependencies.TestBranchName.outputs['ExecuteTestBranchNameScript.FunctionAppVersion'], 'Version2+'))
+  pool:
+    name: NCS - CI and CD
+    demands:
+    - msbuild
+    - visualstudio
 
   steps:
   - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-dotnetcore-build-notests.yml@dfc-devops
@@ -72,8 +73,5 @@ jobs:
       pathtoPublish: $(build.artifactstagingdirectory)
       artifactName: $(SolutionBaseName)
       publishLocation: container
-
-
-
 
 
