@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DFC.Common.Standard.Logging;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using NCS.DSS.Collections.ServiceBus.Processor.Service;
 
 namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
@@ -24,7 +25,7 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
         [FunctionName("DataCollectionsQueueProcessor")]
         public async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName,
                                                 Connection = _dataCollectionsConnectionString)]
-                                                string queueItem,
+            MessageCrossLoadToNCSDto message,
                                                 ILogger log)
         {
             _loggerHelper.LogMethodEnter(log);
@@ -33,14 +34,14 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
 
             try
             {
-                if (queueItem == null)
+                if (message == null)
                 {
                     _loggerHelper.LogError(log, correlationId, new NullReferenceException("Message cannot be null"));
                     return;
                 }
 
                 _loggerHelper.LogInformationMessage(log, correlationId, "Attempting to process message");
-                await _dataCollectionsQueueProcessorService.ProcessMessageAsync(queueItem, log);
+                await _dataCollectionsQueueProcessorService.ProcessMessageAsync(message, log);
             }
             catch (Exception ex)
             {
