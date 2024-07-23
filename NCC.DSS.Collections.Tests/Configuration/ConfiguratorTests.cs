@@ -32,8 +32,8 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
             //Assert
-            Assert.AreEqual(queueName, _ceMessageBusConfig.QueueName);
-            Assert.AreEqual(_connString, _ceMessageBusConfig.ServiceBusConnectionString);
+            Assert.That(queueName == _ceMessageBusConfig.QueueName);
+            Assert.That(_connString == _ceMessageBusConfig.ServiceBusConnectionString);
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
             //Assert
-            Assert.AreNotEqual($"{queueName} ", _ceMessageBusConfig.QueueName);
-            Assert.AreNotEqual($"{_connString} ", _ceMessageBusConfig.ServiceBusConnectionString);
+            Assert.That($"{queueName} " == _ceMessageBusConfig.QueueName, Is.False);
+            Assert.That($"{_connString} " == _ceMessageBusConfig.ServiceBusConnectionString, Is.False);
         }
 
         [Test]
@@ -59,8 +59,8 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
             //Assert
-            Assert.AreEqual(queueName, _dcMessageBusConfig.QueueName);
-            Assert.AreEqual(_connString, _dcMessageBusConfig.ServiceBusConnectionString);
+            Assert.That(queueName == _dcMessageBusConfig.QueueName);
+            Assert.That(_connString == _dcMessageBusConfig.ServiceBusConnectionString);           
         }
 
         [Test]
@@ -72,8 +72,8 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
             //Assert
-            Assert.AreNotEqual($"{queueName} ", _dcMessageBusConfig.QueueName);
-            Assert.AreNotEqual($"{_connString} ", _dcMessageBusConfig.ServiceBusConnectionString);
+            Assert.That($"{queueName} " == _dcMessageBusConfig.QueueName, Is.False);
+            Assert.That($"{_connString} " == _dcMessageBusConfig.ServiceBusConnectionString, Is.False);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(connString, connString, EnvironmentVariableTarget.Process);            
 
             //Assert
-            Assert.AreEqual(connString, _storageConfiguration.ConnectionString);            
+            Assert.That(connString == _storageConfiguration.ConnectionString);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace NCC.DSS.Collections.Tests.Configuration
             Environment.SetEnvironmentVariable(connString, connString, EnvironmentVariableTarget.Process);
 
             //Assert
-            Assert.AreNotEqual($"{connString} ", _storageConfiguration.ConnectionString);
+            Assert.That($"{connString} " == _storageConfiguration.ConnectionString, Is.False);
         }
     }
 }

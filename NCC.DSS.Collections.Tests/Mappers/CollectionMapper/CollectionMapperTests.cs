@@ -44,11 +44,11 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             PersistedCollection mappedCollection = _mapper.Map(collection);
 
             //Assert
-            Assert.AreEqual(mappedCollection.CollectionId, collection.CollectionId);
-            Assert.AreEqual(mappedCollection.CollectionReports, collection.CollectionReports);
-            Assert.AreEqual(mappedCollection.TouchPointId, collection.TouchPointId);
-            Assert.AreEqual(mappedCollection.Ukprn, collection.Ukprn);
-            Assert.AreEqual(mappedCollection.LastModifiedDate, collection.LastModifiedDate);
+            Assert.That(mappedCollection.CollectionId == collection.CollectionId);
+            Assert.That (mappedCollection.CollectionReports == collection.CollectionReports);
+            Assert.That(mappedCollection.TouchPointId == collection.TouchPointId);
+            Assert.That(mappedCollection.Ukprn == collection.Ukprn);
+            Assert.That(mappedCollection.LastModifiedDate == collection.LastModifiedDate);
         }
 
         [Test]
@@ -75,13 +75,12 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
 
             Collection mappedCollection = _mapper.Map(collection);
 
-
             //Assert
-            Assert.AreEqual(mappedCollection.CollectionId, collection.CollectionId);
-            Assert.AreEqual(mappedCollection.CollectionReports, collection.CollectionReports);
-            Assert.AreEqual(mappedCollection.TouchPointId, collection.TouchPointId);
-            Assert.AreEqual(mappedCollection.Ukprn, collection.Ukprn);
-            Assert.AreEqual(mappedCollection.LastModifiedDate, collection.LastModifiedDate);
+            Assert.That(mappedCollection.CollectionId == collection.CollectionId);
+            Assert.That(mappedCollection.CollectionReports == collection.CollectionReports);
+            Assert.That(mappedCollection.TouchPointId == collection.TouchPointId);
+            Assert.That(mappedCollection.Ukprn == collection.Ukprn);
+            Assert.That(mappedCollection.LastModifiedDate == collection.LastModifiedDate);
         }   
         
         [Test]
@@ -115,11 +114,11 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
 
             for (int iCount = 0; iCount < persistedCollectionList.Count; iCount++)
             {
-                Assert.AreEqual(collectionList[iCount].CollectionId, persistedCollectionList[iCount].CollectionId);
-                Assert.AreEqual(collectionList[iCount].CollectionReports, persistedCollectionList[iCount].CollectionReports);
-                Assert.AreEqual(collectionList[iCount].TouchPointId, persistedCollectionList[iCount].TouchPointId);
-                Assert.AreEqual(collectionList[iCount].Ukprn, persistedCollectionList[iCount].Ukprn);
-                Assert.AreEqual(collectionList[iCount].LastModifiedDate, persistedCollectionList[iCount].LastModifiedDate);
+                Assert.That(collectionList[iCount].CollectionId == persistedCollectionList[iCount].CollectionId);
+                Assert.That(collectionList[iCount].CollectionReports == persistedCollectionList[iCount].CollectionReports);
+                Assert.That(collectionList[iCount].TouchPointId == persistedCollectionList[iCount].TouchPointId);
+                Assert.That(collectionList[iCount].Ukprn == persistedCollectionList[iCount].Ukprn);
+                Assert.That(collectionList[iCount].LastModifiedDate == persistedCollectionList[iCount].LastModifiedDate);
             }
         }
 
@@ -154,11 +153,11 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
 
             for (int iCount = 0; iCount < collectionList.Count; iCount++)
             {
-                Assert.AreEqual(collectionList[iCount].CollectionId, persistedCollectionList[iCount].CollectionId);
-                Assert.AreEqual(collectionList[iCount].CollectionReports, persistedCollectionList[iCount].CollectionReports);
-                Assert.AreEqual(collectionList[iCount].TouchPointId, persistedCollectionList[iCount].TouchPointId);
-                Assert.AreEqual(collectionList[iCount].Ukprn, persistedCollectionList[iCount].Ukprn);
-                Assert.AreEqual(collectionList[iCount].LastModifiedDate, persistedCollectionList[iCount].LastModifiedDate);
+                Assert.That(collectionList[iCount].CollectionId == persistedCollectionList[iCount].CollectionId);
+                Assert.That(collectionList[iCount].CollectionReports == persistedCollectionList[iCount].CollectionReports);
+                Assert.That(collectionList[iCount].TouchPointId == persistedCollectionList[iCount].TouchPointId);
+                Assert.That(collectionList[iCount].Ukprn == persistedCollectionList[iCount].Ukprn);
+                Assert.That(collectionList[iCount].LastModifiedDate == persistedCollectionList[iCount].LastModifiedDate);
             }
         }
     }

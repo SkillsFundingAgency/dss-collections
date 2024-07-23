@@ -5,8 +5,6 @@ using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
@@ -18,13 +16,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Azure.Functions.Worker;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 {
     public class PostCollectionHttpTrigger
     {
         private IHttpRequestHelper _httpRequestHelper;
-        private readonly IHttpResponseMessageHelper _httpResponseMessageHelper;
         private IPostCollectionHttpTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
@@ -32,11 +30,10 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         private IJsonHelper _jsonHelper;
         private IApimUrlValidator _apimUrlValidator;
 
-        public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, IHttpResponseMessageHelper httpResponseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+        public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service,  ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper, IApimUrlValidator apimUrlValidator, IHttpRequestHelper httpRequestHelper)
         {
             _service = service;
-            _httpResponseMessageHelper = httpResponseMessageHelper;
             _jsonHelper = jsonHelper;
             _loggerHelper = loggerHelper;
             _dssCorrelationValidator = dssCorrelationValidator;
@@ -45,7 +42,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             _httpRequestHelper = httpRequestHelper;
         }
 
-        [FunctionName("Post")]
+        [Function("Post")]
         [ProducesResponseType(typeof(Models.Collection), (int)HttpStatusCode.Created)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Created, Description = "Collection Created", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collection does not exist", ShowSchema = false)]
@@ -54,7 +51,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
-        public async Task<HttpResponseMessage> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req,
             ILogger log)
         {
@@ -73,18 +70,18 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             if (string.IsNullOrEmpty(touchpointId))
             {
                 log.LogInformation("Unable to locate 'APIM-TouchpointId' in request header.");
-                return _httpResponseMessageHelper.BadRequest();
+                return new BadRequestResult();
             }
 
             var apimUrl = _httpRequestHelper.GetDssApimUrl(req);
             if (string.IsNullOrEmpty(apimUrl))
             {
                 log.LogInformation("Unable to locate 'apimurl' in request header");
-                return _httpResponseMessageHelper.BadRequest();
+                return new BadRequestResult();
             }
 
             if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
-                return _httpResponseMessageHelper.BadRequest();
+                return new BadRequestResult();
 
             Collection collection;
 
@@ -96,7 +93,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             catch (JsonException ex)
             {
                 _loggerHelper.LogError(log, correlationGuid, "Unable to retrieve body from req", ex);
-                return _httpResponseMessageHelper.UnprocessableEntity(ex);
+                return new UnprocessableEntityObjectResult(ex.Message);
             }
 
             collection.TouchPointId = touchpointId;
@@ -109,7 +106,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             if (validationResults != null && validationResults.Any())
             {
                 _loggerHelper.LogInformationMessage(log, correlationGuid, "validation errors with resource");
-                return _httpResponseMessageHelper.UnprocessableEntity(validationResults);
+                return new UnprocessableEntityObjectResult(validationResults);
             }
 
             _loggerHelper.LogInformationMessage(log, correlationGuid, string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
@@ -122,8 +119,8 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             }
 
             return createdCollection == null ?
-                _httpResponseMessageHelper.BadRequest() :
-                _httpResponseMessageHelper.Created(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId"));
+                new BadRequestResult() :
+                new ObjectResult(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId")) { StatusCode = (int)HttpStatusCode.Created};
         }
     }
 }

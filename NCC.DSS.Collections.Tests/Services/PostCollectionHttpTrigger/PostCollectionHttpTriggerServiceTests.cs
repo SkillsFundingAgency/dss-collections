@@ -1,10 +1,7 @@
 ﻿using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
 using DFC.JSON.Standard;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Logging;
-using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.Validators;
@@ -13,16 +10,10 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using NCS.DSS.Collections.Cosmos.Provider;
-using NCS.DSS.Collections.Mappers;
-using NCS.DSS.Collections.ServiceBus;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using Microsoft.Azure.Documents;
-using Microsoft.Azure.Documents.Client;
 using NCS.DSS.Collections.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 {
@@ -32,7 +23,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
     {
         private const string ValidDssCorrelationId = "452d8e8c-2516-4a6b-9fc1-c85e578ac066";
         private Mock<ILogger> _log;
-        private DefaultHttpRequest _request;      
+        private HttpRequest _request;      
         private Mock<IPostCollectionHttpTriggerService> _postCollectionHttpTriggerService;
         private Mock<ILoggerHelper> _loggerHelper;
         private Mock<IHttpRequestHelper> _httpRequestHelper;
@@ -52,11 +43,10 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             _collection.Ukprn = "10005262";
             _collection.CollectionReports = new Uri("http://url/path/");
             _collection.TouchPointId = "0000000001";
-            _request = null;
+            _request = (new DefaultHttpContext()).Request;
 
             _loggerHelper = new Mock<ILoggerHelper>();
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
-            _httpResponseMessageHelper = new HttpResponseMessageHelper();
             _jsonHelper = new JsonHelper();
             _log = new Mock<ILogger>();
 
@@ -66,7 +56,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             _postCollectionHttpTriggerService = new Mock<IPostCollectionHttpTriggerService>();
 
-            function = new NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _httpResponseMessageHelper, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _jsonHelper, _apimValidator.Object, _httpRequestHelper.Object);
+            function = new NCS.DSS.Collections.PostCollectionHttpTrigger.Function.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _jsonHelper, _apimValidator.Object, _httpRequestHelper.Object);
         }
 
         [Test]
@@ -80,8 +70,8 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.IsInstanceOf<HttpResponseMessage>(result);
-            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.That(result,Is.InstanceOf<BadRequestResult>());
+            
         }       
 
         [Test]
@@ -94,8 +84,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.IsInstanceOf<HttpResponseMessage>(result);
-            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.That(result, Is.InstanceOf<BadRequestResult>());
         }
 
         [Test]
@@ -111,8 +100,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.IsInstanceOf<HttpResponseMessage>(result);
-            Assert.AreEqual((HttpStatusCode)422, result.StatusCode);
+            Assert.That(result, Is.InstanceOf<UnprocessableEntityObjectResult>());
         }
 
         [Test]
@@ -130,11 +118,11 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.IsInstanceOf<HttpResponseMessage>(result);
-            Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
+            Assert.That(result, Is.InstanceOf<ObjectResult>());
+            Assert.That((int)HttpStatusCode.Created == (int) ((ObjectResult) result).StatusCode);
         }
 
-        private async Task<HttpResponseMessage> RunFunction()
+        private async Task<IActionResult> RunFunction()
         {
             return await function.Run(
                 _request,

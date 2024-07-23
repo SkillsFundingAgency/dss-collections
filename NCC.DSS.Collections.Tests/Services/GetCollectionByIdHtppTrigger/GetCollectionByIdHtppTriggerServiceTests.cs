@@ -51,8 +51,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId, _logger.Object);
 
             //Assert
-            Assert.IsNotNull(_triggerService);
-            Assert.IsNotNull(result);
+            Assert.That(_triggerService, Is.Not.Null);
+            Assert.That(result, Is.Not.Null);
         }        
     }
 }
