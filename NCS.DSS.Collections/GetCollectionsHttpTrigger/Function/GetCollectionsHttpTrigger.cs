@@ -65,9 +65,12 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
                 _logger.LogInformation($"{correlationId} unable to retrieve collection");
                 return new NoContentResult();
             }
+            var contentTypes = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
+                {
+                    new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/json")
+                };
 
-           
-            return new OkObjectResult(_jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
+            return new OkObjectResult(_jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId")) { ContentTypes = contentTypes};                                       
         }
     }
 }

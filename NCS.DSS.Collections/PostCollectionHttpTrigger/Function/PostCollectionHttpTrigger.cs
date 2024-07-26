@@ -114,10 +114,13 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
             }
-
+            var contentTypes = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
+                {
+                    new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/json")
+                };
             return createdCollection == null ?
                 new BadRequestResult() :
-                new ObjectResult(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId")) { StatusCode = (int)HttpStatusCode.Created};
+                new ObjectResult(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId")) { StatusCode = (int)HttpStatusCode.Created, ContentTypes = contentTypes };
         }
     }
 }
