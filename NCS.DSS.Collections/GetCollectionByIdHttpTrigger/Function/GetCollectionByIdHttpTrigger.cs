@@ -24,16 +24,14 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         private IGetCollectionByIdHtppTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILoggerHelper _loggerHelper;
+        private ILogger<GetCollectionByIdHttpTrigger> _logger;
 
-        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
-            //_requestHelper = requestHelper;
             _service = service;
             _responseMessageHelper = responseMessageHelper;
-            //_jsonHelper = jsonHelper;
-            _loggerHelper = loggerHelper;
+            _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
         }
@@ -47,13 +45,13 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId, ILogger log)
-        {            
-            log.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId)
+        {
+            _logger.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
 
-            var correlationId = _dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, _logger);
 
-            var touchpointId = _dssTouchpointValidator.Extract(req, log);
+            var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
             {
@@ -66,12 +64,12 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             MemoryStream collectionStream;
             try
             {
-                _loggerHelper.LogInformationMessage(log,correlationId,"Attempt to process request");
-                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, log);        
+                _logger.LogInformation($"{correlationId} Attempt to process request.");
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, _logger);        
             }
             catch (Exception ex)
             {
-                _loggerHelper.LogError(log, correlationId, "unable to get collection", ex);
+                _logger.LogError( $"{correlationId} unable to get collection", ex);
                 return new UnprocessableEntityResult();
             }
 
