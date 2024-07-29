@@ -1,11 +1,8 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.HTTP.Standard;
-using DFC.JSON.Standard;
+﻿using DFC.HTTP.Standard;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.Validators;
-using Newtonsoft.Json;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -15,6 +12,7 @@ using NCS.DSS.Collections.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PostCollectionHttpLogger = NCS.DSS.Collections.PostCollectionHttpTrigger.Function;
+using System.Text.Json;
 
 namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 {
@@ -28,7 +26,6 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private Mock<ILogger<PostCollectionHttpLogger.PostCollectionHttpTrigger>> _loggerHelper;
         private Mock<IHttpRequestHelper> _httpRequestHelper;
         private IHttpResponseMessageHelper _httpResponseMessageHelper;
-        private IJsonHelper _jsonHelper;
         private Collection _collection;
         private Mock<IDssCorrelationValidator> _dssCorrelationValidator;
         private Mock<IDssTouchpointValidator> _dssTouchpointValidator;
@@ -47,7 +44,6 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             _loggerHelper = new Mock<ILogger<PostCollectionHttpLogger.PostCollectionHttpTrigger>>();
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
-            _jsonHelper = new JsonHelper();
 
             _dssCorrelationValidator = new Mock<IDssCorrelationValidator>();
             _dssTouchpointValidator = new Mock<IDssTouchpointValidator>();
@@ -55,7 +51,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             _postCollectionHttpTriggerService = new Mock<IPostCollectionHttpTriggerService>();
 
-            function = new PostCollectionHttpLogger.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _jsonHelper, _apimValidator.Object, _httpRequestHelper.Object);
+            function = new PostCollectionHttpLogger.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _apimValidator.Object, _httpRequestHelper.Object);
         }
 
         [Test]
@@ -117,8 +113,8 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<ObjectResult>());
-            Assert.That((int)HttpStatusCode.Created == (int) ((ObjectResult) result).StatusCode);
+            Assert.That(result, Is.InstanceOf<JsonResult>());
+            Assert.That((int)HttpStatusCode.Created == (int) ((JsonResult) result).StatusCode);
         }
 
         private async Task<IActionResult> RunFunction()

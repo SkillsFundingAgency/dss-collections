@@ -1,6 +1,4 @@
-using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
-using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
+using System.Text.Json;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
@@ -22,14 +21,12 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
         private ILogger<GetCollectionsHttpTrigger> _logger;
-        private IJsonHelper _jsonHelper;
 
         public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionsHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper)
+          IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
             _responseMessageHelper = responseMessageHelper;
-            _jsonHelper = jsonHelper;
             _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
@@ -60,17 +57,21 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 
             var results = await _service.ProcessRequestAsync(touchpointId);
 
-            if (results.Count == 0)
+            if (results.Count == 0 || results == null)
             {
                 _logger.LogInformation($"{correlationId} unable to retrieve collection");
                 return new NoContentResult();
             }
-            var contentTypes = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
-                {
-                    new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/json")
-                };
-
-            return new OkObjectResult(_jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId")) { ContentTypes = contentTypes};                                       
+            else if (results.Count == 1)
+            {
+                _logger.LogInformation($"Successfully retrieved [{results.Count}] collection");
+                return new JsonResult(results[0], new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            else
+            {
+                _logger.LogInformation($"Successfully retrieved [{results.Count}] collections");
+                return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
+            }
         }
     }
 }

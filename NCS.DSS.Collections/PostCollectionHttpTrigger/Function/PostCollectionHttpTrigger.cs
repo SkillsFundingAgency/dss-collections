@@ -1,6 +1,4 @@
-using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
-using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +6,13 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.Validators;
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
+using System.Text.Json;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 {
@@ -25,14 +23,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
         private ILogger<PostCollectionHttpTrigger> _logger;
-        private IJsonHelper _jsonHelper;
         private IApimUrlValidator _apimUrlValidator;
 
         public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, ILogger<PostCollectionHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper, IApimUrlValidator apimUrlValidator, IHttpRequestHelper httpRequestHelper)
+          IDssTouchpointValidator dssTouchpointValidator, IApimUrlValidator apimUrlValidator, IHttpRequestHelper httpRequestHelper)
         {
             _service = service;
-            _jsonHelper = jsonHelper;
             _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
@@ -114,13 +110,10 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
             }
-            var contentTypes = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
-                {
-                    new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/json")
-                };
+  
             return createdCollection == null ?
                 new BadRequestResult() :
-                new ObjectResult(_jsonHelper.SerializeObjectAndRenameIdProperty(createdCollection, "id", "CollectionId")) { StatusCode = (int)HttpStatusCode.Created, ContentTypes = contentTypes };
+                new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };
         }
     }
 }

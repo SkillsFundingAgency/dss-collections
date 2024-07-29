@@ -40,7 +40,6 @@ var host = new HostBuilder()
         services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
         services.AddTransient<IDCBlobStorage, DCBlobStorage>();
         services.AddTransient<IStorageConfiguration, StorageConfiguration>();
-        services.AddTransient<IJsonHelper, JsonHelper>();
         services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
         services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
         services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
