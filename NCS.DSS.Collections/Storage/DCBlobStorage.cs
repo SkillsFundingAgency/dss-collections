@@ -29,7 +29,7 @@ namespace NCS.DSS.Collections.Storage
             var resultStream = new MemoryStream();
             var correlationGuidId = Guid.NewGuid();
             var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);  
-            await blobContainer.CreateAsync();
+            
             try
             {
                 BlobClient blob = blobContainer.GetBlobClient(collection.ReportFileName);
