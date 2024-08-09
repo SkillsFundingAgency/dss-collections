@@ -19,12 +19,13 @@ namespace NCC.DSS.Collections.Tests.Helpers
             _collectionIdGuid = Guid.NewGuid();
             _touchpointId = "90000000000";
 
-            _reportHelper = new DataCollectionsReportHelper();            
+            _reportHelper = new DataCollectionsReportHelper();
 
-            _collection = new Collection{
-                                            CollectionId = _collectionIdGuid,
-                                            TouchPointId = _touchpointId
-                                        };
+            _collection = new Collection
+            {
+                CollectionId = _collectionIdGuid,
+                TouchPointId = _touchpointId
+            };
         }
 
         [Test]

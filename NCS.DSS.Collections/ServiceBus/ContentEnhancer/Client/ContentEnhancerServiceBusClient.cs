@@ -16,7 +16,7 @@ namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
         }
         public async Task SendAsync(PersistedCollection collection)
         {
-            var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);            
+            var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);
 
             await queueClient.SendAsync(_messageProvider.MakeMessage(collection));
         }

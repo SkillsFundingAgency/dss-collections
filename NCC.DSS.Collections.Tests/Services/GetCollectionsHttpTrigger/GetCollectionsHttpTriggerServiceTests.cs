@@ -1,11 +1,9 @@
-﻿using DFC.HTTP.Standard;
+﻿using Moq;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
 using NUnit.Framework;
-using Moq;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Assert = NUnit.Framework.Assert;
@@ -44,8 +42,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
             var result = _triggerService.ProcessRequestAsync(_touchPointId);
 
             //Assert
-            Assert.That(_triggerService,Is.Not.Null);
-            Assert.That(result, Is.Not.Null);            
+            Assert.That(_triggerService, Is.Not.Null);
+            Assert.That(result, Is.Not.Null);
         }
     }
 }

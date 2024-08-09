@@ -1,9 +1,10 @@
-using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
@@ -13,8 +14,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Net.Http.Headers;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
@@ -65,11 +64,11 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             try
             {
                 _logger.LogInformation($"{correlationId} Attempt to process request.");
-                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, _logger);        
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, _logger);
             }
             catch (Exception ex)
             {
-                _logger.LogError( $"{correlationId} unable to get collection", ex);
+                _logger.LogError($"{correlationId} unable to get collection", ex);
                 return new UnprocessableEntityResult();
             }
 
@@ -78,7 +77,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             collectionStream.Position = 0;
 
-            var response = new ObjectResult(new StreamContent(collectionStream)){ StatusCode = (int)HttpStatusCode.OK,  };
+            var response = new ObjectResult(new StreamContent(collectionStream)) { StatusCode = (int)HttpStatusCode.OK, };
             var collection = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
             {
                 new MediaTypeHeaderValue("application/octet-stream")

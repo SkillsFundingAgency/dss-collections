@@ -1,8 +1,8 @@
 ﻿using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
+using NUnit.Framework;
 using System;
 using System.Linq;
-using NUnit.Framework;
 
 namespace NCC.DSS.Collections.Tests.Validators
 {
@@ -17,7 +17,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             _validator = new CollectionValidator();
         }
 
-        [Test]        
+        [Test]
         public void Validate_Collection_Test_Positive()
         {
             //Assign
@@ -55,7 +55,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             string touchpointId = "9000000000";
             DateTime lastUpdated = DateTime.Now;
             string ukprn = "12345678";
-            
+
             collection.LastModifiedDate = lastUpdated;
             collection.TouchPointId = touchpointId;
             collection.Ukprn = ukprn;
@@ -83,7 +83,7 @@ namespace NCC.DSS.Collections.Tests.Validators
             string ukprn = "12345678";
 
             collection.CollectionId = collectionId;
-            collection.LastModifiedDate = lastUpdated;            
+            collection.LastModifiedDate = lastUpdated;
             collection.Ukprn = ukprn;
 
             var result = _validator.Validate(collection);
@@ -105,11 +105,11 @@ namespace NCC.DSS.Collections.Tests.Validators
 
             //Act            
             Guid collectionId = Guid.NewGuid();
-            string touchpointId = "9000000000";            
+            string touchpointId = "9000000000";
             string ukprn = "12345678";
 
             collection.CollectionId = collectionId;
-            collection.TouchPointId = touchpointId;            
+            collection.TouchPointId = touchpointId;
             collection.Ukprn = ukprn;
 
             var result = _validator.Validate(collection);
@@ -127,7 +127,7 @@ namespace NCC.DSS.Collections.Tests.Validators
         public void Validate_Collection_Test_UKPRN_Too_Long()
         {
             //Assign
-            var collection = new Collection();;
+            var collection = new Collection(); ;
 
             //Act            
             Guid collectionId = Guid.NewGuid();

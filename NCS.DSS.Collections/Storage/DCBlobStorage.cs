@@ -16,7 +16,7 @@ namespace NCS.DSS.Collections.Storage
         private readonly IStorageConfiguration _storageConfiguration;
         private readonly ILoggerHelper _loggerHelper;
         private readonly ICloudBlobStreamHelper _cloudBlobStreamHelper;
-        public DCBlobStorage(IStorageConfiguration storageConfiguration, ILoggerHelper loggerHelper, 
+        public DCBlobStorage(IStorageConfiguration storageConfiguration, ILoggerHelper loggerHelper,
                              ICloudBlobStreamHelper cloudBlobStreamHelper)
         {
             _storageConfiguration = storageConfiguration;
@@ -28,8 +28,8 @@ namespace NCS.DSS.Collections.Storage
         {
             var resultStream = new MemoryStream();
             var correlationGuidId = Guid.NewGuid();
-            var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);  
-            
+            var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);
+
             try
             {
                 BlobClient blob = blobContainer.GetBlobClient(collection.ReportFileName);
@@ -41,19 +41,19 @@ namespace NCS.DSS.Collections.Storage
                 else
                 {
                     _loggerHelper.LogError(log, correlationGuidId, new Exception($"Unable to locate Data Collections Report File - {collection.ReportFileName}"));
-                    
+
                 }
             }
             catch (Exception ex)
             {
-                _loggerHelper.LogError(log, correlationGuidId, ex);                
+                _loggerHelper.LogError(log, correlationGuidId, ex);
             }
             finally
             {
                 await blobContainer.DeleteAsync();
             }
             return resultStream;
-            
+
         }
     }
 }

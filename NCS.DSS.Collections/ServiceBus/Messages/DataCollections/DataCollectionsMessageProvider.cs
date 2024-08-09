@@ -9,7 +9,7 @@ using System.Text;
 namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
 {
     public class DataCollectionsMessageProvider : IDataCollectionsMessageProvider
-    {        
+    {
         public MessageCrossLoadToNCSDto DeserializeMessage(string message)
         {
             return JsonConvert.DeserializeObject<MessageCrossLoadToNCSDto>(message);
@@ -29,7 +29,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
             {
                 ContentType = "application/json",
                 MessageId = $"{collection.CollectionId} {DateTime.UtcNow}"
-            };            
+            };
         }
     }
 }

@@ -2,6 +2,7 @@ using DFC.HTTP.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
@@ -10,9 +11,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using Microsoft.Azure.Functions.Worker;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 {
@@ -80,12 +80,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             try
             {
-                _logger.LogInformation ("Attempt to get resource from body of the request");
-                collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);               
+                _logger.LogInformation("Attempt to get resource from body of the request");
+                collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);
             }
             catch (JsonException ex)
             {
-                _logger.LogError( "Unable to retrieve body from req", ex);
+                _logger.LogError("Unable to retrieve body from req", ex);
                 return new UnprocessableEntityObjectResult(ex.Message);
             }
 
@@ -110,7 +110,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
             }
-  
+
             return createdCollection == null ?
                 new BadRequestResult() :
                 new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };

@@ -7,6 +7,6 @@ namespace NCS.DSS.Collections.Mappers
         public CustomDateTimeConverter(string format)
         {
             DateTimeFormat = format;
-        }  
+        }
     }
 }

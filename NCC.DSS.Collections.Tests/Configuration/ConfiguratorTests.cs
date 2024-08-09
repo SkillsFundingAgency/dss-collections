@@ -53,21 +53,21 @@ namespace NCC.DSS.Collections.Tests.Configuration
         public void Data_Collections_Out_ServiceBus_Configuration_Passing()
         {
             //Assign
-            var queueName = "DCQueueName_Out";            
+            var queueName = "DCQueueName_Out";
 
             Environment.SetEnvironmentVariable(queueName, queueName, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
             //Assert
             Assert.That(queueName == _dcMessageBusConfig.QueueName);
-            Assert.That(_connString == _dcMessageBusConfig.ServiceBusConnectionString);           
+            Assert.That(_connString == _dcMessageBusConfig.ServiceBusConnectionString);
         }
 
         [Test]
         public void Data_Collections_ServiceBus_Configuration_Failing()
         {
             //Assign
-            var queueName = "DCQueueName_Out";            
+            var queueName = "DCQueueName_Out";
             Environment.SetEnvironmentVariable(queueName, queueName, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable(_connString, _connString, EnvironmentVariableTarget.Process);
 
@@ -82,7 +82,7 @@ namespace NCC.DSS.Collections.Tests.Configuration
             //Assign
             var connString = "StorageConnectionString";
 
-            Environment.SetEnvironmentVariable(connString, connString, EnvironmentVariableTarget.Process);            
+            Environment.SetEnvironmentVariable(connString, connString, EnvironmentVariableTarget.Process);
 
             //Assert
             Assert.That(connString == _storageConfiguration.ConnectionString);

@@ -1,27 +1,27 @@
 ﻿using DFC.HTTP.Standard;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Moq;
+using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.Validators;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Net;
-using System.Threading.Tasks;
-using NCS.DSS.Collections.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PostCollectionHttpLogger = NCS.DSS.Collections.PostCollectionHttpTrigger.Function;
 using System.Text.Json;
+using System.Threading.Tasks;
+using PostCollectionHttpLogger = NCS.DSS.Collections.PostCollectionHttpTrigger.Function;
 
 namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 {
 
-    [TestFixture]    
+    [TestFixture]
     public class PostCollectionHttpTriggerServiceTests
     {
         private const string ValidDssCorrelationId = "452d8e8c-2516-4a6b-9fc1-c85e578ac066";
-        private HttpRequest _request;      
+        private HttpRequest _request;
         private Mock<IPostCollectionHttpTriggerService> _postCollectionHttpTriggerService;
         private Mock<ILogger<PostCollectionHttpLogger.PostCollectionHttpTrigger>> _loggerHelper;
         private Mock<IHttpRequestHelper> _httpRequestHelper;
@@ -65,9 +65,9 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
             var result = await RunFunction();
 
             // Assert
-            Assert.That(result,Is.InstanceOf<BadRequestResult>());
-            
-        }       
+            Assert.That(result, Is.InstanceOf<BadRequestResult>());
+
+        }
 
         [Test]
         public async Task PostCollectionHttpTrigger_ReturnsStatusCodeBadRequest_WhenApimUrlIsNotProvided()
@@ -114,7 +114,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             // Assert
             Assert.That(result, Is.InstanceOf<JsonResult>());
-            Assert.That((int)HttpStatusCode.Created == (int) ((JsonResult) result).StatusCode);
+            Assert.That((int)HttpStatusCode.Created == (int)((JsonResult)result).StatusCode);
         }
 
         private async Task<IActionResult> RunFunction()

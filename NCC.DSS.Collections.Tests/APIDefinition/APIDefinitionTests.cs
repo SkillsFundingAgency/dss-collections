@@ -1,7 +1,6 @@
 using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.APIDefinition;
 using NUnit.Framework;
 

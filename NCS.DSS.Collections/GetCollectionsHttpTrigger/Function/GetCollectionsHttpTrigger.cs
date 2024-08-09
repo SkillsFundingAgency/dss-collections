@@ -2,15 +2,15 @@ using DFC.HTTP.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Threading.Tasks;
-using Microsoft.Azure.Functions.Worker;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
@@ -43,17 +43,17 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req)
         {
-           
+
             var correlationId = _dssCorrelationValidator.Extract(req, _logger);
 
-            var touchpointId = _dssTouchpointValidator.Extract(req, _logger);            
+            var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
-            {                
+            {
                 return new BadRequestResult();
             }
 
-            _logger.LogInformation($"{ correlationId} Attempt to process request");
+            _logger.LogInformation($"{correlationId} Attempt to process request");
 
             var results = await _service.ProcessRequestAsync(touchpointId);
 

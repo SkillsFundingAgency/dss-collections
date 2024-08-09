@@ -15,7 +15,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     [TestFixture]
     public class GetCollectionByIdHtppTriggerServiceTests
     {
-        
+
         private Mock<IDocumentDBProvider> _documentDBProvider;
         private Mock<IDCBlobStorage> _storage;
         private Mock<ILogger> _logger;
@@ -27,7 +27,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
 
         [SetUp]
         public void Setup()
-        {            
+        {
             _documentDBProvider = new Mock<IDocumentDBProvider>();
             _logger = new Mock<ILogger>();
             _collection = new Mock<PersistedCollection>();
@@ -51,6 +51,6 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             //Assert
             Assert.That(_triggerService, Is.Not.Null);
             Assert.That(result, Is.Not.Null);
-        }        
+        }
     }
 }

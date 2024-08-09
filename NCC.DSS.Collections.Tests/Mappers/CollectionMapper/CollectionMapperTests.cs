@@ -1,7 +1,7 @@
-﻿using NCS.DSS.Collections.Helpers;
+﻿using Moq;
+using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -32,20 +32,20 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             var lastModifiedDate = DateTime.Now;
 
             Collection collection = new Collection
-                                    {
-                                        CollectionId = collectionId,
-                                        TouchPointId = touchpointId,
-                                        Ukprn = ukprn,
-                                        CollectionReports = collectionReports,
-                                        LastModifiedDate = lastModifiedDate
-                                    };
+            {
+                CollectionId = collectionId,
+                TouchPointId = touchpointId,
+                Ukprn = ukprn,
+                CollectionReports = collectionReports,
+                LastModifiedDate = lastModifiedDate
+            };
 
             //Act
             PersistedCollection mappedCollection = _mapper.Map(collection);
 
             //Assert
             Assert.That(mappedCollection.CollectionId == collection.CollectionId);
-            Assert.That (mappedCollection.CollectionReports == collection.CollectionReports);
+            Assert.That(mappedCollection.CollectionReports == collection.CollectionReports);
             Assert.That(mappedCollection.TouchPointId == collection.TouchPointId);
             Assert.That(mappedCollection.Ukprn == collection.Ukprn);
             Assert.That(mappedCollection.LastModifiedDate == collection.LastModifiedDate);
@@ -63,15 +63,15 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
 
             //Act
             PersistedCollection collection = new PersistedCollection
-                                                 {
-                                                    CollectionId = collectionId,
-                                                    CollectionReports = collectionReports,
-                                                    ContainerName = "containerName",
-                                                    LastModifiedDate = lastModifiedDate,
-                                                    ReportFileName = $"{touchpointId}-{collectionId}-NCS-Reports.zip",
-                                                    TouchPointId = touchpointId,
-                                                    Ukprn = ukprn
-                                                 };
+            {
+                CollectionId = collectionId,
+                CollectionReports = collectionReports,
+                ContainerName = "containerName",
+                LastModifiedDate = lastModifiedDate,
+                ReportFileName = $"{touchpointId}-{collectionId}-NCS-Reports.zip",
+                TouchPointId = touchpointId,
+                Ukprn = ukprn
+            };
 
             Collection mappedCollection = _mapper.Map(collection);
 
@@ -81,8 +81,8 @@ namespace NCC.DSS.Collections.Tests.Mappers.CollectionMapper
             Assert.That(mappedCollection.TouchPointId == collection.TouchPointId);
             Assert.That(mappedCollection.Ukprn == collection.Ukprn);
             Assert.That(mappedCollection.LastModifiedDate == collection.LastModifiedDate);
-        }   
-        
+        }
+
         [Test]
         public void Test_Mapping_From_Collections_To_PersistedCollections()
         {
