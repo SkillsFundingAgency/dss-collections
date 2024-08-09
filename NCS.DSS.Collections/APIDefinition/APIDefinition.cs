@@ -14,7 +14,7 @@ namespace NCS.DSS.Collections.APIDefinition
         public const string APIDefinitionName = "API-Definition";
         public const string APIDefRoute = APITitle + "/" + APIDefinitionName;
         public const string APIDescription = "To trigger Data Collections submissions and retrieve corresponding funding calculations and occupancy reports";
-        public const string ApiVersion = "2.0.0";
+        public const string ApiVersion = "3.0.0";
 
         private ISwaggerDocumentGenerator swaggerDocumentGenerator;
         public ApiDefinition(ISwaggerDocumentGenerator swaggerDocumentGenerator)
