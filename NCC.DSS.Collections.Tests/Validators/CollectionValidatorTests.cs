@@ -1,7 +1,6 @@
 ﻿using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System;
-using Moq;
 using System.Linq;
 using NUnit.Framework;
 
@@ -38,12 +37,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = _validator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(false, result.Any());
-            Assert.IsNotNull(collection);
-            Assert.AreEqual(collectionId, collection.CollectionId);
-            Assert.AreEqual(touchpointId, collection.TouchPointId);
-            Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(false == result.Any());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collectionId == collection.CollectionId);
+            Assert.That(touchpointId == collection.TouchPointId);
+            Assert.That(lastUpdated == collection.LastModifiedDate);
+            Assert.That(ukprn == collection.Ukprn);
         }
 
         [Test]
@@ -64,12 +63,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = _validator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(0, result.Count());
-            Assert.IsNotNull(collection);
-            Assert.IsNotNull(collection.CollectionId);
-            Assert.AreEqual(touchpointId, collection.TouchPointId);
-            Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(0 == result.Count());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collection.CollectionId, Is.Not.Null);
+            Assert.That(touchpointId == collection.TouchPointId);
+            Assert.That(lastUpdated == collection.LastModifiedDate);
+            Assert.That(ukprn == collection.Ukprn);
         }
 
         [Test]
@@ -90,12 +89,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = _validator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.IsNotNull(collection);
-            Assert.AreEqual(collectionId, collection.CollectionId);
-            Assert.IsNull(collection.TouchPointId);
-            Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(1 == result.Count());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collectionId == collection.CollectionId);
+            Assert.That(collection.TouchPointId, Is.Null);
+            Assert.That(lastUpdated == collection.LastModifiedDate);
+            Assert.That(ukprn == collection.Ukprn);
         }
 
         [Test]
@@ -116,12 +115,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = _validator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.IsNotNull(collection);
-            Assert.AreEqual(collectionId, collection.CollectionId);
-            Assert.AreEqual(touchpointId, collection.TouchPointId);
-            Assert.AreEqual(null, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(1 == result.Count());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collectionId == collection.CollectionId);
+            Assert.That(touchpointId == collection.TouchPointId);
+            Assert.That(collection.LastModifiedDate, Is.Null);
+            Assert.That(ukprn == collection.Ukprn);
         }
 
         [Test]
@@ -144,12 +143,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = _validator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.IsNotNull(collection);
-            Assert.AreEqual(collectionId, collection.CollectionId);
-            Assert.AreEqual(touchpointId, collection.TouchPointId);
-            Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(1 == result.Count());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collectionId == collection.CollectionId);
+            Assert.That(touchpointId == collection.TouchPointId);
+            Assert.That(lastUpdated == collection.LastModifiedDate);
+            Assert.That(ukprn == collection.Ukprn);
         }
 
         [Test]
@@ -173,12 +172,12 @@ namespace NCC.DSS.Collections.Tests.Validators
             var result = collectionValidator.Validate(collection);
 
             //Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.IsNotNull(collection);
-            Assert.AreEqual(collectionId, collection.CollectionId);
-            Assert.AreEqual(touchpointId, collection.TouchPointId);
-            Assert.AreEqual(lastUpdated, collection.LastModifiedDate);
-            Assert.AreEqual(ukprn, collection.Ukprn);
+            Assert.That(1 == result.Count());
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(collectionId == collection.CollectionId);
+            Assert.That(touchpointId == collection.TouchPointId);
+            Assert.That(lastUpdated == collection.LastModifiedDate);
+            Assert.That(ukprn == collection.Ukprn);
         }
     }
 }

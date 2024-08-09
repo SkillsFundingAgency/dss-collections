@@ -24,3 +24,4 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
         }
     }
 }
+

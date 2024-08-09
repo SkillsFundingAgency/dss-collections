@@ -31,14 +31,14 @@ namespace NCC.DSS.Collections.Tests.Helpers
         public void Get_Container_Name_Passing()
         {
             //Assert
-            Assert.AreEqual($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip", _reportHelper.FileName(_collection));
+            Assert.That($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip" == _reportHelper.FileName(_collection));
         }
 
         [Test]
         public void Get_Container_Name_Failing()
         {
             //Assert
-            Assert.AreNotEqual($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip ", _reportHelper.FileName(_collection));
+            Assert.That($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip " != _reportHelper.FileName(_collection));
         }
     }
 }

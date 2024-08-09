@@ -1,5 +1,4 @@
-﻿using DFC.HTTP.Standard;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
@@ -16,7 +15,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     [TestFixture]
     public class GetCollectionByIdHtppTriggerServiceTests
     {
-        private Mock<IHttpRequestHelper> _requestHelper;
+        
         private Mock<IDocumentDBProvider> _documentDBProvider;
         private Mock<IDCBlobStorage> _storage;
         private Mock<ILogger> _logger;
@@ -28,8 +27,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
 
         [SetUp]
         public void Setup()
-        {
-            _requestHelper = new Mock<IHttpRequestHelper>();
+        {            
             _documentDBProvider = new Mock<IDocumentDBProvider>();
             _logger = new Mock<ILogger>();
             _collection = new Mock<PersistedCollection>();
@@ -51,8 +49,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
             var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId, _logger.Object);
 
             //Assert
-            Assert.IsNotNull(_triggerService);
-            Assert.IsNotNull(result);
+            Assert.That(_triggerService, Is.Not.Null);
+            Assert.That(result, Is.Not.Null);
         }        
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DFC.HTTP.Standard;
-using NCS.DSS.Collections.GetCollectionsHttpTrigger;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Mappers;
@@ -18,23 +17,19 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
     {
         private Mock<IDocumentDBProvider> _documentDBProvider;
         private Mock<ICollectionMapper> _collectionMapper;
-        private Mock<IHttpRequestHelper> _httpRequestHelper;
         private Mock<PersistedCollection> _collection;
         private Mock<List<PersistedCollection>> _collections;
         private string _touchPointId;
-        private Guid _collectionId;
         private IGetCollectionsHttpTriggerService _triggerService;
 
         [SetUp]
         public void Setup()
         {
-            _httpRequestHelper = new Mock<IHttpRequestHelper>();
             _collectionMapper = new Mock<ICollectionMapper>();
             _documentDBProvider = new Mock<IDocumentDBProvider>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
-            _collectionId = Guid.NewGuid();
             _triggerService = new GetCollectionsHttpTriggerService(_documentDBProvider.Object, _collectionMapper.Object);
         }
 
@@ -49,8 +44,8 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
             var result = _triggerService.ProcessRequestAsync(_touchPointId);
 
             //Assert
-            Assert.IsNotNull(_triggerService);
-            Assert.IsNotNull(result);            
+            Assert.That(_triggerService,Is.Not.Null);
+            Assert.That(result, Is.Not.Null);            
         }
     }
 }
