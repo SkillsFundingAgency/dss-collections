@@ -73,7 +73,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             }
 
             if (collectionStream == null)
-                return new ContentResult();
+                return new NoContentResult();
 
             collectionStream.Position = 0;
 
