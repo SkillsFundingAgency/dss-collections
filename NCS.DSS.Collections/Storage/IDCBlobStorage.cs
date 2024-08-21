@@ -7,6 +7,6 @@ namespace NCS.DSS.Collections.Storage
 {
     public interface IDCBlobStorage
     {
-       Task<MemoryStream> Get(PersistedCollection collection, ILogger log);
+        Task<MemoryStream> Get(PersistedCollection collection, ILogger log);
     }
 }

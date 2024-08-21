@@ -4,11 +4,11 @@ using System;
 namespace NCS.DSS.Collections.Cosmos.Helper
 {
     public static class DocumentDBHelper
-    {        
+    {
         private static Uri _collectionDocumentCollectionUri;
         private static readonly string CollectionDatabaseId = Environment.GetEnvironmentVariable("CollectionDatabaseId");
-        private static readonly string CollectionCollectionId = Environment.GetEnvironmentVariable("CollectionCollectionId");        
-        
+        private static readonly string CollectionCollectionId = Environment.GetEnvironmentVariable("CollectionCollectionId");
+
         #region CollectionDB
 
         public static Uri CreateCollectionDocumentCollectionUri()

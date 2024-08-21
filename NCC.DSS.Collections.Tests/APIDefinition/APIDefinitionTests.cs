@@ -1,7 +1,6 @@
 using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using NCC.DSS.Collections.Tests.Helpers;
 using NCS.DSS.Collections.APIDefinition;
 using NUnit.Framework;
 
@@ -30,7 +29,7 @@ namespace NCC.DSS.Collections.Tests
             var res = function.Run(req);
 
             //Assert
-            Assert.IsNotNull(res);
+            Assert.That(res, Is.Not.Null);
         }
 
         [Test]
@@ -43,7 +42,7 @@ namespace NCC.DSS.Collections.Tests
             var res = function.Run(req);
 
             //Assert
-            Assert.IsNotNull(res);
+            Assert.That(res, Is.Not.Null);
         }
     }
 }

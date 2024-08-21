@@ -1,10 +1,10 @@
-using System;
-using System.Threading.Tasks;
 using DFC.Common.Standard.Logging;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using NCS.DSS.Collections.ServiceBus.Processor.Service;
+using System;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
 {
@@ -21,8 +21,8 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
             _loggerHelper = loggerHelper;
         }
 
-        
-        [FunctionName("DataCollectionsQueueProcessor")]
+
+        [Function("DataCollectionsQueueProcessor")]
         public async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName,
                                                 Connection = _dataCollectionsConnectionString)]
             MessageCrossLoadToNCSDto message,
