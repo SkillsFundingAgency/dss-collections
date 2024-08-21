@@ -48,10 +48,6 @@ namespace NCS.DSS.Collections.Storage
             {
                 _loggerHelper.LogError(log, correlationGuidId, ex);
             }
-            finally
-            {
-                await blobContainer.DeleteAsync();
-            }
             return resultStream;
 
         }
