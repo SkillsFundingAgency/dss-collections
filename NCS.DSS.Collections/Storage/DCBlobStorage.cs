@@ -41,7 +41,7 @@ namespace NCS.DSS.Collections.Storage
                 else
                 {
                     _loggerHelper.LogError(log, correlationGuidId, new Exception($"Unable to locate Data Collections Report File - {collection.ReportFileName}"));
-
+                    return null;
                 }
             }
             catch (Exception ex)
