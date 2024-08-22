@@ -8,12 +8,8 @@ using Microsoft.Net.Http.Headers;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {

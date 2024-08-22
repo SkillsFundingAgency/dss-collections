@@ -1,8 +1,6 @@
 ﻿using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {

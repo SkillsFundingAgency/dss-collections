@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using NCS.DSS.Collections.Models;
 using Newtonsoft.Json;
-using System;
 using System.Text;
 
 namespace NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer

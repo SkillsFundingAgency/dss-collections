@@ -1,6 +1,5 @@
 ﻿using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
-using System.Collections.Generic;
 
 namespace NCS.DSS.Collections.Mappers
 {

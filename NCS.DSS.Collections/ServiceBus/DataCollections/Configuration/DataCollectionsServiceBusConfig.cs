@@ -1,5 +1,4 @@
 ﻿using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
-using System;
 
 namespace NCS.DSS.Collections.ServiceBus.Configs
 {

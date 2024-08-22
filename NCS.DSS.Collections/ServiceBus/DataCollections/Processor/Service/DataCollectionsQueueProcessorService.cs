@@ -4,8 +4,6 @@ using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
-using System;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 {

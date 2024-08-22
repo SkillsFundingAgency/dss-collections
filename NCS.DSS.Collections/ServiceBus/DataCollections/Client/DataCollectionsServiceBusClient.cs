@@ -2,7 +2,6 @@
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.DataCollections.Client
 {

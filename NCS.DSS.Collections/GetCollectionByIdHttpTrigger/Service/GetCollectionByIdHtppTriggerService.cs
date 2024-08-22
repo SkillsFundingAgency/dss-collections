@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.Storage;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
 {

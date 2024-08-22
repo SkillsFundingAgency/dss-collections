@@ -1,7 +1,5 @@
 ﻿using NCS.DSS.Collections.Models;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 {

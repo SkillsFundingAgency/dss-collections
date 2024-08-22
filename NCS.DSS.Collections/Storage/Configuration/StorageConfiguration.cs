@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCS.DSS.Collections.Storage.Configuration
+﻿namespace NCS.DSS.Collections.Storage.Configuration
 {
     public class StorageConfiguration : IStorageConfiguration
     {
