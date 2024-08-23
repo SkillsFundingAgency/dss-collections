@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer
+﻿namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer
 {
     public class ContentEnhancerMessageBusConfig : IContentEnhancerMessageBusConfig
     {

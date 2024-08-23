@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
+﻿namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
 {
     public interface IContentEnhancerServiceBusClient
     {

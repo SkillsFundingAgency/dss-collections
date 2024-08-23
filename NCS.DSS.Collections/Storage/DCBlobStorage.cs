@@ -4,9 +4,6 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Storage.Configuration;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 
 namespace NCS.DSS.Collections.Storage

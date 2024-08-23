@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
 {

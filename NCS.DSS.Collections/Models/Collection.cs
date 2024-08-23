@@ -1,6 +1,5 @@
 ﻿using DFC.Swagger.Standard.Annotations;
 using Newtonsoft.Json;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NCS.DSS.Collections.Models
