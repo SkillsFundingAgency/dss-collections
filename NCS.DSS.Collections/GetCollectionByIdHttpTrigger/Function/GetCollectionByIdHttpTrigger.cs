@@ -9,7 +9,6 @@ using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Text.Json;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {

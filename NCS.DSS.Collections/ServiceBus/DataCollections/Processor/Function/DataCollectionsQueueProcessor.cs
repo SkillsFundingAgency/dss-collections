@@ -1,4 +1,3 @@
-using DFC.Common.Standard.Logging;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
