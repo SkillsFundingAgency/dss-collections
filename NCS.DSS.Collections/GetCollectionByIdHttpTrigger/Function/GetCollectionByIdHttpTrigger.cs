@@ -82,7 +82,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             //    new MediaTypeHeaderValue("application/octet-stream")
             //};
             //response.ContentTypes = collection;
-            //return response;
+            //return response; 
 
             var responseObject = new StreamContent(collectionStream);
 
