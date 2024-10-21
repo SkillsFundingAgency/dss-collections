@@ -86,11 +86,14 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             var responseObject = new StreamContent(collectionStream);
 
-            return new JsonResult(responseObject, new JsonSerializerOptions())
-            {
-                StatusCode = (int)HttpStatusCode.OK,
-                ContentType = "application/octet-stream",
-            };
+            //return new JsonResult(responseObject., new JsonSerializerOptions())
+            //{
+            //    StatusCode = (int)HttpStatusCode.OK,
+            //    ContentType = "application/octet-stream",
+
+            //};
+
+            return new FileStreamResult(collectionStream, "application/octet-stream");
         }
     }
 }
