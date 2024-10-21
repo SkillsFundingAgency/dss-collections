@@ -73,26 +73,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             collectionStream.Position = 0;
 
-            //var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(collectionStream) };
-            //response.Content.Headers.ContentType.MediaType = "application/octet-stream";
-
-            //var response = new ObjectResult(new StreamContent(collectionStream)) { StatusCode = (int)HttpStatusCode.OK, };
-            //var collection = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
-            //{
-            //    new MediaTypeHeaderValue("application/octet-stream")
-            //};
-            //response.ContentTypes = collection;
-            //return response; 
-
             var responseObject = new StreamContent(collectionStream);
-
-            //return new JsonResult(responseObject., new JsonSerializerOptions())
-            //{
-            //    StatusCode = (int)HttpStatusCode.OK,
-            //    ContentType = "application/octet-stream",
-
-            //};
-
             return new FileStreamResult(collectionStream, "application/octet-stream");
         }
     }
