@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Text.Json;
 
 namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
@@ -73,13 +73,24 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             collectionStream.Position = 0;
 
-            var response = new ObjectResult(new StreamContent(collectionStream)) { StatusCode = (int)HttpStatusCode.OK, };
-            var collection = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
+            //var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(collectionStream) };
+            //response.Content.Headers.ContentType.MediaType = "application/octet-stream";
+
+            //var response = new ObjectResult(new StreamContent(collectionStream)) { StatusCode = (int)HttpStatusCode.OK, };
+            //var collection = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
+            //{
+            //    new MediaTypeHeaderValue("application/octet-stream")
+            //};
+            //response.ContentTypes = collection;
+            //return response;
+
+            var responseObject = new StreamContent(collectionStream);
+
+            return new JsonResult(responseObject, new JsonSerializerOptions())
             {
-                new MediaTypeHeaderValue("application/octet-stream")
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/octet-stream",
             };
-            response.ContentTypes = collection;
-            return response;
         }
     }
 }
