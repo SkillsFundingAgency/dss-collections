@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace NCS.DSS.Collections.Storage.Configuration
+﻿namespace NCS.DSS.Collections.Storage.Configuration
 {
     public class StorageConfiguration : IStorageConfiguration
     {
-        public string ConnectionString => Environment.GetEnvironmentVariable("StorageConnectionString");        
+        public string ConnectionString => Environment.GetEnvironmentVariable("StorageConnectionString");
     }
 }

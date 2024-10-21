@@ -4,25 +4,23 @@ using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
-using System;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 {
 
     public class DataCollectionsQueueProcessorService : IDataCollectionsQueueProcessorService
     {
-        private readonly IDataCollectionsMessageProvider _messageProvider;        
+        private readonly IDataCollectionsMessageProvider _messageProvider;
         private readonly ILoggerHelper _loggerHelper;
         private readonly IDocumentDBProvider _documentDbProvider;
         private readonly IContentEnhancerServiceBusClient _contentEnhancerServiceBusClient;
 
-        public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,                                                    
+        public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,
                                                     ILoggerHelper loggerHelper,
                                                     IContentEnhancerServiceBusClient contentEnhancerServiceBusClient,
                                                     IDocumentDBProvider documentDBProvider)
         {
-            _messageProvider = messageProvider;            
+            _messageProvider = messageProvider;
             _loggerHelper = loggerHelper;
             _documentDbProvider = documentDBProvider;
             _contentEnhancerServiceBusClient = contentEnhancerServiceBusClient;
@@ -31,7 +29,7 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
         {
             var correlationId = Guid.NewGuid();
 
-            if(message == null)
+            if (message == null)
                 throw new Exception("Unable to Deserialize Message");
 
             if (string.Compare(message.Status, "success", StringComparison.InvariantCultureIgnoreCase) != 0)

@@ -1,18 +1,17 @@
-﻿using Microsoft.WindowsAzure.Storage.Blob;
-using System.IO;
-using System.Threading.Tasks;
+﻿using Azure.Storage.Blobs;
 
 namespace NCS.DSS.Collections.Helpers
 {
     public class CloudBlobStreamHelper : ICloudBlobStreamHelper
     {
-        public async Task<MemoryStream> MakeStream(CloudBlob blob)
+        public async Task<MemoryStream> MakeStream(BlobClient blob)
         {
-            Stream memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
 
-            await blob.DownloadToStreamAsync(memoryStream);
+            var result = await blob.DownloadStreamingAsync();
+            await result.Value.Content.CopyToAsync(memoryStream);
 
-            return (MemoryStream)memoryStream;
+            return memoryStream;
         }
     }
 }

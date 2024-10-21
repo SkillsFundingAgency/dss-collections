@@ -3,12 +3,8 @@ using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus;
 using NCS.DSS.Collections.Validators;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 {
@@ -49,7 +45,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 
             var response = await _documentDBProvider.CreateCollectionAsync(_collectionMapper.Map(collection));
 
-            return response.StatusCode == HttpStatusCode.Created ? (dynamic) response.Resource : null;
+            return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;
 
         }
 

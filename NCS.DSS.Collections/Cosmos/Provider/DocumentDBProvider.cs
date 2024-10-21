@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using NCS.DSS.Collections.Cosmos.Client;
@@ -22,7 +18,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             if (client == null)
                 return null;
 
-            return await client.CreateDocumentAsync(collectionUri, collection);            
+            return await client.CreateDocumentAsync(collectionUri, collection);
         }
 
         public async Task<bool> DoesCollectionResourceExist(PersistedCollection collection)
@@ -34,7 +30,7 @@ namespace NCS.DSS.Collections.Cosmos.Provider
             if (client == null)
                 return false;
             try
-            {                
+            {
                 var response = await client.ReadDocumentAsync(documentUri);
                 if (response.Resource != null)
                     return true;

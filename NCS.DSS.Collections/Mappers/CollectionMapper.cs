@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NCS.DSS.Collections.Helpers;
+﻿using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Mappers
@@ -9,7 +8,7 @@ namespace NCS.DSS.Collections.Mappers
         private readonly IDataCollectionsReportHelper _dataCollectionsReportHelper;
         public CollectionMapper(IDataCollectionsReportHelper dataCollectionsReportHelper)
         {
-            _dataCollectionsReportHelper = dataCollectionsReportHelper;                
+            _dataCollectionsReportHelper = dataCollectionsReportHelper;
         }
         public Collection Map(PersistedCollection entity)
         {

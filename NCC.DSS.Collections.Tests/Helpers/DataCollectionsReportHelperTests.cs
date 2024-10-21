@@ -19,26 +19,27 @@ namespace NCC.DSS.Collections.Tests.Helpers
             _collectionIdGuid = Guid.NewGuid();
             _touchpointId = "90000000000";
 
-            _reportHelper = new DataCollectionsReportHelper();            
+            _reportHelper = new DataCollectionsReportHelper();
 
-            _collection = new Collection{
-                                            CollectionId = _collectionIdGuid,
-                                            TouchPointId = _touchpointId
-                                        };
+            _collection = new Collection
+            {
+                CollectionId = _collectionIdGuid,
+                TouchPointId = _touchpointId
+            };
         }
 
         [Test]
         public void Get_Container_Name_Passing()
         {
             //Assert
-            Assert.AreEqual($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip", _reportHelper.FileName(_collection));
+            Assert.That($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip" == _reportHelper.FileName(_collection));
         }
 
         [Test]
         public void Get_Container_Name_Failing()
         {
             //Assert
-            Assert.AreNotEqual($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip ", _reportHelper.FileName(_collection));
+            Assert.That($"{_touchpointId}/{_collectionIdGuid}/NCS-Reports.zip " != _reportHelper.FileName(_collection));
         }
     }
 }

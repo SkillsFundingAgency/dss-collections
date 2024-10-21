@@ -1,8 +1,6 @@
 ﻿using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.Mappers;
 using NCS.DSS.Collections.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {
@@ -20,7 +18,8 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 
         public async Task<List<Collection>> ProcessRequestAsync(string touchpointId)
         {
-            return _collectionMapper.Map(await _documentDBProvider.GetCollectionsForTouchpointAsync(touchpointId));            
+            return _collectionMapper.Map(await _documentDBProvider.GetCollectionsForTouchpointAsync(touchpointId));
         }
     }
 }
+

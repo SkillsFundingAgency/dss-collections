@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NCS.DSS.Collections.Models;
 using System.ComponentModel.DataAnnotations;
-using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Validators
 {
@@ -33,7 +31,7 @@ namespace NCS.DSS.Collections.Validators
 
             if (entity.LastModifiedDate == null)
             {
-                result.Add(new ValidationResult("Null Last Modified Date", new[] {"LastModifiedDate"}));
+                result.Add(new ValidationResult("Null Last Modified Date", new[] { "LastModifiedDate" }));
             }
 
             return result;

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace NCS.DSS.Collections.ServiceBus
+﻿namespace NCS.DSS.Collections.ServiceBus
 {
     public interface IDataCollectionsServiceBusClient
     {

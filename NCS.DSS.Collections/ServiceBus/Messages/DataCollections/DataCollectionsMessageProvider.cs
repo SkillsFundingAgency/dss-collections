@@ -2,14 +2,13 @@
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using Newtonsoft.Json;
-using System;
 using System.Globalization;
 using System.Text;
 
 namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
 {
     public class DataCollectionsMessageProvider : IDataCollectionsMessageProvider
-    {        
+    {
         public MessageCrossLoadToNCSDto DeserializeMessage(string message)
         {
             return JsonConvert.DeserializeObject<MessageCrossLoadToNCSDto>(message);
@@ -29,7 +28,7 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
             {
                 ContentType = "application/json",
                 MessageId = $"{collection.CollectionId} {DateTime.UtcNow}"
-            };            
+            };
         }
     }
 }

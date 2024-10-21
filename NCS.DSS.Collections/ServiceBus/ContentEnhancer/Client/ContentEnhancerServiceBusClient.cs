@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
 {
@@ -16,7 +15,7 @@ namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
         }
         public async Task SendAsync(PersistedCollection collection)
         {
-            var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);            
+            var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);
 
             await queueClient.SendAsync(_messageProvider.MakeMessage(collection));
         }

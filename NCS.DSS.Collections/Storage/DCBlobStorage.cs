@@ -1,13 +1,10 @@
-﻿using DFC.Common.Standard.Logging;
+﻿using Azure.Storage.Blobs;
+using DFC.Common.Standard.Logging;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Storage.Configuration;
-using System;
-using System.IO;
-using System.Threading.Tasks;
+
 
 namespace NCS.DSS.Collections.Storage
 {
@@ -16,41 +13,40 @@ namespace NCS.DSS.Collections.Storage
         private readonly IStorageConfiguration _storageConfiguration;
         private readonly ILoggerHelper _loggerHelper;
         private readonly ICloudBlobStreamHelper _cloudBlobStreamHelper;
-        public DCBlobStorage(IStorageConfiguration storageConfiguration, ILoggerHelper loggerHelper, 
+        public DCBlobStorage(IStorageConfiguration storageConfiguration, ILoggerHelper loggerHelper,
                              ICloudBlobStreamHelper cloudBlobStreamHelper)
         {
             _storageConfiguration = storageConfiguration;
             _loggerHelper = loggerHelper;
             _cloudBlobStreamHelper = cloudBlobStreamHelper;
         }
-        
+
         public async Task<MemoryStream> Get(PersistedCollection collection, ILogger log)
         {
+            var resultStream = new MemoryStream();
             var correlationGuidId = Guid.NewGuid();
+            var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);
 
-            if (CloudStorageAccount.TryParse(_storageConfiguration.ConnectionString, out var cloudstorageAccount))
+            try
             {
-                CloudBlobClient blobClient = cloudstorageAccount.CreateCloudBlobClient();
-
-                CloudBlobContainer blobContainer = blobClient.GetContainerReference(collection.ContainerName);                
-
-                CloudBlockBlob blob = blobContainer.GetBlockBlobReference(collection.ReportFileName);
+                BlobClient blob = blobContainer.GetBlobClient(collection.ReportFileName);
 
                 if (await blob.ExistsAsync())
                 {
-                    return await _cloudBlobStreamHelper.MakeStream(blob);
-                }                
+                    resultStream = await _cloudBlobStreamHelper.MakeStream(blob);
+                }
                 else
                 {
                     _loggerHelper.LogError(log, correlationGuidId, new Exception($"Unable to locate Data Collections Report File - {collection.ReportFileName}"));
                     return null;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                _loggerHelper.LogError(log, correlationGuidId, new Exception($"Unable to location Data Collections storage account - {collection.ContainerName}"));
-                return null;
+                _loggerHelper.LogError(log, correlationGuidId, ex);
             }
+            return resultStream;
+
         }
     }
 }

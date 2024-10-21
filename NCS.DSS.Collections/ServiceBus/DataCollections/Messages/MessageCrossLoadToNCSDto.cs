@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
+﻿namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
 {
     [Serializable]
     public sealed class MessageCrossLoadToNCSDto

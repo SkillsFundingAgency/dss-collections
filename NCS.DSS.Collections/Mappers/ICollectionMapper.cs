@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NCS.DSS.Collections.Mappers
+﻿namespace NCS.DSS.Collections.Mappers
 {
     public interface ICollectionMapper
     {

@@ -1,21 +1,15 @@
-using DFC.Common.Standard.Logging;
-using DFC.Functions.DI.Standard.Attributes;
 using DFC.HTTP.Standard;
-using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
@@ -25,21 +19,19 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         private IGetCollectionsHttpTriggerService _service;
         private IDssCorrelationValidator _dssCorrelationValidator;
         private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILoggerHelper _loggerHelper;
-        private IJsonHelper _jsonHelper;
+        private ILogger<GetCollectionsHttpTrigger> _logger;
 
-        public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IJsonHelper jsonHelper)
+        public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionsHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
+          IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
             _responseMessageHelper = responseMessageHelper;
-            _jsonHelper = jsonHelper;
-            _loggerHelper = loggerHelper;
+            _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
         }
 
-        [FunctionName("Get")]
+        [Function("Get")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collections found", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collections do not exist", ShowSchema = false)]
@@ -47,34 +39,38 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
         [Display(Name = "Get", Description = "Ability to return all collections for the touchpoint.")]
-        public async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req,
-            ILogger log)
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req)
         {
-            _loggerHelper.LogMethodEnter(log);            
 
-            var correlationId = _dssCorrelationValidator.Extract(req, log);
+            var correlationId = _dssCorrelationValidator.Extract(req, _logger);
 
-            var touchpointId = _dssTouchpointValidator.Extract(req, log);            
+            var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
-            {                
-                return _responseMessageHelper.BadRequest();
+            {
+                return new BadRequestResult();
             }
 
-            _loggerHelper.LogInformationMessage(log, correlationId, "Attempt to process request");
+            _logger.LogInformation($"{correlationId} Attempt to process request");
 
             var results = await _service.ProcessRequestAsync(touchpointId);
 
-            if (results.Count == 0)
+            if (results.Count == 0 || results == null)
             {
-                _loggerHelper.LogInformationMessage(log, correlationId, "unable to retrieve collection");
-                return _responseMessageHelper.NoContent();
+                _logger.LogInformation($"{correlationId} unable to retrieve collection");
+                return new NoContentResult();
             }
-
-            _loggerHelper.LogMethodExit(log);
-
-            return _responseMessageHelper.Ok(_jsonHelper.SerializeObjectsAndRenameIdProperty<Collection>(results, "id", "CollectionId"));                                       
+            else if (results.Count == 1)
+            {
+                _logger.LogInformation($"Successfully retrieved [{results.Count}] collection");
+                return new JsonResult(results[0], new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            else
+            {
+                _logger.LogInformation($"Successfully retrieved [{results.Count}] collections");
+                return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
+            }
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using NCS.DSS.Collections.Mappers;
-using Newtonsoft.Json;
-using System;
-
-namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
+﻿namespace NCS.DSS.Collections.ServiceBus.DataCollections.Messages
 {
     [Serializable]
     public sealed class MessageCrossLoadFromNCSDto

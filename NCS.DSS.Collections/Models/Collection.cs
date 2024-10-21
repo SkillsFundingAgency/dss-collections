@@ -1,6 +1,5 @@
 ﻿using DFC.Swagger.Standard.Annotations;
 using Newtonsoft.Json;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NCS.DSS.Collections.Models
@@ -31,6 +30,6 @@ namespace NCS.DSS.Collections.Models
         [DataType(DataType.DateTime)]
         [Display(Description = "Date and time of the last modification to the record.")]
         [Example(Description = "2018-06-20T13:45:00")]
-        public DateTime? LastModifiedDate { get; set; }        
+        public DateTime? LastModifiedDate { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCS.DSS.Collections.Models
+﻿namespace NCS.DSS.Collections.Models
 {
     public class MessageModel
     {
