@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Validators;
@@ -15,17 +14,15 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
     public class GetCollectionByIdHttpTrigger
     {
-        private readonly IHttpResponseMessageHelper _responseMessageHelper;
-        private IGetCollectionByIdHtppTriggerService _service;
-        private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILogger<GetCollectionByIdHttpTrigger> _logger;
+        private readonly IGetCollectionByIdHtppTriggerService _service;
+        private readonly IDssCorrelationValidator _dssCorrelationValidator;
+        private readonly IDssTouchpointValidator _dssTouchpointValidator;
+        private readonly ILogger<GetCollectionByIdHttpTrigger> _logger;
 
-        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
-            _responseMessageHelper = responseMessageHelper;
             _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
@@ -73,13 +70,8 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             collectionStream.Position = 0;
 
-            var response = new ObjectResult(new StreamContent(collectionStream)) { StatusCode = (int)HttpStatusCode.OK, };
-            var collection = new Microsoft.AspNetCore.Mvc.Formatters.MediaTypeCollection
-            {
-                new MediaTypeHeaderValue("application/octet-stream")
-            };
-            response.ContentTypes = collection;
-            return response;
+            var responseObject = new StreamContent(collectionStream);
+            return new FileStreamResult(collectionStream, "application/octet-stream");
         }
     }
 }

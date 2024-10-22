@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
-using NCS.DSS.Collections.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
@@ -15,22 +15,18 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 {
     public class PostCollectionHttpTrigger
     {
-        private IHttpRequestHelper _httpRequestHelper;
-        private IPostCollectionHttpTriggerService _service;
-        private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILogger<PostCollectionHttpTrigger> _logger;
-        private IApimUrlValidator _apimUrlValidator;
+        private readonly IHttpRequestHelper _httpRequestHelper;
+        private readonly IPostCollectionHttpTriggerService _service;
+        private readonly ILogger<PostCollectionHttpTrigger> _logger;
+        private readonly IDynamicHelper _dynamicHelper;
+        private static readonly string[] PropertyToExclude = { "TargetSite" };
 
-        public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, ILogger<PostCollectionHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
-          IDssTouchpointValidator dssTouchpointValidator, IApimUrlValidator apimUrlValidator, IHttpRequestHelper httpRequestHelper)
+        public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, ILogger<PostCollectionHttpTrigger> logger, IHttpRequestHelper httpRequestHelper, IDynamicHelper dynamicHelper)
         {
             _service = service;
             _logger = logger;
-            _dssCorrelationValidator = dssCorrelationValidator;
-            _dssTouchpointValidator = dssTouchpointValidator;
-            _apimUrlValidator = apimUrlValidator;
             _httpRequestHelper = httpRequestHelper;
+            _dynamicHelper = dynamicHelper;
         }
 
         [Function("Post")]
@@ -82,8 +78,8 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             }
             catch (JsonException ex)
             {
-                _logger.LogError("Unable to retrieve body from req", ex);
-                return new UnprocessableEntityObjectResult(ex.Message);
+                _logger.LogError("Unable to retrieve body from req - {0}", ex);
+                return new UnprocessableEntityObjectResult(_dynamicHelper.ExcludeProperty(ex, PropertyToExclude));
             }
 
             collection.TouchPointId = touchpointId;
