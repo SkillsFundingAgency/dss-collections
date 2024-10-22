@@ -57,6 +57,8 @@ var host = new HostBuilder()
         services.AddScoped<ILoggerHelper, LoggerHelper>();
         services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
         services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
+
+        services.AddSingleton<IDynamicHelper, DynamicHelper>();
     })
     .Build();
 
