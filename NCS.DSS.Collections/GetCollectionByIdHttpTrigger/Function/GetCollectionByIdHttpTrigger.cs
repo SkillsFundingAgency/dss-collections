@@ -14,17 +14,15 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
     public class GetCollectionByIdHttpTrigger
     {
-        private readonly IHttpResponseMessageHelper _responseMessageHelper;
-        private IGetCollectionByIdHtppTriggerService _service;
-        private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILogger<GetCollectionByIdHttpTrigger> _logger;
+        private readonly IGetCollectionByIdHtppTriggerService _service;
+        private readonly IDssCorrelationValidator _dssCorrelationValidator;
+        private readonly IDssTouchpointValidator _dssTouchpointValidator;
+        private readonly ILogger<GetCollectionByIdHttpTrigger> _logger;
 
-        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
-            _responseMessageHelper = responseMessageHelper;
             _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
