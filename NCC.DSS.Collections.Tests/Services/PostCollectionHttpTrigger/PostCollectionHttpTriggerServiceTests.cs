@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
-using NCS.DSS.Collections.Validators;
 using NUnit.Framework;
 using System;
 using System.Net;
@@ -25,11 +25,8 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private Mock<IPostCollectionHttpTriggerService> _postCollectionHttpTriggerService;
         private Mock<ILogger<PostCollectionHttpLogger.PostCollectionHttpTrigger>> _loggerHelper;
         private Mock<IHttpRequestHelper> _httpRequestHelper;
-        private IHttpResponseMessageHelper _httpResponseMessageHelper;
+        private Mock<IDynamicHelper> _dynamicHelper;
         private Collection _collection;
-        private Mock<IDssCorrelationValidator> _dssCorrelationValidator;
-        private Mock<IDssTouchpointValidator> _dssTouchpointValidator;
-        private Mock<IApimUrlValidator> _apimValidator;
         private PostCollectionHttpLogger.PostCollectionHttpTrigger function;
         private Mock<IDataCollectionsReportHelper> _dataCollectionsReportHelper;
 
@@ -44,14 +41,11 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
             _loggerHelper = new Mock<ILogger<PostCollectionHttpLogger.PostCollectionHttpTrigger>>();
             _httpRequestHelper = new Mock<IHttpRequestHelper>();
-
-            _dssCorrelationValidator = new Mock<IDssCorrelationValidator>();
-            _dssTouchpointValidator = new Mock<IDssTouchpointValidator>();
-            _apimValidator = new Mock<IApimUrlValidator>();
+            _dynamicHelper = new Mock<IDynamicHelper>();
 
             _postCollectionHttpTriggerService = new Mock<IPostCollectionHttpTriggerService>();
 
-            function = new PostCollectionHttpLogger.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _loggerHelper.Object, _dssCorrelationValidator.Object, _dssTouchpointValidator.Object, _apimValidator.Object, _httpRequestHelper.Object);
+            function = new PostCollectionHttpLogger.PostCollectionHttpTrigger(_postCollectionHttpTriggerService.Object, _loggerHelper.Object, _httpRequestHelper.Object, _dynamicHelper.Object);
         }
 
         [Test]
