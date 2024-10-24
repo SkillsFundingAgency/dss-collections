@@ -1,4 +1,3 @@
-using DFC.HTTP.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,17 +14,15 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
 {
     public class GetCollectionsHttpTrigger
     {
-        private readonly IHttpResponseMessageHelper _responseMessageHelper;
-        private IGetCollectionsHttpTriggerService _service;
-        private IDssCorrelationValidator _dssCorrelationValidator;
-        private IDssTouchpointValidator _dssTouchpointValidator;
-        private ILogger<GetCollectionsHttpTrigger> _logger;
+        private readonly IGetCollectionsHttpTriggerService _service;
+        private readonly IDssCorrelationValidator _dssCorrelationValidator;
+        private readonly IDssTouchpointValidator _dssTouchpointValidator;
+        private readonly ILogger<GetCollectionsHttpTrigger> _logger;
 
-        public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, IHttpResponseMessageHelper responseMessageHelper, ILogger<GetCollectionsHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionsHttpTrigger(IGetCollectionsHttpTriggerService service, ILogger<GetCollectionsHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
-            _responseMessageHelper = responseMessageHelper;
             _logger = logger;
             _dssCorrelationValidator = dssCorrelationValidator;
             _dssTouchpointValidator = dssTouchpointValidator;
