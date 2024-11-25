@@ -22,44 +22,70 @@ using NCS.DSS.Collections.ServiceBus.Processor.Service;
 using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
 using NCS.DSS.Collections.Validators;
-var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services =>
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
+
+namespace NCS.DSS.Contact
+{
+    internal class Program
     {
-        services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
-        services.AddTransient<IGetCollectionByIdHtppTriggerService, GetCollectionByIdHtppTriggerService>();
-        services.AddTransient<IGetCollectionsHttpTriggerService, GetCollectionsHttpTriggerService>();
-        services.AddTransient<IPostCollectionHttpTriggerService, PostCollectionHttpTriggerService>();
-        services.AddTransient<IResourceHelper, ResourceHelper>();
-        services.AddTransient<IApimUrlValidator, ApimUrlValidator>();
-        services.AddTransient<ICollectionValidator, CollectionValidator>();
-        services.AddTransient<IDssCorrelationValidator, DssCorrelationValidator>();
-        services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
-        services.AddTransient<IDCBlobStorage, DCBlobStorage>();
-        services.AddTransient<IStorageConfiguration, StorageConfiguration>();
-        services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
-        services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
-        services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
-        services.AddTransient<IDocumentDBProvider, DocumentDBProvider>(); ;
-        services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
-        services.AddTransient<ICollectionMapper, CollectionMapper>();
+        private static async Task Main(string[] args)
+        {
+            var host = new HostBuilder()
+                .ConfigureFunctionsWebApplication()
+                .ConfigureServices(services =>
+                {
+                    services.AddApplicationInsightsTelemetryWorkerService();
+                    services.ConfigureFunctionsApplicationInsights();
 
-        services.AddScoped<IContentEnhancerMessageBusConfig, ContentEnhancerMessageBusConfig>();
-        services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();
+                    services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
+                    services.AddTransient<IGetCollectionByIdHttpTriggerService, GetCollectionByIdHttpTriggerService>();
+                    services.AddTransient<IGetCollectionsHttpTriggerService, GetCollectionsHttpTriggerService>();
+                    services.AddTransient<IPostCollectionHttpTriggerService, PostCollectionHttpTriggerService>();
+                    services.AddTransient<IResourceHelper, ResourceHelper>();
+                    services.AddTransient<IApimUrlValidator, ApimUrlValidator>();
+                    services.AddTransient<ICollectionValidator, CollectionValidator>();
+                    services.AddTransient<IDssCorrelationValidator, DssCorrelationValidator>();
+                    services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
+                    services.AddTransient<IDCBlobStorage, DCBlobStorage>();
+                    services.AddTransient<IStorageConfiguration, StorageConfiguration>();
+                    services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
+                    services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
+                    services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
+                    services.AddTransient<IDocumentDBProvider, DocumentDBProvider>(); ;
+                    services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
+                    services.AddTransient<ICollectionMapper, CollectionMapper>();
 
-        services.AddScoped<IContentEnhancerServiceBusClient, ContentEnhancerServiceBusClient>();
+                    services.AddScoped<IContentEnhancerMessageBusConfig, ContentEnhancerMessageBusConfig>();
+                    services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();
 
-        services.AddScoped<IContentEnhancerMessageProvider, ContentEnhancerMessageProvider>();
-        services.AddScoped<IDataCollectionsMessageProvider, DataCollectionsMessageProvider>();
+                    services.AddScoped<IContentEnhancerServiceBusClient, ContentEnhancerServiceBusClient>();
 
-        services.AddScoped<IDCBlobStorage, DCBlobStorage>();
+                    services.AddScoped<IContentEnhancerMessageProvider, ContentEnhancerMessageProvider>();
+                    services.AddScoped<IDataCollectionsMessageProvider, DataCollectionsMessageProvider>();
 
-        services.AddScoped<ILoggerHelper, LoggerHelper>();
-        services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
-        services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
+                    services.AddScoped<IDCBlobStorage, DCBlobStorage>();
+                    
+                    services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
+                    services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
 
-        services.AddSingleton<IDynamicHelper, DynamicHelper>();
-    })
-    .Build();
+                    services.AddSingleton<IDynamicHelper, DynamicHelper>();
 
-host.Run();
+                    services.Configure<LoggerFilterOptions>(options =>
+                    {
+                        // The Application Insights SDK adds a default logging filter that instructs ILogger to capture only Warning and more severe logs. Application Insights requires an explicit override.
+                        // Log levels can also be configured using appsettings.json. For more information, see https://learn.microsoft.com/en-us/azure/azure-monitor/app/worker-service#ilogger-logs
+                        LoggerFilterRule toRemove = options.Rules.FirstOrDefault(rule => rule.ProviderName
+                            == "Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider");
+                        if (toRemove is not null)
+                        {
+                            options.Rules.Remove(toRemove);
+                        }
+                    });
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+    }
+}

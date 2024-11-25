@@ -1,6 +1,6 @@
 ﻿using Azure.Storage.Blobs;
-using DFC.Common.Standard.Logging;
 using Microsoft.Extensions.Logging;
+using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Storage.Configuration;
@@ -10,18 +10,20 @@ namespace NCS.DSS.Collections.Storage
 {
     public class DCBlobStorage : IDCBlobStorage
     {
-        private readonly IStorageConfiguration _storageConfiguration;
-        private readonly ILoggerHelper _loggerHelper;
+        private readonly IStorageConfiguration _storageConfiguration;        
         private readonly ICloudBlobStreamHelper _cloudBlobStreamHelper;
-        public DCBlobStorage(IStorageConfiguration storageConfiguration, ILoggerHelper loggerHelper,
-                             ICloudBlobStreamHelper cloudBlobStreamHelper)
+        private readonly ILogger<DCBlobStorage> _logger;
+
+        public DCBlobStorage(IStorageConfiguration storageConfiguration,
+                             ICloudBlobStreamHelper cloudBlobStreamHelper,
+                             ILogger<DCBlobStorage> logger)
         {
             _storageConfiguration = storageConfiguration;
-            _loggerHelper = loggerHelper;
             _cloudBlobStreamHelper = cloudBlobStreamHelper;
+            _logger = logger;
         }
 
-        public async Task<MemoryStream> Get(PersistedCollection collection, ILogger log)
+        public async Task<MemoryStream> Get(PersistedCollection collection)
         {
             var resultStream = new MemoryStream();
             var correlationGuidId = Guid.NewGuid();
@@ -37,13 +39,13 @@ namespace NCS.DSS.Collections.Storage
                 }
                 else
                 {
-                    _loggerHelper.LogError(log, correlationGuidId, new Exception($"Unable to locate Data Collections Report File - {collection.ReportFileName}"));
+                    _logger.LogError($"Unable to locate Data Collections Report File - {0}", collection.ReportFileName);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                _loggerHelper.LogError(log, correlationGuidId, ex);
+                _logger.LogError($"Failed to get Blob file. Error: [{ex.Message}] and Stack Trace: [{ex.StackTrace}]");
             }
             return resultStream;
 

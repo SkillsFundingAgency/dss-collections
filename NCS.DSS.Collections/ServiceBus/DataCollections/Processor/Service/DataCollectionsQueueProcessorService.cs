@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
@@ -10,22 +9,22 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 
     public class DataCollectionsQueueProcessorService : IDataCollectionsQueueProcessorService
     {
-        private readonly IDataCollectionsMessageProvider _messageProvider;
-        private readonly ILoggerHelper _loggerHelper;
+        private readonly IDataCollectionsMessageProvider _messageProvider;        
         private readonly IDocumentDBProvider _documentDbProvider;
         private readonly IContentEnhancerServiceBusClient _contentEnhancerServiceBusClient;
+        private readonly ILogger<DataCollectionsQueueProcessorService> _logger;
 
-        public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,
-                                                    ILoggerHelper loggerHelper,
+        public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,                                                    
                                                     IContentEnhancerServiceBusClient contentEnhancerServiceBusClient,
-                                                    IDocumentDBProvider documentDBProvider)
+                                                    IDocumentDBProvider documentDBProvider,
+                                                    ILogger<DataCollectionsQueueProcessorService> logger)
         {
-            _messageProvider = messageProvider;
-            _loggerHelper = loggerHelper;
+            _messageProvider = messageProvider; 
             _documentDbProvider = documentDBProvider;
-            _contentEnhancerServiceBusClient = contentEnhancerServiceBusClient;
+            _contentEnhancerServiceBusClient = contentEnhancerServiceBusClient;            _logger = logger;
         }
-        public async Task ProcessMessageAsync(MessageCrossLoadToNCSDto message, ILogger log)
+
+        public async Task ProcessMessageAsync(MessageCrossLoadToNCSDto message)
         {
             var correlationId = Guid.NewGuid();
 
@@ -34,16 +33,18 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
 
             if (string.Compare(message.Status, "success", StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections returned failure for CollectionId - {message.JobId} - {message.Status}"));
-                throw new Exception($"Data Collections returned failure for CollectionId - {message.JobId} - {message.Status}");
+                var errorMessage = $"Data Collections returned failure for CollectionId - {message.JobId} - {message.Status}";
+                _logger.LogError(errorMessage);                
+                throw new Exception(errorMessage);
             }
 
             var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
 
             if (collection == null)
             {
-                _loggerHelper.LogError(log, correlationId, new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId - {message.JobId}"));
-                throw new Exception($"Data Collections - Could not locate Collection in CosmosDB CollectionId - {message.JobId}");
+                var errorMessage = $"Data Collections - Could not locate Collection in CosmosDB. CollectionId - {message.JobId}";
+                _logger.LogError(errorMessage);                
+                throw new Exception(errorMessage);
             }
 
             await _contentEnhancerServiceBusClient.SendAsync(collection);

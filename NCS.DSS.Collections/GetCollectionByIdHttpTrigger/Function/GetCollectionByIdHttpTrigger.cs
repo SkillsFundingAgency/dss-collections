@@ -1,4 +1,3 @@
-using DFC.HTTP.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +13,12 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 {
     public class GetCollectionByIdHttpTrigger
     {
-        private readonly IGetCollectionByIdHtppTriggerService _service;
+        private readonly IGetCollectionByIdHttpTriggerService _service;
         private readonly IDssCorrelationValidator _dssCorrelationValidator;
         private readonly IDssTouchpointValidator _dssTouchpointValidator;
         private readonly ILogger<GetCollectionByIdHttpTrigger> _logger;
 
-        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHtppTriggerService service, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
+        public GetCollectionByIdHttpTrigger(IGetCollectionByIdHttpTriggerService service, ILogger<GetCollectionByIdHttpTrigger> logger, IDssCorrelationValidator dssCorrelationValidator,
           IDssTouchpointValidator dssTouchpointValidator)
         {
             _service = service;
@@ -57,7 +56,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             try
             {
                 _logger.LogInformation($"{correlationId} Attempt to process request.");
-                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid, _logger);
+                collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid);
             }
             catch (Exception ex)
             {
