@@ -1,6 +1,5 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.Extensions.Logging;
-using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.Storage.Configuration;
@@ -10,7 +9,7 @@ namespace NCS.DSS.Collections.Storage
 {
     public class DCBlobStorage : IDCBlobStorage
     {
-        private readonly IStorageConfiguration _storageConfiguration;        
+        private readonly IStorageConfiguration _storageConfiguration;
         private readonly ICloudBlobStreamHelper _cloudBlobStreamHelper;
         private readonly ILogger<DCBlobStorage> _logger;
 

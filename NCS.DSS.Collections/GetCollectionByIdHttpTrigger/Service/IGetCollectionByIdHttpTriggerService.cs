@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
+﻿namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
 {
     public interface IGetCollectionByIdHttpTriggerService
     {

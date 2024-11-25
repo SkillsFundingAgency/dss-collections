@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.HTTP.Standard;
+﻿using DFC.HTTP.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -7,7 +6,7 @@ namespace NCS.DSS.Collections.Validators
 {
     public class DssTouchpointValidator : IDssTouchpointValidator
     {
-        private readonly IHttpRequestHelper _httpRequestHelper;        
+        private readonly IHttpRequestHelper _httpRequestHelper;
         private readonly IDssCorrelationValidator _correlationValidator;
         private readonly ILogger<DssTouchpointValidator> _logger;
 

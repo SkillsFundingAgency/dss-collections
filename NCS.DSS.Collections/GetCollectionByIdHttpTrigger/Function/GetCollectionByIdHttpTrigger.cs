@@ -46,11 +46,15 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
 
             if (string.IsNullOrEmpty(touchpointId))
             {
+                _logger.LogWarning("CorrelationId: {0} Unable to locate 'TouchpointId' in request header.", correlationId);
                 return new BadRequestObjectResult("");
             }
 
             if (!Guid.TryParse(collectionId, out var collectionGuid))
+            {
+                _logger.LogWarning("CorrelationId: {0} Unable to parse 'collectionId' to a Guid: {1}", correlationId, collectionId);
                 return new BadRequestObjectResult(collectionGuid);
+            }
 
             MemoryStream collectionStream;
             try
@@ -65,7 +69,10 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             }
 
             if (collectionStream == null)
+            {
+                _logger.LogWarning("CorrelationId: {0} collection stream is null", correlationId);
                 return new NoContentResult();
+            }
 
             collectionStream.Position = 0;
 

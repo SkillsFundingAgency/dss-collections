@@ -39,13 +39,13 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req)
         {
-
             var correlationId = _dssCorrelationValidator.Extract(req, _logger);
 
             var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
             {
+                _logger.LogWarning("CorrelationId: {0} Unable to locate 'TouchpointId' in request header.", correlationId);
                 return new BadRequestResult();
             }
 

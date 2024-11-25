@@ -44,7 +44,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
 
             var correlationId = _httpRequestHelper.GetDssCorrelationId(req);
             if (string.IsNullOrEmpty(correlationId))
+            {
                 _logger.LogInformation("Unable to locate 'DssCorrelationId; in request header");
+            }
 
             if (!Guid.TryParse(correlationId, out var correlationGuid))
             {
@@ -67,7 +69,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             }
 
             if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
+            {
                 return new BadRequestResult();
+            }
 
             Collection collection;
 
@@ -85,7 +89,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             collection.TouchPointId = touchpointId;
 
             if (!collection.LastModifiedDate.HasValue)
+            {
                 collection.LastModifiedDate = DateTime.UtcNow;
+            }
 
             var validationResults = _service.ValidateCollectionAsync(collection);
 
@@ -95,13 +101,14 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return new UnprocessableEntityObjectResult(validationResults);
             }
 
-            _logger.LogInformation(string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            _logger.LogInformation(string.Format("Attempting to create Collection for Touchpoint {0}", touchpointId));
             var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection != null)
             {
                 _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
                 await _service.SendToServiceBusQueueAsync(createdCollection);
+                _logger.LogInformation(string.Format("Newly created collection message sent to service bus successfully"));
             }
 
             return createdCollection == null ?

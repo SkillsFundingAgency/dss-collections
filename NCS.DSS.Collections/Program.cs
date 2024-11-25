@@ -1,8 +1,9 @@
-using DFC.Common.Standard.Logging;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
@@ -22,8 +23,6 @@ using NCS.DSS.Collections.ServiceBus.Processor.Service;
 using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
 using NCS.DSS.Collections.Validators;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 
 namespace NCS.DSS.Contact
 {
@@ -65,7 +64,7 @@ namespace NCS.DSS.Contact
                     services.AddScoped<IDataCollectionsMessageProvider, DataCollectionsMessageProvider>();
 
                     services.AddScoped<IDCBlobStorage, DCBlobStorage>();
-                    
+
                     services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
                     services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
 
