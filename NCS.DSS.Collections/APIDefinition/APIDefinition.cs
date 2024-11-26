@@ -21,7 +21,7 @@ namespace NCS.DSS.Collections.APIDefinition
         }
 
         [Function(APIDefinitionName)]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req)
+        public IActionResult RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = APIDefRoute)] HttpRequest req)
         {
             var swagger = swaggerDocumentGenerator.GenerateSwaggerDocument(req, APITitle, APIDescription,
                 APIDefinitionName, ApiVersion, Assembly.GetExecutingAssembly());

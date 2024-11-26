@@ -113,7 +113,7 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
 
         private async Task<IActionResult> RunFunction()
         {
-            return await function.Run(
+            return await function.RunAsync(
                 _request
                 ).ConfigureAwait(false);
         }
