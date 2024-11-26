@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.Collections.Cosmos.Helper;
-using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NUnit.Framework;
@@ -28,7 +27,6 @@ namespace NCC.DSS.Collections.Tests.Services.PostCollectionHttpTrigger
         private Mock<IDynamicHelper> _dynamicHelper;
         private Collection _collection;
         private PostCollectionHttpLogger.PostCollectionHttpTrigger function;
-        private Mock<IDataCollectionsReportHelper> _dataCollectionsReportHelper;
 
         [SetUp]
         public void Setup()
