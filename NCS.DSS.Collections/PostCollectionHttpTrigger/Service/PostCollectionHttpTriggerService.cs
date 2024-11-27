@@ -45,7 +45,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 
             var response = await _documentDBProvider.CreateCollectionAsync(_collectionMapper.Map(collection));
 
-            return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;
+            return response.StatusCode == HttpStatusCode.Created ? response.Resource : null;
 
         }
 

@@ -1,116 +1,84 @@
-﻿using Microsoft.Azure.Documents;
-using Microsoft.Azure.Documents.Client;
-using Microsoft.Azure.Documents.Linq;
-using NCS.DSS.Collections.Cosmos.Client;
-using NCS.DSS.Collections.Cosmos.Helper;
+﻿using Microsoft.Azure.Cosmos;
 using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Cosmos.Provider
 {
     public class DocumentDBProvider : IDocumentDBProvider
     {
-        public async Task<ResourceResponse<Document>> CreateCollectionAsync(PersistedCollection collection)
+        private readonly Container _container;
+        private readonly string _databaseId = Environment.GetEnvironmentVariable("CollectionDatabaseId");
+        private readonly string _containerId = Environment.GetEnvironmentVariable("CollectionCollectionId");
+
+        public DocumentDBProvider(CosmosClient cosmosClient)
         {
-            var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
-
-            var client = DocumentDBClient.CreateDocumentClient();
-
-            if (client == null)
-                return null;
-
-            return await client.CreateDocumentAsync(collectionUri, collection);
+            _container = cosmosClient.GetContainer(_databaseId, _containerId);
         }
 
-        public async Task<bool> DoesCollectionResourceExist(PersistedCollection collection)
+        public async Task<ItemResponse<PersistedCollection>> CreateCollectionAsync(PersistedCollection collection)
         {
-            var documentUri = DocumentDBHelper.CreateCollectionDocumentUri(collection.CollectionId);
+            ItemResponse<PersistedCollection> response = await _container.CreateItemAsync(collection);
 
-            var client = DocumentDBClient.CreateDocumentClient();
-
-            if (client == null)
-                return false;
-            try
-            {
-                var response = await client.ReadDocumentAsync(documentUri);
-                if (response.Resource != null)
-                    return true;
-            }
-            catch (DocumentClientException)
-            {
-                return false;
-            }
-
-            return false;
+            return response;
         }
 
         public async Task<PersistedCollection> GetCollectionAsync(Guid collectionId)
         {
-            var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
+            string queryText = $"SELECT TOP 1 * FROM c Where c.id = '{collectionId}'";
+            QueryDefinition queryDefinition = new QueryDefinition(queryText);
 
-            var client = DocumentDBClient.CreateDocumentClient();
+            PersistedCollection collection = null;
+            using (FeedIterator<PersistedCollection> iterator = _container.GetItemQueryIterator<PersistedCollection>(queryDefinition))
+            {
+                while (iterator.HasMoreResults)
+                {
+                    var response = await iterator.ReadNextAsync();
+                    collection = response.FirstOrDefault();
+                }
+            }
 
-            var collectionForCollectionIdQuery = client?.CreateDocumentQuery<PersistedCollection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
-                                                    .Where(x => x.CollectionId == collectionId)
-                                                    .AsDocumentQuery();
-
-            if (collectionForCollectionIdQuery == null)
-                return null;
-
-            var collection = await collectionForCollectionIdQuery.ExecuteNextAsync<PersistedCollection>();
-
-            return collection?.FirstOrDefault();
+            return collection;
         }
 
         public async Task<PersistedCollection> GetCollectionForTouchpointAsync(string touchPointId, Guid collectionId)
         {
-            var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
+            string queryText = $"SELECT TOP 1 * FROM c Where c.TouchPointId = '{touchPointId}' and c.id = '{collectionId}'";
+            QueryDefinition queryDefinition = new QueryDefinition(queryText);
 
-            var client = DocumentDBClient.CreateDocumentClient();
+            PersistedCollection collection = null;
+            using (FeedIterator<PersistedCollection> iterator = _container.GetItemQueryIterator<PersistedCollection>(queryDefinition))
+            {
+                while (iterator.HasMoreResults)
+                {
+                    var response = await iterator.ReadNextAsync();
+                    collection = response.FirstOrDefault();
+                }
+            }
 
-            var collectionForTouchpointQuery = client
-                ?.CreateDocumentQuery<PersistedCollection>(collectionUri, new FeedOptions { MaxItemCount = 1 })
-                .Where(x => x.TouchPointId == touchPointId && x.CollectionId == collectionId)
-                .AsDocumentQuery();
-
-            if (collectionForTouchpointQuery == null)
-                return null;
-
-            var collections = await collectionForTouchpointQuery.ExecuteNextAsync<PersistedCollection>();
-
-            return collections?.FirstOrDefault();
+            return collection;
         }
 
         public async Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId)
         {
-            var collectionUri = DocumentDBHelper.CreateCollectionDocumentCollectionUri();
-
-            var client = DocumentDBClient.CreateDocumentClient();
-
-            var collectionsQuery = client.CreateDocumentQuery<PersistedCollection>(collectionUri)
-                .Where(so => so.TouchPointId == touchpointId).AsDocumentQuery();
+            string queryText = $"SELECT * FROM c Where c.TouchPointId = '{touchpointId}'";
+            QueryDefinition queryDefinition = new QueryDefinition(queryText);
 
             var collections = new List<PersistedCollection>();
 
-            while (collectionsQuery.HasMoreResults)
+            using (FeedIterator<PersistedCollection> iterator = _container.GetItemQueryIterator<PersistedCollection>(queryDefinition))
             {
-                var response = await collectionsQuery.ExecuteNextAsync<PersistedCollection>();
-                collections.AddRange(response);
+                while (iterator.HasMoreResults)
+                {
+                    var response = await iterator.ReadNextAsync();
+                    collections.AddRange(response);
+                }
             }
 
             return collections.Any() ? collections : null;
         }
 
-        public async Task<ResourceResponse<Document>> UpdateCollectionAsync(PersistedCollection collection)
+        public async Task<ItemResponse<PersistedCollection>> UpdateCollectionAsync(PersistedCollection collection)
         {
-            var documentUri = DocumentDBHelper.CreateCollectionDocumentUri(collection.CollectionId);
-
-            var client = DocumentDBClient.CreateDocumentClient();
-
-            if (client == null)
-                return null;
-
-            var response = await client.ReplaceDocumentAsync(documentUri, collection);
-
+            var response = await _container.ReplaceItemAsync(collection, collection.CollectionId.ToString());
             return response;
         }
     }

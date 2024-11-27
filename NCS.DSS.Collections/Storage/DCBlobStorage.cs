@@ -38,7 +38,7 @@ namespace NCS.DSS.Collections.Storage
                 }
                 else
                 {
-                    _logger.LogError($"Unable to locate Data Collections Report File - {0}", collection.ReportFileName);
+                    _logger.LogError("Unable to locate Data Collections Report File - {0}", collection.ReportFileName);
                     return null;
                 }
             }

@@ -1,5 +1,6 @@
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,7 @@ using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
 using NCS.DSS.Collections.Validators;
 
-namespace NCS.DSS.Contact
+namespace NCS.DSS.Collections
 {
     internal class Program
     {
@@ -69,6 +70,15 @@ namespace NCS.DSS.Contact
                     services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
 
                     services.AddSingleton<IDynamicHelper, DynamicHelper>();
+
+                    services.AddSingleton(s =>
+                    {
+                        var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
+                        var cosmosEndpoint = Environment.GetEnvironmentVariable("Endpoint");
+                        var cosmosKey = Environment.GetEnvironmentVariable("Key");
+
+                        return new CosmosClient(cosmosEndpoint, cosmosKey, options);
+                    });
 
                     services.Configure<LoggerFilterOptions>(options =>
                     {

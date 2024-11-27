@@ -59,18 +59,18 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             MemoryStream collectionStream;
             try
             {
-                _logger.LogInformation($"{correlationId} Attempt to process request.");
+                _logger.LogInformation("CorrelationId: {0} Attempt to process request.", correlationId);
                 collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{correlationId} unable to get collection", ex);
+                _logger.LogError("CorrelationId: {0} Unable to get collection. Error Message: {1} Stack Trace: {2}", correlationId, ex.Message, ex.StackTrace);
                 return new UnprocessableEntityResult();
             }
 
             if (collectionStream == null)
             {
-                _logger.LogWarning("CorrelationId: {0} collection stream is null", correlationId);
+                _logger.LogWarning("CorrelationId: {0} Collection stream is null", correlationId);
                 return new NoContentResult();
             }
 

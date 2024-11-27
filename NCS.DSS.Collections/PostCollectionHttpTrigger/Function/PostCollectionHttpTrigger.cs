@@ -101,19 +101,20 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
                 return new UnprocessableEntityObjectResult(validationResults);
             }
 
-            _logger.LogInformation(string.Format("Attempting to create Collection for Touchpoint {0}", touchpointId));
-            var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
+            _logger.LogInformation("CorrelationId: {0} Attempting to create Collection for Touchpoint {1}", correlationGuid, touchpointId);
+            var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);            
 
-            if (createdCollection != null)
+            if (createdCollection == null)
             {
-                _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
-                await _service.SendToServiceBusQueueAsync(createdCollection);
-                _logger.LogInformation(string.Format("Newly created collection message sent to service bus successfully"));
-            }
+                _logger.LogWarning("CorrelationId: {0} Unable to create Collection for Touchpoint {1}", correlationGuid, touchpointId);
+                return new BadRequestObjectResult(touchpointId);
+            }            
 
-            return createdCollection == null ?
-                new BadRequestResult() :
-                new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };
+            _logger.LogInformation("CorrelationId: {0} Attempting to send newly created collection to service bus {1}", correlationGuid, createdCollection.CollectionId);
+            await _service.SendToServiceBusQueueAsync(createdCollection);
+
+            _logger.LogInformation("CorrelationId: {0} Response Code [Created]", correlationGuid);
+            return new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };
         }
     }
 }

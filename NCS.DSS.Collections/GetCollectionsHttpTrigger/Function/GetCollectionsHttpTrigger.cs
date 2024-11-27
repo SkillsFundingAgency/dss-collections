@@ -49,23 +49,23 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
                 return new BadRequestResult();
             }
 
-            _logger.LogInformation($"{correlationId} Attempt to process request");
+            _logger.LogInformation("CorrelationId: {0} Attempt to process request", correlationId);
 
             var results = await _service.ProcessRequestAsync(touchpointId);
 
             if (results.Count == 0 || results == null)
             {
-                _logger.LogInformation($"{correlationId} unable to retrieve collection");
+                _logger.LogInformation("CorrelationId: {0} Unable to retrieve collection", correlationId);
                 return new NoContentResult();
             }
             else if (results.Count == 1)
             {
-                _logger.LogInformation($"Successfully retrieved [{results.Count}] collection");
+                _logger.LogInformation("CorrelationId: {0} Successfully retrieved [{1}] collection", correlationId, results.Count);
                 return new JsonResult(results[0], new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
             }
             else
             {
-                _logger.LogInformation($"Successfully retrieved [{results.Count}] collections");
+                _logger.LogInformation("CorrelationId: {0} Successfully retrieved [{1}] collections", correlationId, results.Count);
                 return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
             }
         }

@@ -35,7 +35,6 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         public void GetCollectionsHttpTriggerService_Process_Test()
         {
             //Arrange        
-            _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection.Object)).Returns(Task.FromResult(true));
             _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
