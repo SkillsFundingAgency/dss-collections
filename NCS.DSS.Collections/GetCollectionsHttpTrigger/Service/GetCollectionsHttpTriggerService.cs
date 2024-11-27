@@ -6,10 +6,10 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {
     public class GetCollectionsHttpTriggerService : IGetCollectionsHttpTriggerService
     {
-        private readonly IDocumentDBProvider _documentDBProvider;
+        private readonly ICosmosDBProvider _documentDBProvider;
         private readonly ICollectionMapper _collectionMapper;
 
-        public GetCollectionsHttpTriggerService(IDocumentDBProvider documentDBProvider,
+        public GetCollectionsHttpTriggerService(ICosmosDBProvider documentDBProvider,
                                                 ICollectionMapper collectionMapper)
         {
             _documentDBProvider = documentDBProvider;

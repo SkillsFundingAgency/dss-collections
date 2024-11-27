@@ -6,11 +6,11 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
 {
     public class GetCollectionByIdHttpTriggerService : IGetCollectionByIdHttpTriggerService
     {
-        private readonly IDocumentDBProvider _documentDBProvider;
+        private readonly ICosmosDBProvider _documentDBProvider;
         private readonly IDCBlobStorage _storage;
         private readonly ILogger<GetCollectionByIdHttpTriggerService> _logger;
 
-        public GetCollectionByIdHttpTriggerService(IDocumentDBProvider documentDBProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
+        public GetCollectionByIdHttpTriggerService(ICosmosDBProvider documentDBProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
         {
             _documentDBProvider = documentDBProvider;
             _storage = storage;

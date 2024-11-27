@@ -13,7 +13,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
     [TestFixture]
     public class GetCollectionsHttpTriggerServiceTests
     {
-        private Mock<IDocumentDBProvider> _documentDBProvider;
+        private Mock<ICosmosDBProvider> _documentDBProvider;
         private Mock<ICollectionMapper> _collectionMapper;
         private Mock<PersistedCollection> _collection;
         private Mock<List<PersistedCollection>> _collections;
@@ -24,7 +24,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         public void Setup()
         {
             _collectionMapper = new Mock<ICollectionMapper>();
-            _documentDBProvider = new Mock<IDocumentDBProvider>();
+            _documentDBProvider = new Mock<ICosmosDBProvider>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";

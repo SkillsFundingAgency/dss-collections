@@ -10,13 +10,13 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
     public class DataCollectionsQueueProcessorService : IDataCollectionsQueueProcessorService
     {
         private readonly IDataCollectionsMessageProvider _messageProvider;
-        private readonly IDocumentDBProvider _documentDbProvider;
+        private readonly ICosmosDBProvider _documentDbProvider;
         private readonly IContentEnhancerServiceBusClient _contentEnhancerServiceBusClient;
         private readonly ILogger<DataCollectionsQueueProcessorService> _logger;
 
         public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,
                                                     IContentEnhancerServiceBusClient contentEnhancerServiceBusClient,
-                                                    IDocumentDBProvider documentDBProvider,
+                                                    ICosmosDBProvider documentDBProvider,
                                                     ILogger<DataCollectionsQueueProcessorService> logger)
         {
             _messageProvider = messageProvider;

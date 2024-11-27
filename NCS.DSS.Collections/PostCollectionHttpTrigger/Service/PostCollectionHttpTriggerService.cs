@@ -11,12 +11,12 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
     public class PostCollectionHttpTriggerService : IPostCollectionHttpTriggerService
     {
         private readonly ICollectionValidator _collectionValidator;
-        private readonly IDocumentDBProvider _documentDBProvider;
+        private readonly ICosmosDBProvider _documentDBProvider;
         private readonly IDataCollectionsServiceBusClient _dataCollectionsServiceBusClient;
         private readonly ICollectionMapper _collectionMapper;
 
         public PostCollectionHttpTriggerService(ICollectionValidator collectionValidator,
-                                                IDocumentDBProvider documentDBProvider,
+                                                ICosmosDBProvider documentDBProvider,
                                                 IDataCollectionsServiceBusClient dataCollectionsServiceBusClient,
                                                 ICollectionMapper collectionMapper)
         {

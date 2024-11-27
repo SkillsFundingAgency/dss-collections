@@ -3,13 +3,13 @@ using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Cosmos.Provider
 {
-    public class DocumentDBProvider : IDocumentDBProvider
+    public class CosmosDBProvider : ICosmosDBProvider
     {
         private readonly Container _container;
         private readonly string _databaseId = Environment.GetEnvironmentVariable("CollectionDatabaseId");
         private readonly string _containerId = Environment.GetEnvironmentVariable("CollectionCollectionId");
 
-        public DocumentDBProvider(CosmosClient cosmosClient)
+        public CosmosDBProvider(CosmosClient cosmosClient)
         {
             _container = cosmosClient.GetContainer(_databaseId, _containerId);
         }
