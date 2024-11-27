@@ -102,13 +102,13 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             }
 
             _logger.LogInformation("CorrelationId: {0} Attempting to create Collection for Touchpoint {1}", correlationGuid, touchpointId);
-            var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);            
+            var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
             if (createdCollection == null)
             {
                 _logger.LogWarning("CorrelationId: {0} Unable to create Collection for Touchpoint {1}", correlationGuid, touchpointId);
                 return new BadRequestObjectResult(touchpointId);
-            }            
+            }
 
             _logger.LogInformation("CorrelationId: {0} Attempting to send newly created collection to service bus {1}", correlationGuid, createdCollection.CollectionId);
             await _service.SendToServiceBusQueueAsync(createdCollection);

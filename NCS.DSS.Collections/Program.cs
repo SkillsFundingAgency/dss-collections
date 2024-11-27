@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
 using Microsoft.Azure.Cosmos;
@@ -78,6 +79,12 @@ namespace NCS.DSS.Collections
                         var cosmosKey = Environment.GetEnvironmentVariable("Key");
 
                         return new CosmosClient(cosmosEndpoint, cosmosKey, options);
+                    });
+
+                    services.AddSingleton(s =>
+                    {
+                        var serviceBusConnectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
+                        return new ServiceBusClient(serviceBusConnectionString);
                     });
 
                     services.Configure<LoggerFilterOptions>(options =>

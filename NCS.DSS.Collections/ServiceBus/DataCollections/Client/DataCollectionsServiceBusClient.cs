@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Config;
 using NCS.DSS.Collections.ServiceBus.Messages.DataCollections;
@@ -9,17 +9,21 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Client
     {
         private readonly IDataCollectionsServiceBusConfig _busConfig;
         private readonly IDataCollectionsMessageProvider _messageProvider;
+        private readonly ServiceBusClient _serviceBusClient;
+
         public DataCollectionsServiceBusClient(IDataCollectionsServiceBusConfig busConfig,
-                                               IDataCollectionsMessageProvider messageProvider)
+                                               IDataCollectionsMessageProvider messageProvider,
+                                               ServiceBusClient serviceBusClient)
         {
             _busConfig = busConfig;
             _messageProvider = messageProvider;
+            _serviceBusClient = serviceBusClient;
         }
         public async Task SendPostMessageAsync(PersistedCollection collection)
         {
-            var queueClient = new QueueClient(_busConfig.ServiceBusConnectionString, _busConfig.QueueName);
+            var serviceBusSender = _serviceBusClient.CreateSender(_busConfig.QueueName);
 
-            await queueClient.SendAsync(_messageProvider.MakeMessage(collection));
+            await serviceBusSender.SendMessageAsync(_messageProvider.MakeMessage(collection));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer;
 
@@ -8,16 +8,21 @@ namespace NCS.DSS.Collections.ServiceBus.ContentEnhancer.Client
     {
         private readonly IContentEnhancerMessageBusConfig _config;
         private readonly IContentEnhancerMessageProvider _messageProvider;
-        public ContentEnhancerServiceBusClient(IContentEnhancerMessageBusConfig config, IContentEnhancerMessageProvider messageProvider)
+        private readonly ServiceBusClient _serviceBusClient;
+
+        public ContentEnhancerServiceBusClient(IContentEnhancerMessageBusConfig config,
+            IContentEnhancerMessageProvider messageProvider,
+            ServiceBusClient serviceBusClient)
         {
             _config = config;
             _messageProvider = messageProvider;
+            _serviceBusClient = serviceBusClient;
         }
         public async Task SendAsync(PersistedCollection collection)
         {
-            var queueClient = new QueueClient(_config.ServiceBusConnectionString, _config.QueueName);
+            var serviceBusSender = _serviceBusClient.CreateSender(_config.QueueName);
 
-            await queueClient.SendAsync(_messageProvider.MakeMessage(collection));
+            await serviceBusSender.SendMessageAsync(_messageProvider.MakeMessage(collection));
         }
     }
 }
