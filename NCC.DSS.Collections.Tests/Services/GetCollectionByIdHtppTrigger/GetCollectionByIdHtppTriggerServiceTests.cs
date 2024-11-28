@@ -16,7 +16,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     public class GetCollectionByIdHtppTriggerServiceTests
     {
 
-        private Mock<ICosmosDBProvider> _documentDBProvider;
+        private Mock<ICosmosDBProvider> _cosmosDbProvider;
         private Mock<IDCBlobStorage> _storage;
         private Mock<ILogger<GetCollectionByIdHttpTriggerService>> _logger;
         private Mock<PersistedCollection> _collection;
@@ -28,21 +28,21 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
         [SetUp]
         public void Setup()
         {
-            _documentDBProvider = new Mock<ICosmosDBProvider>();
+            _cosmosDbProvider = new Mock<ICosmosDBProvider>();
             _logger = new Mock<ILogger<GetCollectionByIdHttpTriggerService>>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
             _collectionId = Guid.NewGuid();
             _storage = new Mock<IDCBlobStorage>();
-            _triggerService = new GetCollectionByIdHttpTriggerService(_documentDBProvider.Object, _storage.Object, _logger.Object);
+            _triggerService = new GetCollectionByIdHttpTriggerService(_cosmosDbProvider.Object, _storage.Object, _logger.Object);
         }
 
         [Test]
         public void GetCollectionByIdHttpTriggerService_Process_Test()
         {
             //Arrange        
-            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
+            _cosmosDbProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
             var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId);

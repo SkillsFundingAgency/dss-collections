@@ -10,17 +10,17 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
     public class DataCollectionsQueueProcessorService : IDataCollectionsQueueProcessorService
     {
         private readonly IDataCollectionsMessageProvider _messageProvider;
-        private readonly ICosmosDBProvider _documentDbProvider;
+        private readonly ICosmosDBProvider _cosmosDbProvider;
         private readonly IContentEnhancerServiceBusClient _contentEnhancerServiceBusClient;
         private readonly ILogger<DataCollectionsQueueProcessorService> _logger;
 
         public DataCollectionsQueueProcessorService(IDataCollectionsMessageProvider messageProvider,
                                                     IContentEnhancerServiceBusClient contentEnhancerServiceBusClient,
-                                                    ICosmosDBProvider documentDBProvider,
+                                                    ICosmosDBProvider cosmosDbProvider,
                                                     ILogger<DataCollectionsQueueProcessorService> logger)
         {
             _messageProvider = messageProvider;
-            _documentDbProvider = documentDBProvider;
+            _cosmosDbProvider = cosmosDbProvider;
             _contentEnhancerServiceBusClient = contentEnhancerServiceBusClient;            _logger = logger;
         }
 
@@ -40,7 +40,7 @@ namespace NCS.DSS.Collections.ServiceBus.Processor.Service
                 throw new Exception(errorMessage);
             }
 
-            var collection = await _documentDbProvider.GetCollectionAsync(message.JobId);
+            var collection = await _cosmosDbProvider.GetCollectionAsync(message.JobId);
 
             if (collection == null)
             {
