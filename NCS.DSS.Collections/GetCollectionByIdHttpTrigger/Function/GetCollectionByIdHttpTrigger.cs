@@ -27,56 +27,61 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             _dssTouchpointValidator = dssTouchpointValidator;
         }
 
-        [Function("GetById")]
+        [Function("GET_BY_COLLECTIONID")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collection Plan found", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collection does not exist", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = "Request was malformed", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
-        [Display(Name = "Get", Description = "Ability to retrieve a collection for the given collection id")]
+        [Display(Name = "GET_BY_COLLECTIONID", Description = "Ability to retrieve a collection for the given collection id")]
         public async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections/{collectionId}")] HttpRequest req, string collectionId)
         {
-            _logger.LogInformation("Get Collection C# HTTP trigger function processing a request. For CollectionId " + collectionId);
+            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(GetCollectionByIdHttpTrigger));
 
-            var correlationId = _dssCorrelationValidator.Extract(req, _logger);
+            var correlationGuid = _dssCorrelationValidator.Extract(req, _logger);
 
             var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
             {
-                _logger.LogWarning("CorrelationId: {0} Unable to locate 'TouchpointId' in request header.", correlationId);
+                _logger.LogWarning("Unable to locate 'TouchpointId' in request header. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 return new BadRequestObjectResult("");
             }
 
             if (!Guid.TryParse(collectionId, out var collectionGuid))
             {
-                _logger.LogWarning("CorrelationId: {0} Unable to parse 'collectionId' to a Guid: {1}", correlationId, collectionId);
+                _logger.LogWarning("Unable to parse 'collectionId' to a GUID. Collection ID: {CollectionId}. Correlation GUID: {CorrelationGuid}", collectionId, correlationGuid);
                 return new BadRequestObjectResult(collectionGuid);
             }
+
+            _logger.LogInformation("Header validation has succeeded. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
 
             MemoryStream collectionStream;
             try
             {
-                _logger.LogInformation("CorrelationId: {0} Attempt to process request.", correlationId);
+                _logger.LogInformation("Attempting to process collection retrieval from blob storage. Collection ID: {CollectionId}. Correlation GUID: {CorrelationGuid}", collectionId, correlationGuid);
                 collectionStream = await _service.ProcessRequestAsync(touchpointId, collectionGuid);
             }
             catch (Exception ex)
             {
-                _logger.LogError("CorrelationId: {0} Unable to get collection. Error Message: {1} Stack Trace: {2}", correlationId, ex.Message, ex.StackTrace);
+                _logger.LogError(ex, "An error has occurred when attempting to retrieve collection from blob storage. Correlation GUID: {CorrelationGuid}. Exception: {ExceptionMessage}", correlationGuid, ex.Message);
                 return new UnprocessableEntityResult();
             }
 
             if (collectionStream == null)
             {
-                _logger.LogWarning("CorrelationId: {0} Collection stream is null", correlationId);
+                _logger.LogWarning("Collection stream is null. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 return new NoContentResult();
             }
 
             collectionStream.Position = 0;
 
             var responseObject = new StreamContent(collectionStream);
+
+            _logger.LogInformation("Collection successfully retrieved. Collection ID: {CollectionId}. Correlation GUID: {CorrelationGuid}", collectionId, correlationGuid);
+            _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(GetCollectionByIdHttpTrigger));
             return new FileStreamResult(collectionStream, "application/octet-stream");
         }
     }
