@@ -10,9 +10,9 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
         private readonly IDCBlobStorage _storage;
         private readonly ILogger<GetCollectionByIdHttpTriggerService> _logger;
 
-        public GetCollectionByIdHttpTriggerService(ICosmosDBProvider documentDBProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
+        public GetCollectionByIdHttpTriggerService(ICosmosDBProvider cosmosDbProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
         {
-            _cosmosDbProvider = documentDBProvider;
+            _cosmosDbProvider = cosmosDbProvider;
             _storage = storage;
             _logger = logger;
         }
