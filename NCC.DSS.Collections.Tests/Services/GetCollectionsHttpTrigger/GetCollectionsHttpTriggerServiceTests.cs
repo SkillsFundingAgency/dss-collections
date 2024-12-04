@@ -13,7 +13,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
     [TestFixture]
     public class GetCollectionsHttpTriggerServiceTests
     {
-        private Mock<ICosmosDBProvider> cosmosDbProvider;
+        private Mock<ICosmosDbProvider> cosmosDbProvider;
         private Mock<ICollectionMapper> _collectionMapper;
         private Mock<PersistedCollection> _collection;
         private Mock<List<PersistedCollection>> _collections;
@@ -24,7 +24,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionsHttpTrigger
         public void Setup()
         {
             _collectionMapper = new Mock<ICollectionMapper>();
-            cosmosDbProvider = new Mock<ICosmosDBProvider>();
+            cosmosDbProvider = new Mock<ICosmosDbProvider>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";

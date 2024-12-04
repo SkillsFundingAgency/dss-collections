@@ -16,7 +16,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     public class GetCollectionByIdHtppTriggerServiceTests
     {
 
-        private Mock<ICosmosDBProvider> _cosmosDbProvider;
+        private Mock<ICosmosDbProvider> _cosmosDbProvider;
         private Mock<IDCBlobStorage> _storage;
         private Mock<ILogger<GetCollectionByIdHttpTriggerService>> _logger;
         private Mock<PersistedCollection> _collection;
@@ -28,7 +28,7 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
         [SetUp]
         public void Setup()
         {
-            _cosmosDbProvider = new Mock<ICosmosDBProvider>();
+            _cosmosDbProvider = new Mock<ICosmosDbProvider>();
             _logger = new Mock<ILogger<GetCollectionByIdHttpTriggerService>>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();

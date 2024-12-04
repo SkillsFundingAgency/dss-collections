@@ -3,7 +3,7 @@ using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Cosmos.Provider
 {
-    public interface ICosmosDBProvider
+    public interface ICosmosDbProvider
     {
         Task<ItemResponse<PersistedCollection>> CreateCollectionAsync(PersistedCollection collection);
         Task<List<PersistedCollection>> GetCollectionsForTouchpointAsync(string touchpointId);

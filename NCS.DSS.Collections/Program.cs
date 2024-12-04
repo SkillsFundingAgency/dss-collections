@@ -53,7 +53,7 @@ namespace NCS.DSS.Collections
                     services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
                     services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
                     services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
-                    services.AddTransient<ICosmosDBProvider, CosmosDBProvider>(); ;
+                    services.AddTransient<ICosmosDbProvider, CosmosDbProvider>(); ;
                     services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
                     services.AddTransient<ICollectionMapper, CollectionMapper>();
 

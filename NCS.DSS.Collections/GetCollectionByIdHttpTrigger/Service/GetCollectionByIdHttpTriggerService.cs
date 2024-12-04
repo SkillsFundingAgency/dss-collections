@@ -6,11 +6,11 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
 {
     public class GetCollectionByIdHttpTriggerService : IGetCollectionByIdHttpTriggerService
     {
-        private readonly ICosmosDBProvider _cosmosDbProvider;
+        private readonly ICosmosDbProvider _cosmosDbProvider;
         private readonly IDCBlobStorage _storage;
         private readonly ILogger<GetCollectionByIdHttpTriggerService> _logger;
 
-        public GetCollectionByIdHttpTriggerService(ICosmosDBProvider cosmosDbProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
+        public GetCollectionByIdHttpTriggerService(ICosmosDbProvider cosmosDbProvider, IDCBlobStorage storage, ILogger<GetCollectionByIdHttpTriggerService> logger)
         {
             _cosmosDbProvider = cosmosDbProvider;
             _storage = storage;
@@ -24,7 +24,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
             {
                 _logger.LogInformation($"Collection record does not exist. TouchpointId: {touchPointId} and CollectionId: {collectionId}");
                 return null;
-            }
+            }            
 
             return await _storage.Get(collection);
         }
