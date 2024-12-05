@@ -22,7 +22,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
 
             if (collection == null)
             {
-                _logger.LogInformation($"Collection record does not exist. TouchpointId: {touchPointId} and CollectionId: {collectionId}");
+                _logger.LogInformation("Collection record does not exist. TouchpointId: {TouchPointId} and CollectionId: {CollectionId}", touchPointId, collectionId);
                 return null;
             }            
 

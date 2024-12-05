@@ -44,7 +44,7 @@ namespace NCS.DSS.Collections.Storage
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to get Blob file. Error: [{ex.Message}] and Stack Trace: [{ex.StackTrace}]");
+                _logger.LogError(ex, "Failed to get Blob file. Error: [{ex.Message}] and Stack Trace: [{ex.StackTrace}]", ex.Message, ex.StackTrace);
             }
             return resultStream;
 
