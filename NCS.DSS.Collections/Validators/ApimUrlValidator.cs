@@ -20,7 +20,7 @@ namespace NCS.DSS.Collections.Validators
             var ApimUrl = _httpRequestHelper.GetDssApimUrl(req);
 
             if (string.IsNullOrEmpty(ApimUrl))
-            {                
+            {
                 _logger.LogInformation("Unable to locate 'apimURL' in request header. Correlation GUID: {CorrelationGuid}", _correlationValidator.Extract(req, _logger));
                 return null;
             }

@@ -21,7 +21,7 @@ namespace NCS.DSS.Collections.Validators
             var touchpointId = _httpRequestHelper.GetDssTouchpointId(req);
 
             if (string.IsNullOrEmpty(touchpointId))
-            {                
+            {
                 _logger.LogInformation("Unable to locate 'TouchpointId' in request header. TouchpointId: {TouchpointId} Correlation GUID: {CorrelationGuid}", touchpointId, _correlationValidator.Extract(req, logger));
                 return null;
             }

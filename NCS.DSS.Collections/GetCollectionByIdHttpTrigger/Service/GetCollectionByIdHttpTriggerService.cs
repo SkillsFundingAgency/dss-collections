@@ -24,7 +24,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service
             {
                 _logger.LogInformation("Collection record does not exist. TouchpointId: {TouchPointId} and CollectionId: {CollectionId}", touchPointId, collectionId);
                 return null;
-            }            
+            }
 
             return await _storage.Get(collection);
         }

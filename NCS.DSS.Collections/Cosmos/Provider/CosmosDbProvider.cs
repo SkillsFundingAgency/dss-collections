@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NCS.DSS.Collections.Models;
 
 namespace NCS.DSS.Collections.Cosmos.Provider
@@ -7,13 +8,13 @@ namespace NCS.DSS.Collections.Cosmos.Provider
     public class CosmosDbProvider : ICosmosDbProvider
     {
         private readonly Container _container;
-        private readonly string _databaseId = Environment.GetEnvironmentVariable("CollectionDatabaseId");
-        private readonly string _containerId = Environment.GetEnvironmentVariable("CollectionCollectionId");
+
         private readonly ILogger<CosmosDbProvider> _logger;
 
-        public CosmosDbProvider(CosmosClient cosmosClient, ILogger<CosmosDbProvider> logger)
+        public CosmosDbProvider(CosmosClient cosmosClient, IOptions<CollectionConfigurationSettings> configOptions, ILogger<CosmosDbProvider> logger)
         {
-            _container = cosmosClient.GetContainer(_databaseId, _containerId);
+            var config = configOptions.Value;
+            _container = cosmosClient.GetContainer(config.CollectionDatabaseId, config.CollectionCollectionId);
             _logger = logger;
         }
 

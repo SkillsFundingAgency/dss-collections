@@ -20,7 +20,7 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
 
         [Function("DataCollectionsQueueProcessor")]
         public async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName, Connection = _dataCollectionsConnectionString)] MessageCrossLoadToNCSDto message)
-        {            
+        {
             _logger.LogInformation("Function {FunctionName} has been invoked", nameof(DataCollectionsQueueProcessor));
             var correlationId = Guid.NewGuid();
 
@@ -41,7 +41,7 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
                 throw;
             }
             finally
-            {                
+            {
                 _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(DataCollectionsQueueProcessor));
             }
         }

@@ -3,15 +3,18 @@ using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Mappers;
+using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.ServiceBus;
 using NCS.DSS.Collections.ServiceBus.Configs;
@@ -34,11 +37,14 @@ namespace NCS.DSS.Collections
         {
             var host = new HostBuilder()
                 .ConfigureFunctionsWebApplication()
-                .ConfigureServices(services =>
+                .ConfigureServices((context, services) =>
                 {
+                    var configuration = context.Configuration;
+                    services.AddOptions<CollectionConfigurationSettings>()
+                        .Bind(configuration);
+
                     services.AddApplicationInsightsTelemetryWorkerService();
                     services.ConfigureFunctionsApplicationInsights();
-
                     services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
                     services.AddTransient<IGetCollectionByIdHttpTriggerService, GetCollectionByIdHttpTriggerService>();
                     services.AddTransient<IGetCollectionsHttpTriggerService, GetCollectionsHttpTriggerService>();
@@ -74,17 +80,16 @@ namespace NCS.DSS.Collections
 
                     services.AddSingleton(s =>
                     {
+                        var settings = s.GetRequiredService<IOptions<CollectionConfigurationSettings>>().Value;
                         var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
-                        var cosmosEndpoint = Environment.GetEnvironmentVariable("Endpoint");
-                        var cosmosKey = Environment.GetEnvironmentVariable("Key");
 
-                        return new CosmosClient(cosmosEndpoint, cosmosKey, options);
+                        return new CosmosClient(settings.Endpoint, settings.Key, options);
                     });
 
                     services.AddSingleton(s =>
                     {
-                        var serviceBusConnectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
-                        return new ServiceBusClient(serviceBusConnectionString);
+                        var settings = s.GetRequiredService<IOptions<CollectionConfigurationSettings>>().Value;
+                        return new ServiceBusClient(settings.ServiceBusConnectionString);
                     });
 
                     services.Configure<LoggerFilterOptions>(options =>
