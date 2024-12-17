@@ -6,19 +6,19 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Service
 {
     public class GetCollectionsHttpTriggerService : IGetCollectionsHttpTriggerService
     {
-        private readonly IDocumentDBProvider _documentDBProvider;
+        private readonly ICosmosDbProvider _cosmosDbProvider;
         private readonly ICollectionMapper _collectionMapper;
 
-        public GetCollectionsHttpTriggerService(IDocumentDBProvider documentDBProvider,
+        public GetCollectionsHttpTriggerService(ICosmosDbProvider cosmosDbProvider,
                                                 ICollectionMapper collectionMapper)
         {
-            _documentDBProvider = documentDBProvider;
+            _cosmosDbProvider = cosmosDbProvider;
             _collectionMapper = collectionMapper;
         }
 
         public async Task<List<Collection>> ProcessRequestAsync(string touchpointId)
         {
-            return _collectionMapper.Map(await _documentDBProvider.GetCollectionsForTouchpointAsync(touchpointId));
+            return _collectionMapper.Map(await _cosmosDbProvider.GetCollectionsForTouchpointAsync(touchpointId));
         }
     }
 }

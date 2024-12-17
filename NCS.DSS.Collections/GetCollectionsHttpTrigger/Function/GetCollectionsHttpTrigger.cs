@@ -28,46 +28,54 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
             _dssTouchpointValidator = dssTouchpointValidator;
         }
 
-        [Function("Get")]
+        [Function("GET")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Collections found", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collections do not exist", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = "Request was malformed", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
-        [Display(Name = "Get", Description = "Ability to return all collections for the touchpoint.")]
-        public async Task<IActionResult> Run(
+        [Display(Name = "GET", Description = "Ability to return all collections for the touchpoint.")]
+        public async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req)
         {
+            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(GetCollectionByIdHttpTrigger));
 
-            var correlationId = _dssCorrelationValidator.Extract(req, _logger);
+            var correlationGuid = _dssCorrelationValidator.Extract(req, _logger);
 
             var touchpointId = _dssTouchpointValidator.Extract(req, _logger);
 
             if (string.IsNullOrEmpty(touchpointId))
             {
+                _logger.LogWarning("Unable to locate 'TouchpointId' in request header. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 return new BadRequestResult();
             }
 
-            _logger.LogInformation($"{correlationId} Attempt to process request");
+            _logger.LogInformation("Header validation has succeeded. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
 
+            _logger.LogInformation("Attempting to retrieve all Collection(s) from blob storage. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
             var results = await _service.ProcessRequestAsync(touchpointId);
 
             if (results.Count == 0 || results == null)
             {
-                _logger.LogInformation($"{correlationId} unable to retrieve collection");
+                _logger.LogInformation("No Collection(s) have been found. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
+                _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(GetCollectionsHttpTrigger));
+
                 return new NoContentResult();
             }
-            else if (results.Count == 1)
+
+            if (results.Count == 1)
             {
-                _logger.LogInformation($"Successfully retrieved [{results.Count}] collection");
+                _logger.LogInformation("Successfully retrieved a Collection. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
+                _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(GetCollectionsHttpTrigger));
+
                 return new JsonResult(results[0], new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
             }
-            else
-            {
-                _logger.LogInformation($"Successfully retrieved [{results.Count}] collections");
-                return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
-            }
+
+            _logger.LogInformation("Successfully retrieved {Count} Collection(s). Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid, results.Count);
+            _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(GetCollectionsHttpTrigger));
+
+            return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
         }
     }
 }

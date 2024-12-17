@@ -16,37 +16,36 @@ namespace NCC.DSS.Collections.Tests.Services.GetCollectionByIdHtppTrigger
     public class GetCollectionByIdHtppTriggerServiceTests
     {
 
-        private Mock<IDocumentDBProvider> _documentDBProvider;
+        private Mock<ICosmosDbProvider> _cosmosDbProvider;
         private Mock<IDCBlobStorage> _storage;
-        private Mock<ILogger> _logger;
+        private Mock<ILogger<GetCollectionByIdHttpTriggerService>> _logger;
         private Mock<PersistedCollection> _collection;
         private Mock<List<PersistedCollection>> _collections;
         private string _touchPointId;
         private Guid _collectionId;
-        private IGetCollectionByIdHtppTriggerService _triggerService;
+        private IGetCollectionByIdHttpTriggerService _triggerService;
 
         [SetUp]
         public void Setup()
         {
-            _documentDBProvider = new Mock<IDocumentDBProvider>();
-            _logger = new Mock<ILogger>();
+            _cosmosDbProvider = new Mock<ICosmosDbProvider>();
+            _logger = new Mock<ILogger<GetCollectionByIdHttpTriggerService>>();
             _collection = new Mock<PersistedCollection>();
             _collections = new Mock<List<PersistedCollection>>();
             _touchPointId = "9000000000";
             _collectionId = Guid.NewGuid();
             _storage = new Mock<IDCBlobStorage>();
-            _triggerService = new GetCollectionByIdHtppTriggerService(_documentDBProvider.Object, _storage.Object);
+            _triggerService = new GetCollectionByIdHttpTriggerService(_cosmosDbProvider.Object, _storage.Object, _logger.Object);
         }
 
         [Test]
         public void GetCollectionByIdHttpTriggerService_Process_Test()
         {
             //Arrange        
-            _documentDBProvider.Setup(x => x.DoesCollectionResourceExist(_collection.Object)).Returns(Task.FromResult(true));
-            _documentDBProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
+            _cosmosDbProvider.Setup(x => x.GetCollectionsForTouchpointAsync(_touchPointId)).Returns(Task.FromResult(Task.FromResult(_collections.Object).Result));
 
             //Act
-            var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId, _logger.Object);
+            var result = _triggerService.ProcessRequestAsync(_touchPointId, _collectionId);
 
             //Assert
             Assert.That(_triggerService, Is.Not.Null);

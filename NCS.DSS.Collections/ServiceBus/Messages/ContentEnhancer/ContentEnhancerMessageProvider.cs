@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using NCS.DSS.Collections.Models;
 using Newtonsoft.Json;
 using System.Text;
@@ -7,9 +7,9 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer
 {
     public class ContentEnhancerMessageProvider : IContentEnhancerMessageProvider
     {
-        public Message MakeMessage(Collection collection)
+        public ServiceBusMessage MakeMessage(Collection collection)
         {
-            return new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageModel()
+            return new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageModel()
             {
                 DataCollections = true,
                 CustomerGuid = Guid.Empty,

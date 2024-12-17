@@ -11,17 +11,17 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
     public class PostCollectionHttpTriggerService : IPostCollectionHttpTriggerService
     {
         private readonly ICollectionValidator _collectionValidator;
-        private readonly IDocumentDBProvider _documentDBProvider;
+        private readonly ICosmosDbProvider _cosmosDbProvider;
         private readonly IDataCollectionsServiceBusClient _dataCollectionsServiceBusClient;
         private readonly ICollectionMapper _collectionMapper;
 
         public PostCollectionHttpTriggerService(ICollectionValidator collectionValidator,
-                                                IDocumentDBProvider documentDBProvider,
+                                                ICosmosDbProvider cosmosDbProvider,
                                                 IDataCollectionsServiceBusClient dataCollectionsServiceBusClient,
                                                 ICollectionMapper collectionMapper)
         {
             _collectionValidator = collectionValidator;
-            _documentDBProvider = documentDBProvider;
+            _cosmosDbProvider = cosmosDbProvider;
             _dataCollectionsServiceBusClient = dataCollectionsServiceBusClient;
             _collectionMapper = collectionMapper;
         }
@@ -43,9 +43,9 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Service
 
             collection.CollectionReports = new Uri($"{apimUrl}/{collection.CollectionId}");
 
-            var response = await _documentDBProvider.CreateCollectionAsync(_collectionMapper.Map(collection));
+            var response = await _cosmosDbProvider.CreateCollectionAsync(_collectionMapper.Map(collection));
 
-            return response.StatusCode == HttpStatusCode.Created ? (dynamic)response.Resource : null;
+            return response.StatusCode == HttpStatusCode.Created ? response.Resource : null;
 
         }
 

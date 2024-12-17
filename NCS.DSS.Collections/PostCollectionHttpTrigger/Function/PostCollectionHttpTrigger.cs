@@ -29,84 +29,94 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
             _dynamicHelper = dynamicHelper;
         }
 
-        [Function("Post")]
+        [Function("POST")]
         [ProducesResponseType(typeof(Collection), (int)HttpStatusCode.Created)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Created, Description = "Collection Created", ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = "Collection does not exist", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = "Request was malformed", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = "Insufficient access", ShowSchema = false)]
-        [Response(HttpStatusCode = 422, Description = "Collection validation error(s)", ShowSchema = false)]
-        [Display(Name = "Post", Description = "Ability to create a new collection for a touchpoint.")]
-        public async Task<IActionResult> Run(
+        [Response(HttpStatusCode = (int)HttpStatusCode.UnprocessableEntity, Description = "Collection validation error(s)", ShowSchema = false)]
+        [Display(Name = "POST", Description = "Ability to create a new collection for a touchpoint.")]
+        public async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "collections")] HttpRequest req)
         {
+            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(PostCollectionHttpTrigger));
 
             var correlationId = _httpRequestHelper.GetDssCorrelationId(req);
             if (string.IsNullOrEmpty(correlationId))
-                _logger.LogInformation("Unable to locate 'DssCorrelationId; in request header");
+            {
+                _logger.LogInformation("Unable to locate 'DssCorrelationId' in request header");
+            }
 
             if (!Guid.TryParse(correlationId, out var correlationGuid))
             {
-                _logger.LogInformation("Unable to Parse 'DssCorrelationId' to a Guid");
+                _logger.LogInformation("Unable to parse 'DssCorrelationId' to a Guid");
                 correlationGuid = Guid.NewGuid();
             }
 
             var touchpointId = _httpRequestHelper.GetDssTouchpointId(req);
             if (string.IsNullOrEmpty(touchpointId))
             {
-                _logger.LogInformation("Unable to locate 'APIM-TouchpointId' in request header.");
+                _logger.LogWarning("Unable to locate 'TouchpointId' in request header. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 return new BadRequestResult();
             }
 
             var apimUrl = _httpRequestHelper.GetDssApimUrl(req);
             if (string.IsNullOrEmpty(apimUrl))
             {
-                _logger.LogInformation("Unable to locate 'apimurl' in request header");
+                _logger.LogWarning("Unable to locate 'apimURL' in request header. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 return new BadRequestResult();
             }
 
-            if (string.IsNullOrEmpty(touchpointId) || string.IsNullOrEmpty(apimUrl))
-                return new BadRequestResult();
+            _logger.LogInformation("Header validation has succeeded. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
 
             Collection collection;
-
             try
             {
-                _logger.LogInformation("Attempt to get resource from body of the request");
+                _logger.LogInformation("Attempt to retrieve resource from the request body. Correlation GUID: {CorrelationGuid}", correlationGuid);
                 collection = await _httpRequestHelper.GetResourceFromRequest<Collection>(req);
             }
             catch (JsonException ex)
             {
-                _logger.LogError("Unable to retrieve body from req - {0}", ex);
+                _logger.LogError(ex, "Unable to parse Collection from request body. Exception: {ErrorMessage}", ex.Message);
                 return new UnprocessableEntityObjectResult(_dynamicHelper.ExcludeProperty(ex, PropertyToExclude));
             }
+
+            _logger.LogInformation("Retrieved resource from request body. Correlation GUID: {CorrelationGuid}", correlationGuid);
 
             collection.TouchPointId = touchpointId;
 
             if (!collection.LastModifiedDate.HasValue)
+            {
                 collection.LastModifiedDate = DateTime.UtcNow;
+            }
 
+            _logger.LogInformation("Attempting to validate {Collection} object. Correlation GUID: {CorrelationGuid}", nameof(collection), correlationGuid);
             var validationResults = _service.ValidateCollectionAsync(collection);
 
             if (validationResults != null && validationResults.Any())
             {
-                _logger.LogInformation("validation errors with resource");
+                _logger.LogWarning("Failed to validate {Collection} object. Correlation GUID: {CorrelationGuid}", nameof(collection), correlationGuid);
                 return new UnprocessableEntityObjectResult(validationResults);
             }
+            _logger.LogInformation("Successfully validated {Collection} object. Correlation GUID: {CorrelationGuid}", nameof(collection), correlationGuid);
 
-            _logger.LogInformation(string.Format("Attempting to get Create Collection for Touchpoint {0}", touchpointId));
+            _logger.LogInformation("Attempting to create Collection object. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
             var createdCollection = await _service.ProcessRequestAsync(collection, apimUrl);
 
-            if (createdCollection != null)
+            if (createdCollection == null)
             {
-                _logger.LogInformation(string.Format("attempting to send to service bus {0}", createdCollection.CollectionId));
-                await _service.SendToServiceBusQueueAsync(createdCollection);
+                _logger.LogWarning("Failed to create Collection object. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid);
+                return new BadRequestObjectResult(touchpointId);
             }
 
-            return createdCollection == null ?
-                new BadRequestResult() :
-                new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };
+            _logger.LogInformation("Sending newly created Collection to service bus. Collection ID: {CollectionId}. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", collection.CollectionId, touchpointId, correlationGuid);
+            await _service.SendToServiceBusQueueAsync(createdCollection);
+
+            _logger.LogInformation("POST request successful. Collection ID: {CollectionId}. Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", collection.CollectionId, touchpointId, correlationGuid);
+            _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(PostCollectionHttpTrigger));
+            return new JsonResult(createdCollection, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.Created };
         }
     }
 }
