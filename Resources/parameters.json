@@ -26,12 +26,6 @@
     "serviceBusQueueName": {
       "value": "__serviceBusQueueName__"
     },
-    "sharedAppServicePlanName": {
-      "value": "__sharedAppServicePlanName__"
-    },
-    "sharedAppServicePlanResourceGroup": {
-      "value": "__sharedAppServicePlanResourceGroup__"
-    },
     "storageAccountName": {
       "value": "__storageAccountName__"
     },
