@@ -11,7 +11,7 @@
     "cosmosDbDatabaseId": {
       "type": "string"
     },
-    "cosmosDbEndpoint": {
+    "CosmosDbEndpoint": {
       "type": "string"
     },
     "cosmosDbKey": {
@@ -53,7 +53,7 @@
         "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]",
         "CollectionDatabaseId": "[parameters('cosmosDbCollectionId')]",
         "CollectionCollectionId": "[parameters('cosmosDbDatabaseId')]",
-        "Endpoint": "[parameters('cosmosDbEndpoint')]",
+        "CosmosDbEndpoint": "[parameters('CosmosDbEndpoint')]",
         "Key": "[parameters('cosmosDbKey')]",
         "ServiceBusConnectionString": "[parameters('serviceBusConnectionString')]",
         "QueueName": "[parameters('serviceBusQueueName')]",
