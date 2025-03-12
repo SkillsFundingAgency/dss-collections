@@ -47,7 +47,7 @@ namespace NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Function
             if (string.IsNullOrEmpty(touchpointId))
             {
                 _logger.LogWarning("Unable to locate 'TouchpointId' in request header. Correlation GUID: {CorrelationGuid}", correlationGuid);
-                return new BadRequestObjectResult("");
+                return new BadRequestResult();
             }
 
             if (!Guid.TryParse(collectionId, out var collectionGuid))
