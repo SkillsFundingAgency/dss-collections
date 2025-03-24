@@ -32,9 +32,6 @@
     "storageAccountKey": {
       "value": "__storageAccountKey__"
     },
-    "templateBaseUrl": {
-      "value": "__NestedArmTemplateBaseUrl__"
-    },
     "appInsightsInstrumentationKey": {
       "value": "__appInsightsInstrumentationKey__" 
     },
