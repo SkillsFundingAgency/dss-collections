@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.HTTP.Standard;
+﻿using DFC.HTTP.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -8,13 +7,14 @@ namespace NCS.DSS.Collections.Validators
     public class DssTouchpointValidator : IDssTouchpointValidator
     {
         private readonly IHttpRequestHelper _httpRequestHelper;
-        private readonly ILoggerHelper _loggerHelper;
         private readonly IDssCorrelationValidator _correlationValidator;
-        public DssTouchpointValidator(IHttpRequestHelper httpRequestHelper, ILoggerHelper loggerHelper, IDssCorrelationValidator correlationValidator)
+        private readonly ILogger<DssTouchpointValidator> _logger;
+
+        public DssTouchpointValidator(IHttpRequestHelper httpRequestHelper, IDssCorrelationValidator correlationValidator, ILogger<DssTouchpointValidator> logger)
         {
             _httpRequestHelper = httpRequestHelper;
-            _loggerHelper = loggerHelper;
             _correlationValidator = correlationValidator;
+            _logger = logger;
         }
         public string Extract(HttpRequest req, ILogger logger)
         {
@@ -22,7 +22,7 @@ namespace NCS.DSS.Collections.Validators
 
             if (string.IsNullOrEmpty(touchpointId))
             {
-                _loggerHelper.LogInformationMessage(logger, _correlationValidator.Extract(req, logger), "Unable to locate 'TouchpointId' in request header");
+                _logger.LogInformation("Unable to locate 'TouchpointId' in request header. TouchpointId: {TouchpointId} Correlation GUID: {CorrelationGuid}", touchpointId, _correlationValidator.Extract(req, logger));
                 return null;
             }
 

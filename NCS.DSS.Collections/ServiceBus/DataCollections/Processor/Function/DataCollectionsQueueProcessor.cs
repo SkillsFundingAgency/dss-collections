@@ -10,39 +10,39 @@ namespace NCS.DSS.Collections.ServiceBus.DataCollections.Processor.Function
         private const string _dataCollectionsQueueName = "%DCQueueName_In%";
         private const string _dataCollectionsConnectionString = "ServiceBusConnectionString";
         private IDataCollectionsQueueProcessorService _dataCollectionsQueueProcessorService;
-        private ILogger log;
+        private ILogger<DataCollectionsQueueProcessor> _logger;
 
-        public DataCollectionsQueueProcessor(IDataCollectionsQueueProcessorService dataCollectionsQueueProcessorService, ILogger<DataCollectionsQueueProcessor> log)
+        public DataCollectionsQueueProcessor(IDataCollectionsQueueProcessorService dataCollectionsQueueProcessorService, ILogger<DataCollectionsQueueProcessor> logger)
         {
             _dataCollectionsQueueProcessorService = dataCollectionsQueueProcessorService;
-            this.log = log;
+            _logger = logger;
         }
 
         [Function("DataCollectionsQueueProcessor")]
         public async Task RunAsync([ServiceBusTrigger(_dataCollectionsQueueName, Connection = _dataCollectionsConnectionString)] MessageCrossLoadToNCSDto message)
         {
-            log.LogInformation($"Function {nameof(DataCollectionsQueueProcessor)} has been invoked");
+            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(DataCollectionsQueueProcessor));
             var correlationId = Guid.NewGuid();
 
             try
             {
                 if (message == null)
                 {
-                    log.LogError($"Message cannot be null. Correlation ID: {correlationId}");
+                    _logger.LogWarning("Message cannot be null. Correlation ID: {CorrelationId}", correlationId);
                     return;
                 }
 
-                log.LogInformation($"Attempting to process queue message");
-                await _dataCollectionsQueueProcessorService.ProcessMessageAsync(message, log);
+                _logger.LogInformation("Attempting to process queue message. Correlation ID: {CorrelationId}", correlationId);
+                await _dataCollectionsQueueProcessorService.ProcessMessageAsync(message);
             }
             catch (Exception ex)
             {
-                log.LogError($"An exception has occurred. Correlation ID: {correlationId}", ex);
+                _logger.LogError(ex, "An exception has occurred. Correlation ID: {CorrelationId} Message: {Message} StackTrace: {StackTrace}", correlationId, ex.Message, ex.StackTrace);
                 throw;
             }
             finally
             {
-                log.LogInformation($"Function {nameof(DataCollectionsQueueProcessor)} has finished invocation");
+                _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(DataCollectionsQueueProcessor));
             }
         }
     }

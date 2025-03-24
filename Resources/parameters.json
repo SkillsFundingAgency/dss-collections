@@ -26,23 +26,17 @@
     "serviceBusQueueName": {
       "value": "__serviceBusQueueName__"
     },
-    "sharedAppServicePlanName": {
-      "value": "__sharedAppServicePlanName__"
-    },
-    "sharedAppServicePlanResourceGroup": {
-      "value": "__sharedAppServicePlanResourceGroup__"
-    },
     "storageAccountName": {
       "value": "__storageAccountName__"
     },
     "storageAccountKey": {
       "value": "__storageAccountKey__"
     },
-    "templateBaseUrl": {
-      "value": "__NestedArmTemplateBaseUrl__"
-    },
     "appInsightsInstrumentationKey": {
       "value": "__appInsightsInstrumentationKey__" 
+    },
+    "keyVaultName": {
+      "value": "__SharedKeyVaultName__"
     }
   }
 }

@@ -26,7 +26,7 @@ namespace NCC.DSS.Collections.Tests
             HttpRequest req = new Mock<HttpRequest>().Object;
 
             //Act
-            var res = function.Run(req);
+            var res = function.RunAsync(req);
 
             //Assert
             Assert.That(res, Is.Not.Null);
@@ -39,7 +39,7 @@ namespace NCC.DSS.Collections.Tests
             HttpRequest req = null;
 
             //Act
-            var res = function.Run(req);
+            var res = function.RunAsync(req);
 
             //Assert
             Assert.That(res, Is.Not.Null);

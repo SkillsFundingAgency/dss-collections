@@ -1,14 +1,20 @@
-using DFC.Common.Standard.Logging;
+using Azure.Messaging.ServiceBus;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
+using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NCS.DSS.Collections.Cosmos.Helper;
 using NCS.DSS.Collections.Cosmos.Provider;
 using NCS.DSS.Collections.GetCollectionByIdHttpTrigger.Service;
 using NCS.DSS.Collections.GetCollectionsHttpTrigger.Service;
 using NCS.DSS.Collections.Helpers;
 using NCS.DSS.Collections.Mappers;
+using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.PostCollectionHttpTrigger.Service;
 using NCS.DSS.Collections.ServiceBus;
 using NCS.DSS.Collections.ServiceBus.Configs;
@@ -22,44 +28,83 @@ using NCS.DSS.Collections.ServiceBus.Processor.Service;
 using NCS.DSS.Collections.Storage;
 using NCS.DSS.Collections.Storage.Configuration;
 using NCS.DSS.Collections.Validators;
-var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services =>
+
+namespace NCS.DSS.Collections
+{
+    internal class Program
     {
-        services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
-        services.AddTransient<IGetCollectionByIdHtppTriggerService, GetCollectionByIdHtppTriggerService>();
-        services.AddTransient<IGetCollectionsHttpTriggerService, GetCollectionsHttpTriggerService>();
-        services.AddTransient<IPostCollectionHttpTriggerService, PostCollectionHttpTriggerService>();
-        services.AddTransient<IResourceHelper, ResourceHelper>();
-        services.AddTransient<IApimUrlValidator, ApimUrlValidator>();
-        services.AddTransient<ICollectionValidator, CollectionValidator>();
-        services.AddTransient<IDssCorrelationValidator, DssCorrelationValidator>();
-        services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
-        services.AddTransient<IDCBlobStorage, DCBlobStorage>();
-        services.AddTransient<IStorageConfiguration, StorageConfiguration>();
-        services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
-        services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
-        services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
-        services.AddTransient<IDocumentDBProvider, DocumentDBProvider>(); ;
-        services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
-        services.AddTransient<ICollectionMapper, CollectionMapper>();
+        private static async Task Main(string[] args)
+        {
+            var host = new HostBuilder()
+                .ConfigureFunctionsWebApplication()
+                .ConfigureServices((context, services) =>
+                {
+                    var configuration = context.Configuration;
+                    services.AddOptions<CollectionConfigurationSettings>()
+                        .Bind(configuration);
 
-        services.AddScoped<IContentEnhancerMessageBusConfig, ContentEnhancerMessageBusConfig>();
-        services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();
+                    services.AddApplicationInsightsTelemetryWorkerService();
+                    services.ConfigureFunctionsApplicationInsights();
+                    services.AddScoped<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
+                    services.AddTransient<IGetCollectionByIdHttpTriggerService, GetCollectionByIdHttpTriggerService>();
+                    services.AddTransient<IGetCollectionsHttpTriggerService, GetCollectionsHttpTriggerService>();
+                    services.AddTransient<IPostCollectionHttpTriggerService, PostCollectionHttpTriggerService>();
+                    services.AddTransient<IResourceHelper, ResourceHelper>();
+                    services.AddTransient<IApimUrlValidator, ApimUrlValidator>();
+                    services.AddTransient<ICollectionValidator, CollectionValidator>();
+                    services.AddTransient<IDssCorrelationValidator, DssCorrelationValidator>();
+                    services.AddTransient<IDssTouchpointValidator, DssTouchpointValidator>();
+                    services.AddTransient<IDCBlobStorage, DCBlobStorage>();
+                    services.AddTransient<IStorageConfiguration, StorageConfiguration>();
+                    services.AddTransient<IHttpResponseMessageHelper, HttpResponseMessageHelper>();
+                    services.AddTransient<IHttpRequestHelper, HttpRequestHelper>();
+                    services.AddTransient<IDataCollectionsQueueProcessorService, DataCollectionsQueueProcessorService>();
+                    services.AddTransient<ICosmosDbProvider, CosmosDbProvider>(); ;
+                    services.AddTransient<IDataCollectionsServiceBusClient, DataCollectionsServiceBusClient>();
+                    services.AddTransient<ICollectionMapper, CollectionMapper>();
 
-        services.AddScoped<IContentEnhancerServiceBusClient, ContentEnhancerServiceBusClient>();
+                    services.AddScoped<IContentEnhancerMessageBusConfig, ContentEnhancerMessageBusConfig>();
+                    services.AddScoped<IDataCollectionsServiceBusConfig, DataCollectionsServiceBusConfig>();
 
-        services.AddScoped<IContentEnhancerMessageProvider, ContentEnhancerMessageProvider>();
-        services.AddScoped<IDataCollectionsMessageProvider, DataCollectionsMessageProvider>();
+                    services.AddScoped<IContentEnhancerServiceBusClient, ContentEnhancerServiceBusClient>();
 
-        services.AddScoped<IDCBlobStorage, DCBlobStorage>();
+                    services.AddScoped<IContentEnhancerMessageProvider, ContentEnhancerMessageProvider>();
+                    services.AddScoped<IDataCollectionsMessageProvider, DataCollectionsMessageProvider>();
 
-        services.AddScoped<ILoggerHelper, LoggerHelper>();
-        services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
-        services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
+                    services.AddScoped<IDCBlobStorage, DCBlobStorage>();
 
-        services.AddSingleton<IDynamicHelper, DynamicHelper>();
-    })
-    .Build();
+                    services.AddScoped<IDataCollectionsReportHelper, DataCollectionsReportHelper>();
+                    services.AddScoped<ICloudBlobStreamHelper, CloudBlobStreamHelper>();
 
-host.Run();
+                    services.AddSingleton<IDynamicHelper, DynamicHelper>();
+
+                    services.AddSingleton(s =>
+                    {
+                        var settings = s.GetRequiredService<IOptions<CollectionConfigurationSettings>>().Value;
+                        var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
+
+                        return new CosmosClient(settings.Endpoint, settings.Key, options);
+                    });
+
+                    services.AddSingleton(s =>
+                    {
+                        var settings = s.GetRequiredService<IOptions<CollectionConfigurationSettings>>().Value;
+                        return new ServiceBusClient(settings.ServiceBusConnectionString);
+                    });
+
+                    services.Configure<LoggerFilterOptions>(options =>
+                    {
+                        LoggerFilterRule toRemove = options.Rules.FirstOrDefault(rule => rule.ProviderName
+                            == "Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider");
+                        if (toRemove is not null)
+                        {
+                            options.Rules.Remove(toRemove);
+                        }
+                    });
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+    }
+}
