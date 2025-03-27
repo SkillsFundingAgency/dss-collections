@@ -24,17 +24,18 @@ namespace NCS.DSS.Collections.Storage
 
         public async Task<MemoryStream> Get(PersistedCollection collection)
         {
-            var resultStream = new MemoryStream();
-            var correlationGuidId = Guid.NewGuid();
-            var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);
+            var resultStream = new MemoryStream();         
 
             try
             {
+                var blobContainer = new BlobContainerClient(_storageConfiguration.ConnectionString, collection.ContainerName);
+                _logger.LogInformation("Started retrieving data from Blob file - {0}", collection.ReportFileName);
                 BlobClient blob = blobContainer.GetBlobClient(collection.ReportFileName);
 
                 if (await blob.ExistsAsync())
                 {
                     resultStream = await _cloudBlobStreamHelper.MakeStream(blob);
+                    _logger.LogInformation("Completed retrieving data from Blob file - {0}", collection.ReportFileName);
                 }
                 else
                 {
