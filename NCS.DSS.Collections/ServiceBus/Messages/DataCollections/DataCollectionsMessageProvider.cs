@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using NCS.DSS.Collections.Models;
 using NCS.DSS.Collections.ServiceBus.DataCollections.Messages;
 using Newtonsoft.Json;
@@ -14,9 +14,9 @@ namespace NCS.DSS.Collections.ServiceBus.Messages.DataCollections
             return JsonConvert.DeserializeObject<MessageCrossLoadToNCSDto>(message);
         }
 
-        public Message MakeMessage(PersistedCollection collection)
+        public ServiceBusMessage MakeMessage(PersistedCollection collection)
         {
-            return new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageCrossLoadFromNCSDto
+            return new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageCrossLoadFromNCSDto
             {
                 ContainerName = collection.ContainerName,
                 JobId = collection.CollectionId,

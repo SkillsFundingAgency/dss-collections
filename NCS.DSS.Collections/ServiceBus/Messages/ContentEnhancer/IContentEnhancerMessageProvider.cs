@@ -1,9 +1,9 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 
 namespace NCS.DSS.Collections.ServiceBus.Messages.ContentEnhancer
 {
     public interface IContentEnhancerMessageProvider
     {
-        Message MakeMessage(Models.Collection collection);
+        ServiceBusMessage MakeMessage(Models.Collection collection);
     }
 }

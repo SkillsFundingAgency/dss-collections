@@ -16,7 +16,9 @@ namespace NCS.DSS.Collections.Validators
             var correlationId = _httpRequestHelper.GetDssCorrelationId(req);
 
             if (string.IsNullOrEmpty(correlationId))
+            {
                 logger.LogInformation("Unable to locate 'DssCorrelationId' in request header");
+            }
 
             if (!Guid.TryParse(correlationId, out var correlationGuid))
             {
