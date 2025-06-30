@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
@@ -80,10 +81,30 @@ namespace NCS.DSS.Collections
 
                     services.AddSingleton(s =>
                     {
-                        var settings = s.GetRequiredService<IOptions<CollectionConfigurationSettings>>().Value;
-                        var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
+                        var logger = s.GetRequiredService<ILogger<Program>>();
 
-                        return new CosmosClient(settings.Endpoint, settings.Key, options);
+                        var connectionString = configuration["StorageConnectionString"];
+                        var endpoint = configuration["CosmosDbEndpoint"];
+
+                        var options = new CosmosClientOptions
+                        {
+                            ConnectionMode = ConnectionMode.Gateway
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(endpoint))
+                        {
+                            logger.LogInformation("Using DefaultAzureCredential for Cosmos DB (managed identity)");
+                            return new CosmosClient(endpoint, new DefaultAzureCredential(), options);
+                        }
+                        else if (!string.IsNullOrWhiteSpace(connectionString))
+                        {
+                            logger.LogInformation("No managed identity found: using Cosmos DB connection string (local development)");
+                            return new CosmosClient(connectionString, options);
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Neither CosmosDbEndpoint or a ConnectionString are configured");
+                        }
                     });
 
                     services.AddSingleton(s =>

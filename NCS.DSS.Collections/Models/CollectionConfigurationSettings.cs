@@ -3,7 +3,7 @@
     public class CollectionConfigurationSettings
     {
         public required string Key { get; set; }
-        public required string Endpoint { get; set; }
+        public required string CosmosDbEndpoint { get; set; }
         public required string QueueName { get; set; }
         public required string ServiceBusConnectionString { get; set; }
         public required string CollectionDatabaseId { get; set; }
