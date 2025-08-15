@@ -39,7 +39,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
         public async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "collections")] HttpRequest req)
         {
-            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(GetCollectionByIdHttpTrigger));
+            _logger.LogInformation("Function {FunctionName} has been invoked", nameof(GetCollectionsHttpTrigger));
 
             var correlationGuid = _dssCorrelationValidator.Extract(req, _logger);
 
@@ -72,7 +72,7 @@ namespace NCS.DSS.Collections.GetCollectionsHttpTrigger.Function
                 return new JsonResult(results[0], new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
             }
 
-            _logger.LogInformation("Successfully retrieved {Count} Collection(s). Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", touchpointId, correlationGuid, results.Count);
+            _logger.LogInformation("Successfully retrieved {Count} Collection(s). Touchpoint ID: {TouchpointId}. Correlation GUID: {CorrelationGuid}", results.Count, touchpointId, correlationGuid);
             _logger.LogInformation("Function {FunctionName} has finished invoking", nameof(GetCollectionsHttpTrigger));
 
             return new JsonResult(results, new JsonSerializerOptions()) { StatusCode = (int)HttpStatusCode.OK };
