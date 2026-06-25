@@ -19,7 +19,7 @@ namespace NCS.DSS.Collections.PostCollectionHttpTrigger.Function
         private readonly IPostCollectionHttpTriggerService _service;
         private readonly ILogger<PostCollectionHttpTrigger> _logger;
         private readonly IDynamicHelper _dynamicHelper;
-        private static readonly string[] PropertyToExclude = { "TargetSite" };
+        private static readonly string[] PropertyToExclude = { "TargetSite", "StackTrace" };
 
         public PostCollectionHttpTrigger(IPostCollectionHttpTriggerService service, ILogger<PostCollectionHttpTrigger> logger, IHttpRequestHelper httpRequestHelper, IDynamicHelper dynamicHelper)
         {
