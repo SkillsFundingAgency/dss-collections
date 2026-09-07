@@ -14,17 +14,11 @@
     "CosmosDbEndpoint": {
       "type": "string"
     },
-    "cosmosDbKey": {
-      "type": "string"
-    },
     "environmentName": {
       "type": "string"
     },
     "functionAppNames": {
       "type": "array"
-    },
-    "serviceBusConnectionString": {
-      "type": "string"
     },
     "serviceBusQueueName": {
       "type": "string"
@@ -54,8 +48,8 @@
         "CollectionDatabaseId": "[parameters('cosmosDbCollectionId')]",
         "CollectionCollectionId": "[parameters('cosmosDbDatabaseId')]",
         "CosmosDbEndpoint": "[parameters('CosmosDbEndpoint')]",
-        "Key": "[parameters('cosmosDbKey')]",
-        "ServiceBusConnectionString": "[parameters('serviceBusConnectionString')]",
+        "Key": "[format('@Microsoft.KeyVault(VaultName={0};SecretName=CosmosDbAccessKey)', parameters('keyVaultName'))]",
+        "ServiceBusConnectionString": "[format('@Microsoft.KeyVault(VaultName={0};SecretName=ServiceBusConnectionString)', parameters('keyVaultName'))]",
         "QueueName": "[parameters('serviceBusQueueName')]",
         "DCQueueName_Out": "ncsout",
         "DCQueueName_In": "ncsin",

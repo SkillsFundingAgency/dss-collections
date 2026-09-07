@@ -11,17 +11,11 @@
     "CosmosDbEndpoint": {
       "value": "__cosmosDbEndpoint__"
     },
-    "cosmosDbKey": {
-      "value": "__cosmosDbKey__"
-    },
     "environmentName": {
       "value": "__environmentName__"
     },
     "functionAppNames": {
       "value": ""
-    },
-    "serviceBusConnectionString": {
-      "value": "__serviceBusConnectionString__"
     },
     "serviceBusQueueName": {
       "value": "__serviceBusQueueName__"
